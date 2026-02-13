@@ -25,7 +25,7 @@ const Portfolio = () => {
         p2: 'Внедряю передовые ИИ-технологии для анализа нормативно-правовой базы и автоматизации обработки кадастровых данных. Это позволяет существенно сокращать сроки подготовки заключений, минимизировать юридические риски и принимать взвешенные решения по управлению земельными активами. Специализируюсь на комплексном анализе выписок ЕГРН, оценке градостроительного потенциала территорий и подготовке аналитических отчетов.',
         resumeBtn: 'Скачать полное резюме (PDF)',
         cards: [
-          { title: 'ГИС-эксперт', desc: 'QGIS, ArcGIS, пространственный анализ' },
+          { title: 'ГИС-эксперт', desc: 'QGIS, пространственный анализ' },
           { title: 'Кадастровый инженер', desc: 'Межевание, ЕГРН, земельный кадастр' },
           { title: 'ИИ для НПА', desc: 'Автоматизация анализа законодательства' },
           { title: 'Градостроительство', desc: 'Зонирование, генпланы, ПЗЗ' }
@@ -51,9 +51,8 @@ const Portfolio = () => {
       skills: {
         title: 'Технические навыки',
         items: [
-          'QGIS и ArcGIS',
-          'Python (PyQGIS, GeoPandas)',
-          'PostGIS и Spatial SQL',
+          'QGIS',
+          'Python (GeoPandas)',
           'Обработка кадастровых данных',
           'Дистанционное зондирование',
           'Градостроительство и зонирование'
@@ -86,7 +85,7 @@ const Portfolio = () => {
         p2: 'I implement cutting-edge AI technologies for regulatory framework analysis and automation of cadastral data processing. This significantly reduces the time for preparing conclusions, minimizes legal risks, and enables informed decisions in land asset management. I specialize in comprehensive analysis of cadastral extracts, assessment of urban development potential, and preparation of analytical reports.',
         resumeBtn: 'Download Full Resume (PDF)',
         cards: [
-          { title: 'GIS Expert', desc: 'QGIS, ArcGIS, spatial analysis' },
+          { title: 'GIS Expert', desc: 'QGIS, spatial analysis' },
           { title: 'Cadastral Engineer', desc: 'Land surveying, cadastre, EGRN' },
           { title: 'AI for Legal Analysis', desc: 'Automation of regulatory analysis' },
           { title: 'Urban Planning', desc: 'Zoning, master plans, regulations' }
@@ -112,9 +111,8 @@ const Portfolio = () => {
       skills: {
         title: 'Technical Skills',
         items: [
-          'QGIS & ArcGIS',
-          'Python (PyQGIS, GeoPandas)',
-          'PostGIS & Spatial SQL',
+          'QGIS',
+          'Python (GeoPandas)',
           'Cadastral Data Processing',
           'Remote Sensing',
           'Urban Planning & Zoning'
