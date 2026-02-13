@@ -4,8 +4,137 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [language, setLanguage] = useState('ru'); // 'ru' или 'en'
   const { scrollY } = useScroll();
   const gridOpacity = useTransform(scrollY, [0, 300], [0.15, 0.05]);
+
+  // Переводы
+  const translations = {
+    ru: {
+      nav: ['Главная', 'О себе', 'Услуги', 'Проекты', 'Навыки', 'Контакты'],
+      hero: {
+        subtitle: 'Управление земельными активами | ГИС-аналитика | Кадастровый инженер',
+        description: 'Ведущий эксперт по управлению земельными активами и GIS-аналитике. Объединяю компетенции кадастрового инженера и градостроительного аналитика. Активно применяю ИИ-технологии для глубокого анализа нормативно-правовой базы и автоматизации обработки геоданных, что позволяет сокращать сроки подготовки заключений и снижать риски.',
+        contact: 'Связаться',
+        resume: 'Скачать резюме',
+        projects: 'Посмотреть проекты'
+      },
+      about: {
+        title: 'О себе',
+        p1: 'Ведущий эксперт с уникальной комбинацией компетенций: кадастровый инженер, специалист по ГИС-анализу и градостроительному проектированию. Обладаю глубоким пониманием земельного законодательства и практическим опытом работы с геопространственными данными на всех этапах жизненного цикла земельных активов.',
+        p2: 'Внедряю передовые ИИ-технологии для анализа нормативно-правовой базы и автоматизации обработки кадастровых данных. Это позволяет существенно сокращать сроки подготовки заключений, минимизировать юридические риски и принимать взвешенные решения по управлению земельными активами. Специализируюсь на комплексном анализе выписок ЕГРН, оценке градостроительного потенциала территорий и подготовке аналитических отчетов.',
+        resumeBtn: 'Скачать полное резюме (PDF)',
+        cards: [
+          { title: 'ГИС-эксперт', desc: 'QGIS, ArcGIS, пространственный анализ' },
+          { title: 'Кадастровый инженер', desc: 'Межевание, ЕГРН, земельный кадастр' },
+          { title: 'ИИ для НПА', desc: 'Автоматизация анализа законодательства' },
+          { title: 'Градостроительство', desc: 'Зонирование, генпланы, ПЗЗ' }
+        ]
+      },
+      services: {
+        title: 'Услуги',
+        items: [
+          { title: 'ГИС Картографирование и анализ', desc: 'Индивидуальные картографические решения, пространственные запросы и многослойный анализ для земельных проектов.' },
+          { title: 'Обработка кадастровых данных', desc: 'Автоматизированный парсинг ЕГРН XML, извлечение границ участков и структурирование данных о правообладателях.' },
+          { title: 'Планирование землепользования', desc: 'Проверка соответствия зонированию, анализ пригодности земель и картирование нормативных ограничений.' },
+          { title: 'Экономика застройки', desc: 'Анализ участков, выявление ограничений и исследования вместимости для жилых и коммерческих проектов.' },
+          { title: 'Геопространственная автоматизация', desc: 'Python-скриптинг для пакетной обработки, валидации данных и оптимизации рабочих процессов в QGIS.' }
+        ]
+      },
+      projects: {
+        title: 'Проекты',
+        client: 'Клиент',
+        year: 'Год',
+        close: 'Закрыть',
+        open: 'Открыть проект'
+      },
+      skills: {
+        title: 'Технические навыки',
+        items: [
+          'QGIS и ArcGIS',
+          'Python (PyQGIS, GeoPandas)',
+          'PostGIS и Spatial SQL',
+          'Обработка кадастровых данных',
+          'Дистанционное зондирование',
+          'Градостроительство и зонирование'
+        ]
+      },
+      contact: {
+        title: 'Связаться со мной',
+        intro: 'Заинтересованы в сотрудничестве по ГИС-проекту или нужна экспертиза в области пространственного анализа? Свяжитесь со мной удобным способом — готов обсудить ваш проект и предложить профессиональные решения.',
+        email: 'Email',
+        phone: 'Телефон',
+        telegram: 'Telegram',
+        name: 'Имя',
+        message: 'Сообщение',
+        send: 'Отправить сообщение'
+      },
+      footer: 'Евгений Яровой. Эксперт по земельным активам и ГИС-аналитике.'
+    },
+    en: {
+      nav: ['Home', 'About', 'Services', 'Projects', 'Skills', 'Contact'],
+      hero: {
+        subtitle: 'Land Asset Management | GIS Analytics | Cadastral Engineer',
+        description: 'Leading expert in land asset management and GIS analytics. I combine the competencies of a cadastral engineer and urban planning analyst. Actively applying AI technologies for in-depth analysis of regulatory framework and automation of geodata processing, which reduces the time for preparing conclusions and minimizes risks.',
+        contact: 'Get in Touch',
+        resume: 'Download Resume',
+        projects: 'View Projects'
+      },
+      about: {
+        title: 'About',
+        p1: 'Leading expert with a unique combination of competencies: cadastral engineer, GIS analysis specialist, and urban planning professional. I possess deep understanding of land legislation and practical experience working with geospatial data at all stages of the land asset lifecycle.',
+        p2: 'I implement cutting-edge AI technologies for regulatory framework analysis and automation of cadastral data processing. This significantly reduces the time for preparing conclusions, minimizes legal risks, and enables informed decisions in land asset management. I specialize in comprehensive analysis of cadastral extracts, assessment of urban development potential, and preparation of analytical reports.',
+        resumeBtn: 'Download Full Resume (PDF)',
+        cards: [
+          { title: 'GIS Expert', desc: 'QGIS, ArcGIS, spatial analysis' },
+          { title: 'Cadastral Engineer', desc: 'Land surveying, cadastre, EGRN' },
+          { title: 'AI for Legal Analysis', desc: 'Automation of regulatory analysis' },
+          { title: 'Urban Planning', desc: 'Zoning, master plans, regulations' }
+        ]
+      },
+      services: {
+        title: 'Services',
+        items: [
+          { title: 'GIS Mapping & Analysis', desc: 'Custom cartographic solutions, spatial queries, and multi-layer analysis for land development projects.' },
+          { title: 'Cadastral Data Processing', desc: 'Automated EGRN XML parsing, parcel boundary extraction, and ownership data structuring.' },
+          { title: 'Land Use Planning', desc: 'Zoning compliance review, land suitability analysis, and regulatory constraint mapping.' },
+          { title: 'Development Feasibility', desc: 'Site analysis, constraint identification, and capacity studies for residential and commercial projects.' },
+          { title: 'Geospatial Automation', desc: 'Python scripting for batch processing, data validation, and workflow optimization in QGIS.' }
+        ]
+      },
+      projects: {
+        title: 'Projects',
+        client: 'Client',
+        year: 'Year',
+        close: 'Close',
+        open: 'Open Project'
+      },
+      skills: {
+        title: 'Technical Skills',
+        items: [
+          'QGIS & ArcGIS',
+          'Python (PyQGIS, GeoPandas)',
+          'PostGIS & Spatial SQL',
+          'Cadastral Data Processing',
+          'Remote Sensing',
+          'Urban Planning & Zoning'
+        ]
+      },
+      contact: {
+        title: 'Get in Touch',
+        intro: 'Interested in collaborating on a GIS project or need spatial analysis expertise? Contact me in any convenient way — ready to discuss your project and offer professional solutions.',
+        email: 'Email',
+        phone: 'Phone',
+        telegram: 'Telegram',
+        name: 'Name',
+        message: 'Message',
+        send: 'Send Message'
+      },
+      footer: 'Evgeniy Yarovoy. Expert in Land Assets and GIS Analytics.'
+    }
+  };
+
+  const t = translations[language];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,7 +190,7 @@ const Portfolio = () => {
             </motion.div>
             
             <div className="flex gap-8">
-              {['Главная', 'О себе', 'Услуги', 'Проекты', 'Навыки', 'Контакты'].map((item, i) => {
+              {t.nav.map((item, i) => {
                 const sectionIds = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
                 return (
                   <motion.button
@@ -83,6 +212,34 @@ const Portfolio = () => {
                   </motion.button>
                 );
               })}
+              
+              {/* Language Switcher */}
+              <div className="flex items-center gap-2 ml-4 border-l border-green-500/20 pl-4">
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setLanguage('ru')}
+                  className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${
+                    language === 'ru' 
+                      ? 'bg-green-500 text-slate-900' 
+                      : 'text-gray-400 hover:text-green-400 hover:bg-green-500/10'
+                  }`}
+                >
+                  RU
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setLanguage('en')}
+                  className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${
+                    language === 'en' 
+                      ? 'bg-cyan-400 text-slate-900' 
+                      : 'text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/10'
+                  }`}
+                >
+                  EN
+                </motion.button>
+              </div>
             </div>
           </div>
         </div>
@@ -126,13 +283,11 @@ const Portfolio = () => {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light">
-              Управление земельными активами | ГИС-аналитика | Кадастровый инженер
+              {t.hero.subtitle}
             </p>
             
             <p className="text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Ведущий эксперт по управлению земельными активами и GIS-аналитике. Объединяю компетенции кадастрового инженера 
-              и градостроительного аналитика. Активно применяю ИИ-технологии для глубокого анализа нормативно-правовой базы 
-              и автоматизации обработки геоданных, что позволяет сокращать сроки подготовки заключений и снижать риски.
+              {t.hero.description}
             </p>
             
             <div className="flex gap-4 justify-center flex-wrap">
@@ -142,7 +297,7 @@ const Portfolio = () => {
                 onClick={() => scrollToSection('contact')}
                 className="px-8 py-3 bg-green-500 text-slate-900 rounded-2xl font-semibold hover:bg-green-400 transition-colors shadow-lg shadow-green-500/30"
               >
-                Связаться
+                {t.hero.contact}
               </motion.button>
               <motion.a
                 href="/resume.pdf"
@@ -154,7 +309,7 @@ const Portfolio = () => {
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Скачать резюме
+                {t.hero.resume}
               </motion.a>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -162,7 +317,7 @@ const Portfolio = () => {
                 onClick={() => scrollToSection('projects')}
                 className="px-8 py-3 border-2 border-cyan-400 text-cyan-400 rounded-2xl font-semibold hover:bg-cyan-400/10 transition-colors"
               >
-                Посмотреть проекты
+                {t.hero.projects}
               </motion.button>
             </div>
           </motion.div>
@@ -195,22 +350,17 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-green-400">//</span>
-              <span>О себе</span>
+              <span>{t.about.title}</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
 
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-6">
                 <p className="text-gray-300 leading-relaxed">
-                  Ведущий эксперт с уникальной комбинацией компетенций: кадастровый инженер, специалист по ГИС-анализу 
-                  и градостроительному проектированию. Обладаю глубоким пониманием земельного законодательства и практическим 
-                  опытом работы с геопространственными данными на всех этапах жизненного цикла земельных активов.
+                  {t.about.p1}
                 </p>
                 <p className="text-gray-300 leading-relaxed">
-                  Внедряю передовые ИИ-технологии для анализа нормативно-правовой базы и автоматизации обработки кадастровых 
-                  данных. Это позволяет существенно сокращать сроки подготовки заключений, минимизировать юридические риски 
-                  и принимать взвешенные решения по управлению земельными активами. Специализируюсь на комплексном анализе 
-                  выписок ЕГРН, оценке градостроительного потенциала территорий и подготовке аналитических отчетов.
+                  {t.about.p2}
                 </p>
                 
                 <motion.a
@@ -223,17 +373,12 @@ const Portfolio = () => {
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                  Скачать полное резюме (PDF)
+                  {t.about.resumeBtn}
                 </motion.a>
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                {[
-                  { icon: '🗺️', title: 'ГИС-эксперт', desc: 'QGIS, ArcGIS, пространственный анализ' },
-                  { icon: '📐', title: 'Кадастровый инженер', desc: 'Межевание, ЕГРН, земельный кадастр' },
-                  { icon: '🤖', title: 'ИИ для НПА', desc: 'Автоматизация анализа законодательства' },
-                  { icon: '🏗️', title: 'Градостроительство', desc: 'Зонирование, генпланы, ПЗЗ' },
-                ].map((item, i) => (
+                {t.about.cards.map((item, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -243,7 +388,7 @@ const Portfolio = () => {
                     whileHover={{ y: -5 }}
                     className="bg-slate-800/50 backdrop-blur-sm border border-green-500/20 rounded-2xl p-6 hover:border-cyan-400/50 transition-all"
                   >
-                    <div className="text-3xl mb-3">{item.icon}</div>
+                    <div className="text-3xl mb-3">{['🗺️', '📐', '🤖', '🏗️'][i]}</div>
                     <h3 className="text-green-400 font-semibold mb-2">{item.title}</h3>
                     <p className="text-sm text-gray-400">{item.desc}</p>
                   </motion.div>
@@ -264,33 +409,12 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-cyan-400">//</span>
-              <span>Услуги</span>
+              <span>{t.services.title}</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  title: 'ГИС Картографирование и анализ',
-                  desc: 'Индивидуальные картографические решения, пространственные запросы и многослойный анализ для земельных проектов.',
-                },
-                {
-                  title: 'Обработка кадастровых данных',
-                  desc: 'Автоматизированный парсинг ЕГРН XML, извлечение границ участков и структурирование данных о правообладателях.',
-                },
-                {
-                  title: 'Планирование землепользования',
-                  desc: 'Проверка соответствия зонированию, анализ пригодности земель и картирование нормативных ограничений.',
-                },
-                {
-                  title: 'Экономика застройки',
-                  desc: 'Анализ участков, выявление ограничений и исследования вместимости для жилых и коммерческих проектов.',
-                },
-                {
-                  title: 'Геопространственная автоматизация',
-                  desc: 'Python-скриптинг для пакетной обработки, валидации данных и оптимизации рабочих процессов в QGIS.',
-                },
-              ].map((service, i) => (
+              {t.services.items.map((service, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 30 }}
@@ -328,7 +452,7 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-green-400">//</span>
-              <span>Проекты</span>
+              <span>{t.projects.title}</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
 
@@ -473,7 +597,7 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-cyan-400">//</span>
-              <span>Технические навыки</span>
+              <span>{t.skills.title}</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
 
@@ -483,36 +607,32 @@ const Portfolio = () => {
               </div>
               
               <div className="p-6 space-y-6">
-                {[
-                  { skill: 'QGIS и ArcGIS', level: 95 },
-                  { skill: 'Python (PyQGIS, GeoPandas)', level: 90 },
-                  { skill: 'PostGIS и Spatial SQL', level: 85 },
-                  { skill: 'Обработка кадастровых данных', level: 92 },
-                  { skill: 'Дистанционное зондирование', level: 80 },
-                  { skill: 'Градостроительство и зонирование', level: 88 },
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-gray-300 font-medium">{item.skill}</span>
-                      <span className="text-cyan-400 font-mono text-sm">{item.level}%</span>
-                    </div>
-                    <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${item.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: i * 0.1 }}
-                        className="h-full bg-gradient-to-r from-green-400 to-cyan-400 rounded-full"
-                      />
-                    </div>
-                  </motion.div>
-                ))}
+                {t.skills.items.map((skillName, i) => {
+                  const levels = [95, 90, 85, 92, 80, 88];
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-gray-300 font-medium">{skillName}</span>
+                        <span className="text-cyan-400 font-mono text-sm">{levels[i]}%</span>
+                      </div>
+                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${levels[i]}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, delay: i * 0.1 }}
+                          className="h-full bg-gradient-to-r from-green-400 to-cyan-400 rounded-full"
+                        />
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </motion.div>
@@ -529,15 +649,14 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-green-400">//</span>
-              <span>Связаться со мной</span>
+              <span>{t.contact.title}</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
 
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-6">
                 <p className="text-gray-300 leading-relaxed">
-                  Заинтересованы в сотрудничестве по ГИС-проекту или нужна экспертиза в области пространственного анализа? 
-                  Свяжитесь со мной удобным способом — готов обсудить ваш проект и предложить профессиональные решения.
+                  {t.contact.intro}
                 </p>
 
                 <div className="space-y-4">
@@ -552,7 +671,7 @@ const Portfolio = () => {
                       </svg>
                     </div>
                     <div>
-                      <div className="text-sm text-gray-500">Email</div>
+                      <div className="text-sm text-gray-500">{t.contact.email}</div>
                       <div className="font-medium">zemlymag@gmail.com</div>
                     </div>
                   </motion.a>
@@ -568,7 +687,7 @@ const Portfolio = () => {
                       </svg>
                     </div>
                     <div>
-                      <div className="text-sm text-gray-500">Телефон</div>
+                      <div className="text-sm text-gray-500">{t.contact.phone}</div>
                       <div className="font-medium">+7 932 438-31-90</div>
                     </div>
                   </motion.a>
@@ -586,7 +705,7 @@ const Portfolio = () => {
                       </svg>
                     </div>
                     <div>
-                      <div className="text-sm text-gray-500">Telegram</div>
+                      <div className="text-sm text-gray-500">{t.contact.telegram}</div>
                       <div className="font-medium">@kakDelaEvgen</div>
                     </div>
                   </motion.a>
@@ -597,7 +716,7 @@ const Portfolio = () => {
                 <div>
                   <input
                     type="text"
-                    placeholder="Имя"
+                    placeholder={t.contact.name}
                     className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-green-400 transition-colors text-gray-100 placeholder-gray-500"
                   />
                 </div>
@@ -611,7 +730,7 @@ const Portfolio = () => {
                 <div>
                   <textarea
                     rows="5"
-                    placeholder="Сообщение"
+                    placeholder={t.contact.message}
                     className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-green-400 transition-colors text-gray-100 placeholder-gray-500 resize-none"
                   />
                 </div>
@@ -621,7 +740,7 @@ const Portfolio = () => {
                   type="submit"
                   className="w-full px-8 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-semibold hover:from-green-400 hover:to-cyan-400 transition-all shadow-lg shadow-green-500/30"
                 >
-                  Отправить сообщение
+                  {t.contact.send}
                 </motion.button>
               </form>
             </div>
@@ -652,9 +771,9 @@ const Portfolio = () => {
                   {selectedProject.title}
                 </h3>
                 <div className="flex gap-4 text-sm text-gray-400">
-                  <span>Клиент: {selectedProject.client}</span>
+                  <span>{t.projects.client}: {selectedProject.client}</span>
                   <span>•</span>
-                  <span>Год: {selectedProject.year}</span>
+                  <span>{t.projects.year}: {selectedProject.year}</span>
                 </div>
               </div>
               <button
@@ -716,7 +835,7 @@ const Portfolio = () => {
                   onClick={() => setSelectedProject(null)}
                   className="px-8 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-semibold hover:from-green-400 hover:to-cyan-400 transition-all shadow-lg shadow-green-500/30"
                 >
-                  Закрыть
+                  {t.projects.close}
                 </motion.button>
                 {selectedProject.link && selectedProject.link !== '#' && (
                   <motion.a
@@ -727,7 +846,7 @@ const Portfolio = () => {
                     whileTap={{ scale: 0.95 }}
                     className="px-8 py-3 border-2 border-cyan-400 text-cyan-400 rounded-xl font-semibold hover:bg-cyan-400/10 transition-colors"
                   >
-                    Открыть проект →
+                    {t.projects.open} →
                   </motion.a>
                 )}
               </div>
@@ -739,7 +858,7 @@ const Portfolio = () => {
       {/* Footer */}
       <footer className="py-8 px-6 border-t border-green-500/20 bg-slate-900/50">
         <div className="max-w-6xl mx-auto text-center text-gray-500 text-sm">
-          <p>© 2026 Евгений Яровой. Эксперт по земельным активам и ГИС-аналитике.</p>
+          <p>© 2026 {t.footer}</p>
         </div>
       </footer>
     </div>
