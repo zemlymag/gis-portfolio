@@ -765,6 +765,24 @@ const Portfolio = () => {
                       <div className="font-medium">Мой GIS путь</div>
                     </div>
                   </motion.a>
+
+                  <motion.a
+                    href="https://www.linkedin.com/in/%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9-%D1%8F%D1%80%D0%BE%D0%B2%D0%BE%D0%B9-28365645/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ x: 5 }}
+                    className="flex items-center gap-4 text-gray-300 hover:text-blue-400 transition-colors group"
+                  >
+                    <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                      <svg className="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6C1.1 6 0 4.88 0 3.5C0 2.12 1.12 1 2.5 1C3.88 1 4.98 2.12 4.98 3.5ZM0.22 8.98H4.74V24H0.22V8.98ZM8.98 8.98H13.18V11.02H13.26C13.98 9.56 15.98 8.98 18.26 8.98C23.02 8.98 24 11.96 24 16.34V24H19.48V17.58C19.48 15.62 19.44 12.98 16.66 12.98C13.86 12.98 13.46 15.28 13.46 17.38V24H8.94V8.98H8.98Z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-500">LinkedIn</div>
+                      <div className="font-medium">Евгений Яровой</div>
+                    </div>
+                  </motion.a>
                 </div>
               </div>
 
