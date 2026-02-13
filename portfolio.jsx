@@ -96,7 +96,7 @@ const Portfolio = () => {
           { title: 'GIS Mapping & Analysis', desc: 'Custom cartographic solutions, spatial queries, and multi-layer analysis for land development projects.' },
           { title: 'Cadastral Data Processing', desc: 'Automated EGRN XML parsing, parcel boundary extraction, and ownership data structuring.' },
           { title: 'Land Use Planning', desc: 'Zoning compliance review, land suitability analysis, and regulatory constraint mapping.' },
-          { title: 'Development Feasibility', desc: 'Site analysis, constraint identification, and capacity studies for residential and commercial projects.' },
+          { title: 'NSPD, GIS OGD and FGIS TP', desc: 'Analysis of cadastral and urban planning data, identification of constraints, and preparation of cartographic materials.' },
           { title: 'Geospatial Automation', desc: 'Python scripting for batch processing, data validation, and workflow optimization in QGIS.' }
         ]
       },
