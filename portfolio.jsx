@@ -463,7 +463,7 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">Email</div>
-                      <div className="font-medium">gis@example.com</div>
+                      <div className="font-medium">zemlymag@gmail.com</div>
                     </div>
                   </motion.a>
 
@@ -479,7 +479,7 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">Telegram</div>
-                      <div className="font-medium">@gis_specialist</div>
+                      <div className="font-medium">https://t.me/kakDelaEvgen</div>
                     </div>
                   </motion.a>
                 </div>
