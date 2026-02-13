@@ -117,7 +117,7 @@ const Portfolio = () => {
             
             <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">
-                Alex Kartographer
+                Яровой Евгений
               </span>
             </h1>
             
