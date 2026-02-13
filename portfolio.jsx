@@ -60,25 +60,28 @@ const Portfolio = () => {
             </motion.div>
             
             <div className="flex gap-8">
-              {['Home', 'About', 'Services', 'Projects', 'Skills', 'Contact'].map((item, i) => (
-                <motion.button
-                  key={item}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                  className={`text-sm font-medium transition-colors relative group ${
-                    activeSection === item.toLowerCase() 
-                      ? 'text-green-400' 
-                      : 'text-gray-400 hover:text-cyan-400'
-                  }`}
-                >
-                  {item}
-                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-green-400 transition-all ${
-                    activeSection === item.toLowerCase() ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} />
-                </motion.button>
-              ))}
+              {['Главная', 'О себе', 'Услуги', 'Проекты', 'Навыки', 'Контакты'].map((item, i) => {
+                const sectionIds = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
+                return (
+                  <motion.button
+                    key={item}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    onClick={() => scrollToSection(sectionIds[i])}
+                    className={`text-sm font-medium transition-colors relative group ${
+                      activeSection === sectionIds[i]
+                        ? 'text-green-400' 
+                        : 'text-gray-400 hover:text-cyan-400'
+                    }`}
+                  >
+                    {item}
+                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-green-400 transition-all ${
+                      activeSection === sectionIds[i] ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`} />
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -112,22 +115,22 @@ const Portfolio = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="text-sm font-mono text-cyan-400 mb-4 tracking-wider">
-              &lt;SPATIAL_INTELLIGENCE /&gt;
+              &lt;ПРОСТРАНСТВЕННЫЙ_ИНТЕЛЛЕКТ /&gt;
             </div>
             
             <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">
-                Яровой Евгений
+                Александр Картограф
               </span>
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light">
-              GIS Analytics | Land Development | Urban Planning
+              ГИС Аналитика | Землеустройство | Градостроительство
             </p>
             
             <p className="text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Transforming spatial data into actionable insights. Specialized in cadastral analysis, 
-              EGRN XML processing, and data-driven urban development strategies with advanced geospatial intelligence.
+              Превращаю пространственные данные в практические решения. Специализируюсь на кадастровом анализе, 
+              обработке выписок ЕГРН в формате XML и разработке градостроительных стратегий на основе геопространственных данных.
             </p>
             
             <div className="flex gap-4 justify-center">
@@ -137,7 +140,7 @@ const Portfolio = () => {
                 onClick={() => scrollToSection('contact')}
                 className="px-8 py-3 bg-green-500 text-slate-900 rounded-2xl font-semibold hover:bg-green-400 transition-colors shadow-lg shadow-green-500/30"
               >
-                Get in Touch
+                Связаться
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -145,7 +148,7 @@ const Portfolio = () => {
                 onClick={() => scrollToSection('projects')}
                 className="px-8 py-3 border-2 border-cyan-400 text-cyan-400 rounded-2xl font-semibold hover:bg-cyan-400/10 transition-colors"
               >
-                View Projects
+                Посмотреть проекты
               </motion.button>
             </div>
           </motion.div>
@@ -178,31 +181,31 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-green-400">//</span>
-              <span>About</span>
+              <span>О себе</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
 
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-6">
                 <p className="text-gray-300 leading-relaxed">
-                  GIS specialist with extensive experience in spatial analysis, land development consulting, 
-                  and urban planning workflows. Proficient in processing complex cadastral datasets, 
-                  automating EGRN XML analysis, and delivering data-driven insights for zoning compliance 
-                  and master plan evaluations.
+                  ГИС-специалист с обширным опытом в пространственном анализе, земельном консалтинге 
+                  и градостроительном проектировании. Владею навыками обработки сложных кадастровых наборов данных, 
+                  автоматизации анализа выписок ЕГРН в формате XML и предоставления аналитики для проверки 
+                  соответствия зонированию и генеральным планам.
                 </p>
                 <p className="text-gray-300 leading-relaxed">
-                  My approach combines technical precision with strategic thinking, enabling clients to make 
-                  informed decisions on land use, development feasibility, and regulatory alignment. 
-                  I specialize in transforming raw geospatial data into clear, actionable intelligence.
+                  Мой подход сочетает техническую точность со стратегическим мышлением, позволяя клиентам принимать 
+                  обоснованные решения по землепользованию, целесообразности застройки и соответствию нормативным требованиям. 
+                  Специализируюсь на преобразовании необработанных геопространственных данных в четкую, практическую аналитику.
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-6">
                 {[
-                  { icon: '🗺️', title: 'QGIS Expert', desc: 'Advanced spatial analysis & cartography' },
-                  { icon: '📊', title: 'Data Analytics', desc: 'Statistical modeling & visualization' },
-                  { icon: '📋', title: 'Cadastral Processing', desc: 'EGRN XML automation' },
-                  { icon: '🏗️', title: 'Urban Planning', desc: 'Zoning & master plan review' },
+                  { icon: '🗺️', title: 'Эксперт QGIS', desc: 'Продвинутый пространственный анализ и картография' },
+                  { icon: '📊', title: 'Аналитика данных', desc: 'Статистическое моделирование и визуализация' },
+                  { icon: '📋', title: 'Кадастровая обработка', desc: 'Автоматизация ЕГРН XML' },
+                  { icon: '🏗️', title: 'Градостроительство', desc: 'Зонирование и проверка генпланов' },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -234,31 +237,31 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-cyan-400">//</span>
-              <span>Services</span>
+              <span>Услуги</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 {
-                  title: 'GIS Mapping & Analysis',
-                  desc: 'Custom cartographic solutions, spatial queries, and multi-layer analysis for land development projects.',
+                  title: 'ГИС Картографирование и анализ',
+                  desc: 'Индивидуальные картографические решения, пространственные запросы и многослойный анализ для земельных проектов.',
                 },
                 {
-                  title: 'Cadastral Data Processing',
-                  desc: 'Automated EGRN XML parsing, parcel boundary extraction, and ownership data structuring.',
+                  title: 'Обработка кадастровых данных',
+                  desc: 'Автоматизированный парсинг ЕГРН XML, извлечение границ участков и структурирование данных о правообладателях.',
                 },
                 {
-                  title: 'Land Use Planning',
-                  desc: 'Zoning compliance review, land suitability analysis, and regulatory constraint mapping.',
+                  title: 'Планирование землепользования',
+                  desc: 'Проверка соответствия зонированию, анализ пригодности земель и картирование нормативных ограничений.',
                 },
                 {
-                  title: 'Development Feasibility',
-                  desc: 'Site analysis, constraint identification, and capacity studies for residential and commercial projects.',
+                  title: 'Экономика застройки',
+                  desc: 'Анализ участков, выявление ограничений и исследования вместимости для жилых и коммерческих проектов.',
                 },
                 {
-                  title: 'Geospatial Automation',
-                  desc: 'Python scripting for batch processing, data validation, and workflow optimization in QGIS.',
+                  title: 'Геопространственная автоматизация',
+                  desc: 'Python-скриптинг для пакетной обработки, валидации данных и оптимизации рабочих процессов в QGIS.',
                 },
               ].map((service, i) => (
                 <motion.div
@@ -298,26 +301,26 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-green-400">//</span>
-              <span>Projects</span>
+              <span>Проекты</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
 
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  title: 'Regional Master Plan Analysis',
-                  desc: 'Comprehensive GIS assessment of 50+ parcels for mixed-use development compliance with local zoning regulations.',
-                  tags: ['QGIS', 'Zoning', 'Python'],
+                  title: 'Анализ регионального генплана',
+                  desc: 'Комплексная ГИС-оценка 50+ участков для многофункциональной застройки на соответствие местным правилам зонирования.',
+                  tags: ['QGIS', 'Зонирование', 'Python'],
                 },
                 {
-                  title: 'Cadastral Database Automation',
-                  desc: 'Automated pipeline for processing EGRN XML files, extracting parcel geometry and ownership data at scale.',
+                  title: 'Автоматизация кадастровой БД',
+                  desc: 'Автоматизированный конвейер для обработки файлов ЕГРН XML, извлечения геометрии участков и данных о правообладателях в масштабе.',
                   tags: ['Python', 'XML', 'PostGIS'],
                 },
                 {
-                  title: 'Urban Heat Island Mapping',
-                  desc: 'Multi-temporal satellite imagery analysis to identify heat vulnerability zones for urban planning interventions.',
-                  tags: ['Remote Sensing', 'QGIS', 'Analysis'],
+                  title: 'Картирование городских островов тепла',
+                  desc: 'Мультивременной анализ спутниковых снимков для выявления зон уязвимости к перегреву для градостроительных интервенций.',
+                  tags: ['ДЗЗ', 'QGIS', 'Анализ'],
                 },
               ].map((project, i) => (
                 <motion.div
@@ -383,7 +386,7 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-cyan-400">//</span>
-              <span>Technical Skills</span>
+              <span>Технические навыки</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
 
@@ -394,12 +397,12 @@ const Portfolio = () => {
               
               <div className="p-6 space-y-6">
                 {[
-                  { skill: 'QGIS & ArcGIS', level: 95 },
+                  { skill: 'QGIS и ArcGIS', level: 95 },
                   { skill: 'Python (PyQGIS, GeoPandas)', level: 90 },
-                  { skill: 'PostGIS & Spatial SQL', level: 85 },
-                  { skill: 'Cadastral Data Processing', level: 92 },
-                  { skill: 'Remote Sensing & Analysis', level: 80 },
-                  { skill: 'Urban Planning & Zoning', level: 88 },
+                  { skill: 'PostGIS и Spatial SQL', level: 85 },
+                  { skill: 'Обработка кадастровых данных', level: 92 },
+                  { skill: 'Дистанционное зондирование', level: 80 },
+                  { skill: 'Градостроительство и зонирование', level: 88 },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -439,15 +442,15 @@ const Portfolio = () => {
           >
             <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
               <span className="text-green-400">//</span>
-              <span>Get in Touch</span>
+              <span>Связаться со мной</span>
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
 
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-6">
                 <p className="text-gray-300 leading-relaxed">
-                  Interested in collaborating on a GIS project or need spatial analysis expertise? 
-                  Let's discuss how geospatial intelligence can drive your next development.
+                  Заинтересованы в сотрудничестве по ГИС-проекту или нужна экспертиза в области пространственного анализа? 
+                  Давайте обсудим, как геопространственные данные могут продвинуть ваш следующий проект.
                 </p>
 
                 <div className="space-y-4">
@@ -463,7 +466,7 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">Email</div>
-                      <div className="font-medium">zemlymag@gmail.com</div>
+                      <div className="font-medium">gis@example.com</div>
                     </div>
                   </motion.a>
 
@@ -479,7 +482,7 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">Telegram</div>
-                      <div className="font-medium">https://t.me/kakDelaEvgen</div>
+                      <div className="font-medium">@gis_specialist</div>
                     </div>
                   </motion.a>
                 </div>
@@ -489,7 +492,7 @@ const Portfolio = () => {
                 <div>
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder="Имя"
                     className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-green-400 transition-colors text-gray-100 placeholder-gray-500"
                   />
                 </div>
@@ -503,7 +506,7 @@ const Portfolio = () => {
                 <div>
                   <textarea
                     rows="5"
-                    placeholder="Message"
+                    placeholder="Сообщение"
                     className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-green-400 transition-colors text-gray-100 placeholder-gray-500 resize-none"
                   />
                 </div>
@@ -513,7 +516,7 @@ const Portfolio = () => {
                   type="submit"
                   className="w-full px-8 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-semibold hover:from-green-400 hover:to-cyan-400 transition-all shadow-lg shadow-green-500/30"
                 >
-                  Send Message
+                  Отправить сообщение
                 </motion.button>
               </form>
             </div>
@@ -524,7 +527,7 @@ const Portfolio = () => {
       {/* Footer */}
       <footer className="py-8 px-6 border-t border-green-500/20 bg-slate-900/50">
         <div className="max-w-6xl mx-auto text-center text-gray-500 text-sm">
-          <p>© 2026 GIS Portfolio. Spatial intelligence for modern development.</p>
+          <p>© 2026 ГИС Портфолио. Пространственный интеллект для современной застройки.</p>
         </div>
       </footer>
     </div>
