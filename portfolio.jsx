@@ -289,7 +289,7 @@ const Portfolio = () => {
               &lt;ПРОСТРАНСТВЕННЫЙ_ИНТЕЛЛЕКТ /&gt;
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight break-words leading-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">
                 Евгений Яровой
               </span>
