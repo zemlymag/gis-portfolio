@@ -25,7 +25,7 @@ const Portfolio = () => {
         p2: 'Внедряю передовые ИИ-технологии для анализа нормативно-правовой базы и автоматизации обработки кадастровых данных. Это позволяет существенно сокращать сроки подготовки заключений, минимизировать юридические риски и принимать взвешенные решения по управлению земельными активами. Специализируюсь на комплексном анализе выписок ЕГРН, оценке градостроительного потенциала территорий и подготовке аналитических отчетов.',
         resumeBtn: 'Скачать полное резюме (PDF)',
         cards: [
-          { title: 'ГИС-эксперт', desc: 'QGIS, пространственный анализ' },
+          { title: 'ГИС-эксперт', desc: 'QGIS, ArcGIS, пространственный анализ' },
           { title: 'Кадастровый инженер', desc: 'Межевание, ЕГРН, земельный кадастр' },
           { title: 'ИИ для НПА', desc: 'Автоматизация анализа законодательства' },
           { title: 'Градостроительство', desc: 'Зонирование, генпланы, ПЗЗ' }
@@ -51,8 +51,9 @@ const Portfolio = () => {
       skills: {
         title: 'Технические навыки',
         items: [
-          'QGIS',
-          'Python (GeoPandas)',
+          'QGIS и ArcGIS',
+          'Python (PyQGIS, GeoPandas)',
+          'PostGIS и Spatial SQL',
           'Обработка кадастровых данных',
           'Дистанционное зондирование',
           'Градостроительство и зонирование'
@@ -85,7 +86,7 @@ const Portfolio = () => {
         p2: 'I implement cutting-edge AI technologies for regulatory framework analysis and automation of cadastral data processing. This significantly reduces the time for preparing conclusions, minimizes legal risks, and enables informed decisions in land asset management. I specialize in comprehensive analysis of cadastral extracts, assessment of urban development potential, and preparation of analytical reports.',
         resumeBtn: 'Download Full Resume (PDF)',
         cards: [
-          { title: 'GIS Expert', desc: 'QGIS, spatial analysis' },
+          { title: 'GIS Expert', desc: 'QGIS, ArcGIS, spatial analysis' },
           { title: 'Cadastral Engineer', desc: 'Land surveying, cadastre, EGRN' },
           { title: 'AI for Legal Analysis', desc: 'Automation of regulatory analysis' },
           { title: 'Urban Planning', desc: 'Zoning, master plans, regulations' }
@@ -111,8 +112,9 @@ const Portfolio = () => {
       skills: {
         title: 'Technical Skills',
         items: [
-          'QGIS',
-          'Python (GeoPandas)',
+          'QGIS & ArcGIS',
+          'Python (PyQGIS, GeoPandas)',
+          'PostGIS & Spatial SQL',
           'Cadastral Data Processing',
           'Remote Sensing',
           'Urban Planning & Zoning'
@@ -270,6 +272,23 @@ const Portfolio = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
+            {/* Profile Photo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mb-8 flex justify-center"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full blur-xl opacity-30"></div>
+                <img 
+                  src="/profile-photo.jpg" 
+                  alt="Евгений Яровой"
+                  className="relative w-40 h-40 rounded-full object-cover border-4 border-green-400/30 shadow-2xl shadow-green-500/20"
+                />
+              </div>
+            </motion.div>
+
             <div className="text-sm font-mono text-cyan-400 mb-4 tracking-wider">
               &lt;ПРОСТРАНСТВЕННЫЙ_ИНТЕЛЛЕКТ /&gt;
             </div>
