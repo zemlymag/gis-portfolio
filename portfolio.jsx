@@ -120,7 +120,7 @@ const Portfolio = () => {
             
             <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">
-                Александр Картограф
+                Евгений Яровой
               </span>
             </h1>
             
@@ -466,7 +466,7 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">Email</div>
-                      <div className="font-medium">gis@example.com</div>
+                      <div className="font-medium">zemlymag@gmail.com</div>
                     </div>
                   </motion.a>
 
@@ -482,7 +482,7 @@ const Portfolio = () => {
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">Telegram</div>
-                      <div className="font-medium">@gis_specialist</div>
+                      <div className="font-medium">@kakDelaEvgen</div>
                     </div>
                   </motion.a>
                 </div>
