@@ -5,6 +5,8 @@ const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
   const [language, setLanguage] = useState('ru'); // 'ru' или 'en'
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [submitStatus, setSubmitStatus] = useState('');
   const { scrollY } = useScroll();
   const gridOpacity = useTransform(scrollY, [0, 300], [0.15, 0.05]);
 
@@ -152,6 +154,30 @@ const Portfolio = () => {
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (formData.name && formData.email && formData.message) {
+      // Открыть Telegram канал в новом окне
+      window.open('https://t.me/kakDelaEvgen', '_blank');
+      // Очистить форму
+      setFormData({ name: '', email: '', message: '' });
+      // Показать сообщение об успешной отправке
+      setSubmitStatus('success');
+      setTimeout(() => setSubmitStatus(''), 3000);
+    } else {
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(''), 3000);
+    }
   };
 
   return (
@@ -786,10 +812,13 @@ const Portfolio = () => {
                 </div>
               </div>
 
-              <form className="space-y-4">
+              <form onSubmit={handleFormSubmit} className="space-y-4">
                 <div>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleFormChange}
                     placeholder={t.contact.name}
                     className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-green-400 transition-colors text-gray-100 placeholder-gray-500"
                   />
@@ -797,6 +826,9 @@ const Portfolio = () => {
                 <div>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleFormChange}
                     placeholder="Email"
                     className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-cyan-400 transition-colors text-gray-100 placeholder-gray-500"
                   />
@@ -804,10 +836,23 @@ const Portfolio = () => {
                 <div>
                   <textarea
                     rows="5"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleFormChange}
                     placeholder={t.contact.message}
                     className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-green-400 transition-colors text-gray-100 placeholder-gray-500 resize-none"
                   />
                 </div>
+                {submitStatus === 'success' && (
+                  <div className="p-3 bg-green-500/20 border border-green-500 rounded-xl text-green-400 text-sm text-center">
+                    Спасибо! Открыт мой Telegram канал. Продолжим общение там!
+                  </div>
+                )}
+                {submitStatus === 'error' && (
+                  <div className="p-3 bg-red-500/20 border border-red-500 rounded-xl text-red-400 text-sm text-center">
+                    Пожалуйста, заполните все поля
+                  </div>
+                )}
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
