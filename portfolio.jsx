@@ -844,56 +844,25 @@ const Portfolio = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleFormSubmit} className="space-y-4">
-                <div>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleFormChange}
-                    placeholder={t.contact.name}
-                    className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-green-400 transition-colors text-gray-100 placeholder-gray-500"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleFormChange}
-                    placeholder="Email"
-                    className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-cyan-400 transition-colors text-gray-100 placeholder-gray-500"
-                  />
-                </div>
-                <div>
-                  <textarea
-                    rows="5"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleFormChange}
-                    placeholder={t.contact.message}
-                    className="w-full px-4 py-3 bg-slate-800/50 border border-green-500/20 rounded-xl focus:outline-none focus:border-green-400 transition-colors text-gray-100 placeholder-gray-500 resize-none"
-                  />
-                </div>
-                {submitStatus === 'success' && (
-                  <div className="p-3 bg-green-500/20 border border-green-500 rounded-xl text-green-400 text-sm text-center">
-                    Спасибо! Открыт мой Telegram канал. Продолжим общение там!
-                  </div>
-                )}
-                {submitStatus === 'error' && (
-                  <div className="p-3 bg-red-500/20 border border-red-500 rounded-xl text-red-400 text-sm text-center">
-                    Пожалуйста, заполните все поля
-                  </div>
-                )}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  className="w-full px-8 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-semibold hover:from-green-400 hover:to-cyan-400 transition-all shadow-lg shadow-green-500/30"
+              <div className="space-y-4">
+                <motion.a
+                  href="https://t.me/zemlymag"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ x: 5 }}
+                  className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 transition-colors group"
                 >
-                  {t.contact.send}
-                </motion.button>
-              </form>
+                  <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Telegram</div>
+                    <div className="font-medium">@zemlymag</div>
+                  </div>
+                </motion.a>
+              </div>
             </div>
           </motion.div>
         </div>
