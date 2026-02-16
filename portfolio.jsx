@@ -9,6 +9,7 @@ const Portfolio = () => {
   const [submitStatus, setSubmitStatus] = useState('');
   const { scrollY } = useScroll();
   const gridOpacity = useTransform(scrollY, [0, 300], [0.15, 0.05]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Переводы
   const translations = {
@@ -211,8 +212,9 @@ const Portfolio = () => {
               <span className="text-gray-100">Portfolio</span>
             </motion.div>
             
-            <div className="flex gap-8">
-              {t.nav.map((item, i) => {
+            <div className="flex items-center gap-4">
+              <div className="hidden md:flex gap-8">
+                {t.nav.map((item, i) => {
                 const sectionIds = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
                 return (
                   <motion.button
@@ -233,8 +235,22 @@ const Portfolio = () => {
                     }`} />
                   </motion.button>
                 );
-              })}
-              
+                })}
+              </div>
+
+              {/* Mobile hamburger */}
+              <div className="md:hidden">
+                <button
+                  onClick={() => setMobileMenuOpen(prev => !prev)}
+                  className="p-2 rounded-md bg-slate-800/40 hover:bg-slate-800/60"
+                  aria-label="Toggle menu"
+                >
+                  <svg className="w-6 h-6 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+              </div>
+
               {/* Language Switcher */}
               <div className="flex items-center gap-2 ml-4 border-l border-green-500/20 pl-4">
                 <motion.button
@@ -265,6 +281,22 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
+        {/* Mobile menu panel */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute inset-x-0 top-16 bg-slate-900/95 backdrop-blur-sm z-40 py-4">
+            <div className="max-w-7xl mx-auto px-6 flex flex-col gap-2">
+              {['home','about','services','projects','skills','contact'].map((id, i) => (
+                <button
+                  key={id}
+                  onClick={() => { setMobileMenuOpen(false); scrollToSection(id); }}
+                  className="text-left w-full px-4 py-3 text-gray-200 hover:text-green-400 bg-slate-900/30 rounded-md"
+                >
+                  {t.nav[i]}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -306,7 +338,7 @@ const Portfolio = () => {
                 <img 
                   src="/profile-photo.jpg" 
                   alt="Евгений Яровой"
-                  className="relative w-40 h-40 rounded-full object-cover border-4 border-green-400/30 shadow-2xl shadow-green-500/20"
+                  className="relative w-28 h-28 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-green-400/30 shadow-2xl shadow-green-500/20"
                 />
               </div>
             </motion.div>
