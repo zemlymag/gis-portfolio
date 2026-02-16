@@ -411,7 +411,7 @@ const Portfolio = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 px-6 relative">
+      <section id="about" className="py-16 sm:py-24 px-4 sm:px-6 relative">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -437,9 +437,9 @@ const Portfolio = () => {
                 <motion.a
                   href="/resume.pdf"
                   download="Яровой_Евгений_Резюме.pdf"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-semibold hover:from-green-400 hover:to-cyan-400 transition-all shadow-lg shadow-green-500/30"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center gap-3 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-lg md:rounded-xl text-sm md:text-base font-semibold hover:from-green-400 hover:to-cyan-400 transition-all shadow-lg shadow-green-500/30"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -448,7 +448,7 @@ const Portfolio = () => {
                 </motion.a>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {t.about.cards.map((item, i) => (
                   <motion.div
                     key={i}
@@ -456,8 +456,8 @@ const Portfolio = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    whileHover={{ y: -5 }}
-                    className="bg-slate-800/50 backdrop-blur-sm border border-green-500/20 rounded-2xl p-6 hover:border-cyan-400/50 transition-all"
+                    whileHover={{ y: -4 }}
+                    className="bg-slate-800/50 backdrop-blur-sm border border-green-500/20 rounded-2xl p-4 md:p-6 hover:border-cyan-400/50 transition-all"
                   >
                     <div className="text-3xl mb-3">{['🗺️', '📐', '🤖', '🏗️'][i]}</div>
                     <h3 className="text-green-400 font-semibold mb-2">{item.title}</h3>
