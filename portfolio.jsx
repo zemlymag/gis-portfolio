@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+
+const SECTION_IDS = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
+const SKILL_LEVELS = [95, 90, 92, 88];
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
   const [language, setLanguage] = useState('ru'); // 'ru' или 'en'
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [submitStatus, setSubmitStatus] = useState('');
   const { scrollY } = useScroll();
   const gridOpacity = useTransform(scrollY, [0, 300], [0.15, 0.05]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const modalCloseButtonRef = useRef(null);
+  const lastFocusedElementRef = useRef(null);
 
   // Переводы
   const translations = {
@@ -136,49 +139,66 @@ const Portfolio = () => {
   const t = translations[language];
 
   useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
+  useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const sections = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const current = SECTION_IDS.find((section) => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top <= 100 && rect.bottom >= 100;
+          }
+          return false;
+        });
+        if (current) setActiveSection(current);
+        ticking = false;
       });
-      if (current) setActiveSection(current);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (!selectedProject) return;
+    const previousOverflow = document.body.style.overflow;
+    const activeEl = document.activeElement;
+    if (activeEl instanceof HTMLElement) {
+      lastFocusedElementRef.current = activeEl;
+    }
+    document.body.style.overflow = 'hidden';
+    window.setTimeout(() => {
+      modalCloseButtonRef.current?.focus();
+    }, 0);
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setSelectedProject(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      lastFocusedElementRef.current?.focus();
+    };
+  }, [selectedProject]);
+
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
-      // Открыть Telegram канал в новом окне
-      window.open('https://t.me/kakDelaEvgen', '_blank');
-      // Очистить форму
-      setFormData({ name: '', email: '', message: '' });
-      // Показать сообщение об успешной отправке
-      setSubmitStatus('success');
-      setTimeout(() => setSubmitStatus(''), 3000);
-    } else {
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus(''), 3000);
-    }
   };
 
   return (
@@ -215,23 +235,22 @@ const Portfolio = () => {
             <div className="flex items-center gap-4">
               <div className="hidden md:flex gap-8">
                 {t.nav.map((item, i) => {
-                const sectionIds = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
                 return (
                   <motion.button
                     key={item}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    onClick={() => scrollToSection(sectionIds[i])}
+                    onClick={() => scrollToSection(SECTION_IDS[i])}
                     className={`text-sm font-medium transition-colors relative group ${
-                      activeSection === sectionIds[i]
+                      activeSection === SECTION_IDS[i]
                         ? 'text-green-400' 
                         : 'text-gray-400 hover:text-cyan-400'
                     }`}
                   >
                     {item}
                     <span className={`absolute -bottom-1 left-0 h-0.5 bg-green-400 transition-all ${
-                      activeSection === sectionIds[i] ? 'w-full' : 'w-0 group-hover:w-full'
+                      activeSection === SECTION_IDS[i] ? 'w-full' : 'w-0 group-hover:w-full'
                     }`} />
                   </motion.button>
                 );
@@ -244,6 +263,8 @@ const Portfolio = () => {
                   onClick={() => setMobileMenuOpen(prev => !prev)}
                   className="p-2 rounded-md bg-slate-800/40 hover:bg-slate-800/60"
                   aria-label="Toggle menu"
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="mobile-nav-menu"
                 >
                   <svg className="w-6 h-6 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -283,9 +304,9 @@ const Portfolio = () => {
         </div>
         {/* Mobile menu panel */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute inset-x-0 top-16 bg-slate-900/95 backdrop-blur-sm z-40 py-4">
+          <div id="mobile-nav-menu" className="md:hidden absolute inset-x-0 top-16 bg-slate-900/95 backdrop-blur-sm z-40 py-4">
             <div className="max-w-7xl mx-auto px-6 flex flex-col gap-2">
-              {['home','about','services','projects','skills','contact'].map((id, i) => (
+              {SECTION_IDS.map((id, i) => (
                 <button
                   key={id}
                   onClick={() => { setMobileMenuOpen(false); scrollToSection(id); }}
@@ -647,15 +668,16 @@ const Portfolio = () => {
                 },
                 */
               ].map((project, i) => (
-                <motion.div
+                <motion.button
                   key={i}
+                  type="button"
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.15 }}
                   whileHover={{ scale: 1.05, borderColor: 'rgba(34, 197, 94, 0.6)' }}
                   onClick={() => setSelectedProject(project)}
-                  className="bg-slate-800/50 backdrop-blur-sm border border-cyan-500/20 rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-green-500/20 transition-all group cursor-pointer"
+                  className="text-left w-full bg-slate-800/50 backdrop-blur-sm border border-cyan-500/20 rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-green-500/20 transition-all group cursor-pointer"
                 >
                   <div className="h-48 bg-gradient-to-br from-slate-700 to-slate-800 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-20">
@@ -694,7 +716,7 @@ const Portfolio = () => {
                       ))}
                     </div>
                   </div>
-                </motion.div>
+                </motion.button>
               ))}
             </div>
           </motion.div>
@@ -722,7 +744,6 @@ const Portfolio = () => {
               
               <div className="p-6 space-y-6">
                 {t.skills.items.map((skillName, i) => {
-                  const levels = [95, 90, 92, 88];
                   return (
                     <motion.div
                       key={i}
@@ -733,12 +754,12 @@ const Portfolio = () => {
                     >
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-gray-300 font-medium">{skillName}</span>
-                        <span className="text-cyan-400 font-mono text-sm">{levels[i]}%</span>
+                        <span className="text-cyan-400 font-mono text-sm">{SKILL_LEVELS[i]}%</span>
                       </div>
                       <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
-                          whileInView={{ width: `${levels[i]}%` }}
+                          whileInView={{ width: `${SKILL_LEVELS[i]}%` }}
                           viewport={{ once: true }}
                           transition={{ duration: 1, delay: i * 0.1 }}
                           className="h-full bg-gradient-to-r from-green-400 to-cyan-400 rounded-full"
@@ -878,6 +899,10 @@ const Portfolio = () => {
           className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 flex items-center justify-center p-6"
         >
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            tabIndex={-1}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -887,7 +912,7 @@ const Portfolio = () => {
             {/* Modal Header */}
             <div className="sticky top-0 bg-slate-900/95 backdrop-blur-md border-b border-green-500/20 p-6 flex justify-between items-start">
               <div>
-                <h3 className="text-3xl font-bold text-green-400 mb-2">
+                <h3 id="project-modal-title" className="text-3xl font-bold text-green-400 mb-2">
                   {selectedProject.title}
                 </h3>
                 <div className="flex gap-4 text-sm text-gray-400">
@@ -897,8 +922,10 @@ const Portfolio = () => {
                 </div>
               </div>
               <button
+                ref={modalCloseButtonRef}
                 onClick={() => setSelectedProject(null)}
                 className="text-gray-400 hover:text-red-400 transition-colors"
+                aria-label={t.projects.close}
               >
                 <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -926,6 +953,8 @@ const Portfolio = () => {
                   <img 
                     src={selectedProject.image} 
                     alt={selectedProject.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-auto rounded-xl shadow-2xl border border-green-500/20"
                   />
                 </div>
