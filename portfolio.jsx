@@ -1,20 +1,273 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { 
+  MapPin, 
+  Briefcase, 
+  Calendar, 
+  X, 
+  ExternalLink, 
+  Globe, 
+  Database, 
+  Cpu, 
+  User, 
+  Layers, 
+  Phone, 
+  Mail,
+  Map as MapIcon,
+  Rainbow,
+  Ghost
+} from 'lucide-react';
+
+/**
+ * КОМПОНЕНТ: ExperienceMapModal
+ * Интерактивная карта на базе Leaflet.js
+ */
+const ExperienceMapModal = ({ onClose, language, t }) => {
+  const [selectedPoint, setSelectedPoint] = useState(null);
+  const [leafletReady, setLeafletReady] = useState(false);
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
+  const markersRef = useRef({});
+
+  const experienceData = [
+    {
+      id: 'kazan',
+      name: 'Казань',
+      region: 'Республика Татарстан',
+      photo: '/kazan.jpg',
+      workPlace: 'Текущая локация',
+      position: 'Эксперт по землеустройству',
+      activity: 'Проживание и готовность к новым вызовам. Специализация: правовой анализ участков, ГИС-аналитика.',
+      year: '2026',
+      coords: [55.7887, 49.1221]
+    },
+    {
+      id: 'nizhnekamsk',
+      name: 'Нижнекамск',
+      region: 'Республика Татарстан',
+      photo: '/nizhnekamsk.jpg',
+      workPlace: 'СИБУР, Группа компаний',
+      position: 'Эксперт',
+      activity: 'Сопровождение строительства этиленопровода (265 км). Анализ 1000+ участков, работа в QGIS и ФГИС ЛК.',
+      year: '2023 — 2025',
+      coords: [55.6333, 51.8167]
+    },
+    {
+      id: 'tobolsk',
+      name: 'Тобольск',
+      region: 'Тюменская область',
+      photo: '/tobolsk.jpg',
+      workPlace: 'СИБУР (ЗапСибНефтехим)',
+      position: 'Главный специалист',
+      activity: 'Создание единой GIS-базы в QGIS. Анализ инвест-проектов на территории РФ.',
+      year: '2021 — 2022',
+      coords: [58.1975, 68.2544]
+    },
+    {
+      id: 'nefteyugansk',
+      name: 'Нефтеюганск / Пыть-Ях',
+      region: 'ХМАО-Югра',
+      photo: '/nefteyugansk.jpeg',
+      workPlace: 'РН-Юганскнефтегаз, ООО',
+      position: 'Ведущий специалист',
+      activity: 'Оформление земель под объекты нефтедобычи. Работа в MapInfo и Технокад.',
+      year: '2018 — 2022',
+      coords: [61.0997, 72.6031]
+    },
+    {
+      id: 'surgut',
+      name: 'Сургут',
+      region: 'ХМАО-Югра',
+      photo: '/surgut.jpg',
+      workPlace: 'ПАО Сургутнефтегаз',
+      position: 'Маркшейдер 1 категории',
+      activity: 'Кадастровое сопровождение капстроительства. Учет добычи ОПИ по 12 карьерам.',
+      year: '2012 — 2018',
+      coords: [61.25, 73.4167]
+    },
+    {
+      id: 'vyborg',
+      name: 'Выборг',
+      region: 'Ленинградская область',
+      photo: '/vyborg.jpg',
+      workPlace: 'ПО «Возрождение»',
+      position: 'Геодезист',
+      activity: 'Геодезическое сопровождение добычи минерального сырья на карьерах.',
+      year: '2018',
+      coords: [60.7092, 28.7442]
+    },
+    {
+      id: 'magadan',
+      name: 'Магадан',
+      region: 'Магаданская область',
+      photo: '/magadan.jpg',
+      workPlace: 'Мэрия города Магадана',
+      position: 'Главный специалист',
+      activity: 'Градостроительный отдел. Отвод земельных участков под строительство.',
+      year: '2012',
+      coords: [59.5667, 150.8]
+    }
+  ];
+
+  useEffect(() => {
+    if (!window.L) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      script.async = true;
+      script.onload = () => setLeafletReady(true);
+      document.head.appendChild(script);
+    } else {
+      setLeafletReady(true);
+    }
+    setSelectedPoint(experienceData[0]);
+    return () => { if (mapInstance.current) { mapInstance.current.remove(); mapInstance.current = null; } };
+  }, []);
+
+  useEffect(() => {
+    if (!leafletReady || !mapRef.current || mapInstance.current) return;
+    const L = window.L;
+    mapInstance.current = L.map(mapRef.current, { center: [62, 95], zoom: 3, zoomControl: false, attributionControl: false });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(mapInstance.current);
+    L.control.zoom({ position: 'bottomright' }).addTo(mapInstance.current);
+
+    experienceData.forEach(point => {
+      const marker = L.circleMarker(point.coords, { 
+        radius: 8, fillColor: "#10b981", color: "#fff", weight: 2, opacity: 1, fillOpacity: 0.8 
+      }).addTo(mapInstance.current);
+      marker.on('click', () => setSelectedPoint(point));
+      markersRef.current[point.id] = marker;
+    });
+  }, [leafletReady]);
+
+  useEffect(() => {
+    if (!mapInstance.current || !selectedPoint || !window.L) return;
+    mapInstance.current.flyTo(selectedPoint.coords, 6, { duration: 1.5 });
+    Object.keys(markersRef.current).forEach(key => {
+      const m = markersRef.current[key];
+      if (key === selectedPoint.id) m.setStyle({ fillColor: "#22d3ee", radius: 10 });
+      else m.setStyle({ fillColor: "#10b981", radius: 8 });
+    });
+  }, [selectedPoint]);
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] bg-slate-950 flex flex-col overflow-hidden">
+      <div className="bg-slate-900 border-b border-green-500/20 px-6 py-4 flex justify-between items-center shrink-0">
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col">
+            <span className="text-xl font-black text-white italic tracking-tighter uppercase underline decoration-green-500 underline-offset-4">ГИС.ГЕОГРАФИЯ</span>
+            <span className="text-[10px] font-bold text-green-400 uppercase tracking-[0.3em]">{language === 'ru' ? 'Карта опыта' : 'Experience Map'}</span>
+          </div>
+        </div>
+        <button onClick={onClose} className="p-2 bg-slate-800 text-slate-400 hover:text-white rounded-xl transition-all border border-slate-700">
+          <X size={24} />
+        </button>
+      </div>
+
+      <div className="flex-grow flex flex-col lg:flex-row overflow-hidden">
+        <div className="w-full lg:w-[450px] bg-slate-900 border-r border-green-500/10 overflow-y-auto flex flex-col shrink-0">
+          <div className="p-6 bg-slate-950/50 border-b border-white/5">
+             <h4 className="flex items-center gap-2 text-[10px] font-black text-green-400 uppercase tracking-widest mb-3 italic">
+               <User size={14} /> {language === 'ru' ? 'Обо мне' : 'About me'}
+             </h4>
+             <p className="text-xs text-slate-400 leading-relaxed italic">
+               {t.hero.description}
+             </p>
+          </div>
+
+          {selectedPoint && (
+            <motion.div key={selectedPoint.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col h-full">
+              <div className="relative h-56 shrink-0 overflow-hidden">
+                <img src={selectedPoint.photo} alt={selectedPoint.name} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                <div className="absolute bottom-6 left-6">
+                  <h3 className="text-2xl font-black text-white tracking-tight">{selectedPoint.name}</h3>
+                  <div className="flex items-center gap-2 text-cyan-400 text-[10px] mt-1 font-bold uppercase tracking-wider italic">
+                    <MapPin size={12} /> {selectedPoint.region}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-6 flex-grow">
+                <div className="space-y-6">
+                  <div className="flex gap-4">
+                    <div className="p-2.5 bg-green-500/10 text-green-400 rounded-xl h-fit border border-green-500/20 shadow-lg">
+                      <Briefcase size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">{language === 'ru' ? 'Место работы' : 'Workplace'}</h4>
+                      <p className="text-white font-bold text-sm leading-tight italic">{selectedPoint.workPlace}</p>
+                      <p className="text-cyan-400 text-[10px] font-bold mt-1 uppercase italic">{selectedPoint.position}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="p-2.5 bg-cyan-500/10 text-cyan-400 rounded-xl h-fit border border-cyan-500/20 shadow-lg">
+                      <MapIcon size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">{language === 'ru' ? 'Деятельность' : 'Activity'}</h4>
+                      <p className="text-slate-300 text-xs leading-relaxed italic">{selectedPoint.activity}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl h-fit border border-amber-500/20 shadow-lg">
+                      <Calendar size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">{language === 'ru' ? 'Период' : 'Period'}</h4>
+                      <p className="text-white font-bold text-sm tracking-wider italic">{selectedPoint.year}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </div>
+
+        <div className="flex-grow bg-slate-950 relative">
+          <div ref={mapRef} className="w-full h-full z-0" />
+          <div className="absolute top-6 right-6 z-10 pointer-events-none hidden md:block">
+            <div className="bg-slate-900/90 backdrop-blur-md p-4 rounded-2xl border border-green-500/20 shadow-2xl w-48">
+              <div className="flex items-center gap-2 mb-3 text-white italic">
+                <Database size={14} className="text-green-400" />
+                <span className="text-[9px] font-black uppercase tracking-widest">{language === 'ru' ? 'Слои ГИС' : 'GIS Layers'}</span>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter italic">{language === 'ru' ? 'Активный объект' : 'Active object'}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500 opacity-50 shadow-[0_0_10px_rgba(16,185,129,0.3)]"></div>
+                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter italic">{language === 'ru' ? 'Архив опыта' : 'Experience archive'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const SECTION_IDS = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
 const SKILL_LEVELS = [95, 90, 92, 88];
 
-const Portfolio = () => {
+const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
-  const [language, setLanguage] = useState('ru'); // 'ru' или 'en'
+  const [language, setLanguage] = useState('ru'); 
+  const [showExperienceMap, setShowExperienceMap] = useState(false);
   const { scrollY } = useScroll();
   const gridOpacity = useTransform(scrollY, [0, 300], [0.15, 0.05]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const modalCloseButtonRef = useRef(null);
-  const lastFocusedElementRef = useRef(null);
-
-  // Переводы
+  
   const translations = {
     ru: {
       nav: ['Главная', 'О себе', 'Услуги', 'Проекты', 'Навыки', 'Контакты'],
@@ -23,7 +276,8 @@ const Portfolio = () => {
         description: 'Ведущий эксперт по управлению земельными активами и GIS-аналитике. Объединяю компетенции кадастрового инженера и градостроительного аналитика. Активно применяю ИИ-технологии для глубокого анализа нормативно-правовой базы и автоматизации обработки геоданных, что позволяет сокращать сроки подготовки заключений и снижать риски.',
         contact: 'Связаться',
         resume: 'Скачать резюме',
-        projects: 'Посмотреть проекты'
+        projects: 'Посмотреть проекты',
+        mapCta: 'Карта опыта'
       },
       about: {
         title: 'О себе',
@@ -67,7 +321,8 @@ const Portfolio = () => {
         title: 'Связаться со мной',
         intro: 'Заинтересованы в сотрудничестве по ГИС-проекту или нужна экспертиза в области пространственного анализа? Свяжитесь со мной удобным способом — готов обсудить ваш проект и предложить профессиональные решения.',
         email: 'Email',
-        phone: 'Телефон',
+        phone: '+7 (932) 438-31-90',
+        emailAddr: 'zemlymag@gmail.com',
         telegram: 'Telegram',
         name: 'Имя',
         message: 'Сообщение',
@@ -82,7 +337,8 @@ const Portfolio = () => {
         description: 'Leading expert in land asset management and GIS analytics. I combine the competencies of a cadastral engineer and urban planning analyst. Actively applying AI technologies for in-depth analysis of regulatory framework and automation of geodata processing, which reduces the time for preparing conclusions and minimizes risks.',
         contact: 'Get in Touch',
         resume: 'Download Resume',
-        projects: 'View Projects'
+        projects: 'View Projects',
+        mapCta: 'Experience Map'
       },
       about: {
         title: 'About',
@@ -93,7 +349,7 @@ const Portfolio = () => {
           { title: 'GIS Expert', desc: 'QGIS, spatial analysis' },
           { title: 'Cadastral Engineer', desc: 'Land surveying, cadastre, EGRN' },
           { title: 'AI for Legal Analysis', desc: 'Automation of regulatory analysis' },
-          { title: 'Urban Planning', desc: 'Zoning, master plans, regulations' }
+          { title: 'Urban Planning', desc: 'Urban planning' }
         ]
       },
       services: {
@@ -126,7 +382,8 @@ const Portfolio = () => {
         title: 'Get in Touch',
         intro: 'Interested in collaborating on a GIS project or need spatial analysis expertise? Contact me in any convenient way — ready to discuss your project and offer professional solutions.',
         email: 'Email',
-        phone: 'Phone',
+        phone: '+7 (932) 438-31-90',
+        emailAddr: 'zemlymag@gmail.com',
         telegram: 'Telegram',
         name: 'Name',
         message: 'Message',
@@ -160,42 +417,17 @@ const Portfolio = () => {
         ticking = false;
       });
     };
-
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    if (!mobileMenuOpen) return;
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') setMobileMenuOpen(false);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mobileMenuOpen]);
-
-  useEffect(() => {
-    if (!selectedProject) return;
+    if (!selectedProject && !showExperienceMap) return;
     const previousOverflow = document.body.style.overflow;
-    const activeEl = document.activeElement;
-    if (activeEl instanceof HTMLElement) {
-      lastFocusedElementRef.current = activeEl;
-    }
     document.body.style.overflow = 'hidden';
-    window.setTimeout(() => {
-      modalCloseButtonRef.current?.focus();
-    }, 0);
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') setSelectedProject(null);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = previousOverflow;
-      lastFocusedElementRef.current?.focus();
-    };
-  }, [selectedProject]);
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [selectedProject, showExperienceMap]);
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -203,11 +435,7 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen bg-slate-900 text-gray-100 relative overflow-hidden">
-      {/* Animated Grid Background */}
-      <motion.div 
-        className="fixed inset-0 pointer-events-none"
-        style={{ opacity: gridOpacity }}
-      >
+      <motion.div className="fixed inset-0 pointer-events-none" style={{ opacity: gridOpacity }}>
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -218,810 +446,208 @@ const Portfolio = () => {
         </svg>
       </motion.div>
 
-      {/* Sticky Navigation */}
       <nav className="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-green-500/20">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="text-xl font-bold tracking-tight"
-            >
-              <span className="text-green-400">GIS</span>
-              <span className="text-cyan-400">_</span>
-              <span className="text-gray-100">Portfolio</span>
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-xl font-bold tracking-tight">
+              <span className="text-green-400">GIS</span><span className="text-cyan-400">_</span><span className="text-gray-100">Portfolio</span>
             </motion.div>
-            
             <div className="flex items-center gap-4">
               <div className="hidden md:flex gap-8">
-                {t.nav.map((item, i) => {
-                return (
-                  <motion.button
-                    key={item}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    onClick={() => scrollToSection(SECTION_IDS[i])}
-                    className={`text-sm font-medium transition-colors relative group ${
-                      activeSection === SECTION_IDS[i]
-                        ? 'text-green-400' 
-                        : 'text-gray-400 hover:text-cyan-400'
-                    }`}
-                  >
+                {t.nav.map((item, i) => (
+                  <motion.button key={item} onClick={() => scrollToSection(SECTION_IDS[i])} className={`text-sm font-medium transition-colors relative group ${activeSection === SECTION_IDS[i] ? 'text-green-400' : 'text-gray-400 hover:text-cyan-400'}`}>
                     {item}
-                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-green-400 transition-all ${
-                      activeSection === SECTION_IDS[i] ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`} />
+                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-green-400 transition-all ${activeSection === SECTION_IDS[i] ? 'w-full' : 'w-0 group-hover:w-full'}`} />
                   </motion.button>
-                );
-                })}
+                ))}
               </div>
-
-              {/* Mobile hamburger */}
-              <div className="md:hidden">
-                <button
-                  onClick={() => setMobileMenuOpen(prev => !prev)}
-                  className="p-2 rounded-md bg-slate-800/40 hover:bg-slate-800/60"
-                  aria-label="Toggle menu"
-                  aria-expanded={mobileMenuOpen}
-                  aria-controls="mobile-nav-menu"
-                >
-                  <svg className="w-6 h-6 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Language Switcher */}
               <div className="flex items-center gap-2 ml-4 border-l border-green-500/20 pl-4">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setLanguage('ru')}
-                  className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${
-                    language === 'ru' 
-                      ? 'bg-green-500 text-slate-900' 
-                      : 'text-gray-400 hover:text-green-400 hover:bg-green-500/10'
-                  }`}
-                >
-                  RU
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setLanguage('en')}
-                  className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${
-                    language === 'en' 
-                      ? 'bg-cyan-400 text-slate-900' 
-                      : 'text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/10'
-                  }`}
-                >
-                  EN
-                </motion.button>
+                <button onClick={() => setLanguage('ru')} className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${language === 'ru' ? 'bg-green-500 text-slate-900' : 'text-gray-400 hover:text-green-400'}`}>RU</button>
+                <button onClick={() => setLanguage('en')} className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${language === 'en' ? 'bg-cyan-400 text-slate-900' : 'text-gray-400 hover:text-cyan-400'}`}>EN</button>
               </div>
             </div>
           </div>
         </div>
-        {/* Mobile menu panel */}
-        {mobileMenuOpen && (
-          <div id="mobile-nav-menu" className="md:hidden absolute inset-x-0 top-16 bg-slate-900/95 backdrop-blur-sm z-40 py-4">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col gap-2">
-              {SECTION_IDS.map((id, i) => (
-                <button
-                  key={id}
-                  onClick={() => { setMobileMenuOpen(false); scrollToSection(id); }}
-                  className="text-left w-full px-4 py-3 text-gray-200 hover:text-green-400 bg-slate-900/30 rounded-md"
-                >
-                  {t.nav[i]}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </nav>
 
-      {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center relative px-6">
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            animate={{
-              backgroundPosition: ['0% 0%', '100% 100%'],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              repeatType: 'reverse',
-            }}
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage: `radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.3) 0%, transparent 50%),
-                               radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)`,
-              backgroundSize: '200% 200%',
-            }}
-          />
-        </div>
-
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Profile Photo */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-8 flex justify-center"
-            >
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="mb-8 flex justify-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full blur-xl opacity-30"></div>
-                <img 
-                  src="/profile-photo.jpg" 
-                  alt="Евгений Яровой"
-                  className="relative w-28 h-28 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-green-400/30 shadow-2xl shadow-green-500/20"
-                />
+                <img src="/profile-photo.jpg" alt="Евгений Яровой" className="relative w-28 h-28 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-green-400/30 shadow-2xl" />
               </div>
             </motion.div>
-
-            <div className="text-sm font-mono text-cyan-400 mb-4 tracking-wider">
-              &lt;ПРОСТРАНСТВЕННЫЙ_ИНТЕЛЛЕКТ /&gt;
-            </div>
-            
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight break-words leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">
-                Евгений Яровой
-              </span>
+            <div className="text-sm font-mono text-cyan-400 mb-4 tracking-wider">&lt;ПРОСТРАНСТВЕННЫЙ_ИНТЕЛЛЕКТ /&gt;</div>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight uppercase italic">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">Евгений Яровой</span>
             </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light">
-              {t.hero.subtitle}
-            </p>
-            
-            <p className="text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              {t.hero.description}
-            </p>
-            
+            <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light">{t.hero.subtitle}</p>
+            <p className="text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed italic">{t.hero.description}</p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection('contact')}
-                className="px-8 py-3 bg-green-500 text-slate-900 rounded-2xl font-semibold hover:bg-green-400 transition-colors shadow-lg shadow-green-500/30"
-              >
-                {t.hero.contact}
+              <motion.button onClick={() => scrollToSection('contact')} whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-green-500 text-slate-900 rounded-2xl font-semibold uppercase text-xs tracking-widest">{t.hero.contact}</motion.button>
+              <motion.button onClick={() => setShowExperienceMap(true)} whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-slate-800 border border-green-500/20 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest italic shadow-xl">
+                <MapPin size={16} className="text-cyan-400" /> {t.hero.mapCta}
               </motion.button>
-              <motion.a
-                href="/resume.pdf"
-                download="Яровой_Евгений_Резюме.pdf"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-2xl font-semibold hover:from-cyan-400 hover:to-blue-400 transition-colors shadow-lg shadow-cyan-500/30 flex items-center gap-2"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                {t.hero.resume}
-              </motion.a>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection('projects')}
-                className="px-8 py-3 border-2 border-cyan-400 text-cyan-400 rounded-2xl font-semibold hover:bg-cyan-400/10 transition-colors"
-              >
-                {t.hero.projects}
-              </motion.button>
+              <motion.a href="/resume.pdf" download whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest italic">{t.hero.resume}</motion.a>
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-green-400/50 rounded-full flex items-start justify-center p-2"
-          >
-            <motion.div className="w-1.5 h-1.5 bg-green-400 rounded-full" />
-          </motion.div>
-        </motion.div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-16 sm:py-24 px-4 sm:px-6 relative">
+      <section id="about" className="py-24 px-6 relative">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
-              <span className="text-green-400">//</span>
-              <span>{t.about.title}</span>
-            </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
-
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="space-y-6">
-                <p className="text-gray-300 leading-relaxed">
-                  {t.about.p1}
-                </p>
-                <p className="text-gray-300 leading-relaxed">
-                  {t.about.p2}
-                </p>
-                
-                <motion.a
-                  href="/resume.pdf"
-                  download="Яровой_Евгений_Резюме.pdf"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center gap-3 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-lg md:rounded-xl text-sm md:text-base font-semibold hover:from-green-400 hover:to-cyan-400 transition-all shadow-lg shadow-green-500/30"
-                >
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  {t.about.resumeBtn}
-                </motion.a>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {t.about.cards.map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    whileHover={{ y: -4 }}
-                    className="bg-slate-800/50 backdrop-blur-sm border border-green-500/20 rounded-2xl p-4 md:p-6 hover:border-cyan-400/50 transition-all"
-                  >
-                    <div className="text-3xl mb-3">{['🗺️', '📐', '🤖', '🏗️'][i]}</div>
-                    <h3 className="text-green-400 font-semibold mb-2">{item.title}</h3>
-                    <p className="text-sm text-gray-400">{item.desc}</p>
-                  </motion.div>
-                ))}
-              </div>
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3 italic"><span className="text-green-400">//</span>{t.about.title}</h2>
+          <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <p className="text-gray-300 leading-relaxed italic">{t.about.p1}</p>
+              <p className="text-gray-300 leading-relaxed italic">{t.about.p2}</p>
+              <motion.a href="/resume.pdf" download className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-bold uppercase text-xs tracking-widest italic">{t.about.resumeBtn}</motion.a>
             </div>
-          </motion.div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {t.about.cards.map((item, i) => (
+                <div key={i} className="bg-slate-800/50 border border-green-500/20 rounded-2xl p-6 italic">
+                  <div className="text-3xl mb-3">{['🗺️', '📐', '🤖', '🏗️'][i]}</div>
+                  <h3 className="text-green-400 font-bold mb-2 uppercase tracking-tighter">{item.title}</h3>
+                  <p className="text-xs text-gray-400">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Services Section */}
       <section id="services" className="py-24 px-6 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
-              <span className="text-cyan-400">//</span>
-              <span>{t.services.title}</span>
-            </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {t.services.items.map((service, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ scale: 1.03, borderColor: 'rgba(249, 115, 22, 0.5)' }}
-                  className="bg-slate-800/50 backdrop-blur-sm border-2 border-green-500/20 rounded-2xl p-8 hover:shadow-xl hover:shadow-orange-500/10 transition-all cursor-pointer group"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center group-hover:from-orange-500/20 group-hover:to-orange-500/30 transition-colors">
-                      <div className="w-6 h-6 border-2 border-green-400 rounded group-hover:border-orange-400 transition-colors" />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3 text-gray-100 group-hover:text-green-400 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    {service.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3 italic"><span className="text-cyan-400">//</span>{t.services.title}</h2>
+          <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {t.services.items.map((service, i) => (
+              <div key={i} className="bg-slate-800/50 border-2 border-green-500/20 rounded-2xl p-8 hover:border-green-400 transition-all cursor-default group italic">
+                <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform italic"><Globe size={24} className="text-green-400" /></div>
+                <h3 className="text-xl font-bold mb-3 uppercase tracking-tighter">{service.title}</h3>
+                <p className="text-gray-400 text-sm italic">{service.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Projects Section */}
       <section id="projects" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
-              <span className="text-green-400">//</span>
-              <span>{t.projects.title}</span>
-            </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
-
-            <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto">
-              {[
-                {
-                  title: 'Создание гипсометрической карты Татарстана',
-                  desc: 'Работа с рельефом и верификация данных в QGIS. Физико-административная карта Республики Татарстан с визуализацией рельефа и административной сеткой.',
-                  tags: ['QGIS', 'DEM', 'Картография'],
-                  fullDescription: `
-                    Завершил работу над физико-административной картой Республики Татарстан. Основной задачей было совместить наглядную визуализацию рельефа с точной административной сеткой, сохранив при этом высокую читаемость карты.
-                    
-                    Краткий разбор воркфлоу и источников данных, которые легли в основу проекта.
-                    
-                    1️⃣ Сбор и подготовка данных
-                    
-                    Качество карты напрямую зависит от исходников. В этом проекте я использовал гибридный подход к сбору данных:
-                    
-                    • Административное деление и населенные пункты: За основу взял данные Фонда пространственных данных РТ (портал fpd-tatar.nextgis.com). Это позволило получить наиболее актуальную и точную информацию по границам районов и локации городов, что выгодно отличает карту от версий на базе только глобальных данных.
-                    
-                    • Природные объекты: Границы лесных массивов, гидрографию (реки и водохранилища) выгружал и обрабатывал через OpenStreetMap (OSM). Данные прошли постобработку и генерализацию контуров для корректного отображения в выбранном масштабе.
-                    
-                    2️⃣ Работа с рельефом (DEM и визуализация)
-                    
-                    Для создания «объема» использовал классическую связку в QGIS:
-                    
-                    • Гипсометрия: Наложил цветовую шкалу (Color Ramp) от темно-зеленого для низин к коричневому для возвышенностей.
-                    
-                    • Отмывка (Hillshade): Сгенерировал теневой рельеф на основе DEM. Использовал режим смешивания «Умножение» (Multiply), чтобы сохранить насыщенность цветов и подчеркнуть пластику ландшафта.
-                    
-                    3️⃣ Картографический дизайн
-                    
-                    • Дорожная сеть: Иерархия дорог настроена через Symbol Levels (уровни знака), чтобы избежать визуальных разрывов на перекрестках.
-                    
-                    • Условные знаки: Разработал кастомную легенду для классификации населенных пунктов по численности.
-                    
-                    • Оформление: Применил буферизацию (Halo) для текстовых меток для повышения контраста.
-                    
-                    P.S. есть еще куда стремиться ↗️
-                  `,
-                  client: 'Личный проект',
-                  year: '2024',
-                  link: '#',
-                  image: '/project-map-rt.png'
-                },
-                // Закомментированные проекты - можно раскомментировать позже
-                /*
-                {
-                  title: 'Анализ регионального генплана',
-                  desc: 'Комплексная ГИС-оценка 50+ участков для многофункциональной застройки на соответствие местным правилам зонирования.',
-                  tags: ['QGIS', 'Зонирование', 'Python'],
-                  fullDescription: `
-                    Проведен полный геопространственный анализ территории площадью более 150 га для проекта многофункциональной застройки.
-                    
-                    Задачи проекта:
-                    • Анализ соответствия 50+ земельных участков правилам зонирования
-                    • Проверка ограничений по санитарно-защитным зонам
-                    • Оценка транспортной доступности
-                    • Анализ обеспеченности инженерной инфраструктурой
-                    
-                    Результаты:
-                    • Создана интерактивная карта с зонами ограничений
-                    • Подготовлен отчет с рекомендациями по 15 приоритетным участкам
-                    • Сэкономлено 3 месяца на предпроектных исследованиях
-                    
-                    Технологии: QGIS 3.28, Python (GeoPandas, Shapely)
-                  `,
-                  client: 'Девелоперская компания',
-                  year: '2024',
-                  link: '#'
-                },
-                {
-                  title: 'Автоматизация кадастровой БД',
-                  desc: 'Автоматизированный конвейер для обработки файлов ЕГРН XML, извлечения геометрии участков и данных о правообладателях в масштабе.',
-                  tags: ['Python', 'XML', 'База данных'],
-                  fullDescription: `
-                    Разработана система автоматической обработки выписок из ЕГРН для земельного банка компании.
-                    
-                    Задачи проекта:
-                    • Автоматический парсинг XML-файлов ЕГРН
-                    • Извлечение координат границ участков
-                    • Структурирование данных о правообладателях
-                    • Интеграция с корпоративной ГИС
-                    
-                    Результаты:
-                    • Обработка 500+ выписок ЕГРН в день (было: 10-15 вручную)
-                    • Сокращение времени обработки с 30 минут до 2 секунд на файл
-                    • База данных 5000+ участков с актуальной информацией
-                    • Снижение ошибок ввода данных до нуля
-                    
-                    Технологии: Python, lxml, PostgreSQL, QGIS API
-                  `,
-                  client: 'Земельная компания',
-                  year: '2023',
-                  link: '#'
-                },
-                {
-                  title: 'Картирование городских островов тепла',
-                  desc: 'Мультивременной анализ спутниковых снимков для выявления зон уязвимости к перегреву для градостроительных интервенций.',
-                  tags: ['ДЗЗ', 'QGIS', 'Анализ'],
-                  fullDescription: `
-                    Исследование температурных аномалий в городской среде для разработки стратегии адаптации к изменению климата.
-                    
-                    Задачи проекта:
-                    • Анализ тепловых снимков Landsat 8 за 5 лет
-                    • Выявление устойчивых островов тепла
-                    • Корреляция с плотностью застройки и озеленением
-                    • Разработка рекомендаций по снижению температуры
-                    
-                    Результаты:
-                    • Идентифицировано 12 критических зон перегрева
-                    • Установлена связь с плотностью застройки (R² = 0.87)
-                    • Предложены зоны приоритетного озеленения
-                    • Подготовлены рекомендации для генплана города
-                    
-                    Технологии: QGIS, GDAL, Python (rasterio, numpy), Landsat 8
-                  `,
-                  client: 'Администрация города',
-                  year: '2024',
-                  link: '#'
-                },
-                */
-              ].map((project, i) => (
-                <motion.button
-                  key={i}
-                  type="button"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 }}
-                  whileHover={{ scale: 1.05, borderColor: 'rgba(34, 197, 94, 0.6)' }}
-                  onClick={() => setSelectedProject(project)}
-                  className="text-left w-full bg-slate-800/50 backdrop-blur-sm border border-cyan-500/20 rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-green-500/20 transition-all group cursor-pointer"
-                >
-                  <div className="h-48 bg-gradient-to-br from-slate-700 to-slate-800 relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-20">
-                      <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                          <pattern id={`proj-grid-${i}`} width="20" height="20" patternUnits="userSpaceOnUse">
-                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(34, 197, 94, 0.3)" strokeWidth="0.5"/>
-                          </pattern>
-                        </defs>
-                        <rect width="100%" height="100%" fill={`url(#proj-grid-${i})`} />
-                      </svg>
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <motion.div
-                        whileHover={{ rotate: 180 }}
-                        transition={{ duration: 0.6 }}
-                        className="w-20 h-20 border-4 border-green-400/30 border-t-green-400 rounded-full"
-                      />
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-3 group-hover:text-green-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                      {project.desc}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, j) => (
-                        <span
-                          key={j}
-                          className="px-3 py-1 bg-green-500/10 text-green-400 text-xs rounded-full border border-green-500/30"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3 italic"><span className="text-green-400">//</span>{t.projects.title}</h2>
+          <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
+          <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto">
+            {[
+              {
+                title: 'Создание гипсометрической карты Татарстана',
+                desc: 'Физико-административная карта Республики Татарстан с визуализацией рельефа и административной сеткой.',
+                tags: ['QGIS', 'DEM', 'Картография'],
+                fullDescription: 'Завершил работу над физико-административной картой Республики Татарстан. Основной задачей было совместить визуализацию рельефа с административной сеткой.\n\n1️⃣ Сбор данных: fpd-tatar.nextgis.com (районы) + OSM (гидрография/леса).\n2️⃣ Рельеф: Color Ramp + Hillshade (DEM).\n3️⃣ Дизайн: Symbol Levels для дорог, Halo для меток.',
+                client: 'Личный проект', year: '2024', image: '/project-map-rt.png'
+              }
+            ].map((proj, i) => (
+              <button key={i} onClick={() => setSelectedProject(proj)} className="text-left bg-slate-800/50 border border-cyan-500/20 rounded-[2rem] overflow-hidden hover:border-green-400 transition-all group flex flex-col italic text-white">
+                <div className="h-48 bg-slate-700 relative flex items-center justify-center overflow-hidden">
+                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+                   <MapIcon size={64} className="text-green-400/50 group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold mb-3 uppercase tracking-tighter group-hover:text-green-400 transition-colors">{proj.title}</h3>
+                  <p className="text-gray-400 text-sm mb-6">{proj.desc}</p>
+                  <div className="flex gap-2">{proj.tags.map(t => <span key={t} className="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] rounded-full border border-green-500/20 uppercase font-black">{t}</span>)}</div>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Skills Section */}
       <section id="skills" className="py-24 px-6 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
-              <span className="text-cyan-400">//</span>
-              <span>{t.skills.title}</span>
-            </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
-
-            <div className="bg-slate-800/50 backdrop-blur-sm border border-green-500/20 rounded-2xl overflow-hidden">
-              <div className="bg-slate-900/50 px-6 py-4 border-b border-green-500/20 font-mono text-sm text-green-400">
-                attribute_table.shp
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3 italic"><span className="text-cyan-400">//</span>{t.skills.title}</h2>
+          <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
+          <div className="bg-slate-800 border border-green-500/20 rounded-3xl p-8 italic">
+            {t.skills.items.map((skill, i) => (
+              <div key={i} className="mb-6 last:mb-0">
+                <div className="flex justify-between mb-2 uppercase text-[10px] font-black tracking-widest italic"><span>{skill}</span><span className="text-cyan-400">{SKILL_LEVELS[i]}%</span></div>
+                <div className="h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                  <motion.div initial={{ width: 0 }} whileInView={{ width: `${SKILL_LEVELS[i]}%` }} transition={{ duration: 1 }} className="h-full bg-gradient-to-r from-green-500 to-cyan-400" />
+                </div>
               </div>
-              
-              <div className="p-6 space-y-6">
-                {t.skills.items.map((skillName, i) => {
-                  return (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -30 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1 }}
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-gray-300 font-medium">{skillName}</span>
-                        <span className="text-cyan-400 font-mono text-sm">{SKILL_LEVELS[i]}%</span>
-                      </div>
-                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${SKILL_LEVELS[i]}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: i * 0.1 }}
-                          className="h-full bg-gradient-to-r from-green-400 to-cyan-400 rounded-full"
-                        />
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-24 px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-4 flex items-center gap-3">
-              <span className="text-green-400">//</span>
-              <span>{t.contact.title}</span>
-            </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
-
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="space-y-6">
-                <p className="text-gray-300 leading-relaxed">
-                  {t.contact.intro}
-                </p>
-
-                <div className="space-y-4">
-                  <motion.a
-                    href="mailto:zemlymag@gmail.com"
-                    whileHover={{ x: 5 }}
-                    className="flex items-center gap-4 text-gray-300 hover:text-green-400 transition-colors group"
-                  >
-                    <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500">{t.contact.email}</div>
-                      <div className="font-medium">zemlymag@gmail.com</div>
-                    </div>
-                  </motion.a>
-
-                  <motion.a
-                    href="tel:+79324383190"
-                    whileHover={{ x: 5 }}
-                    className="flex items-center gap-4 text-gray-300 hover:text-green-400 transition-colors group"
-                  >
-                    <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500">{t.contact.phone}</div>
-                      <div className="font-medium">+7 932 438-31-90</div>
-                    </div>
-                  </motion.a>
-
-                  <motion.a
-                    href="https://t.me/kakDelaEvgen"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ x: 5 }}
-                    className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 transition-colors group"
-                  >
-                    <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors">
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500">{t.contact.telegram}</div>
-                      <div className="font-medium">Мой GIS путь</div>
-                    </div>
-                  </motion.a>
-
-                  <motion.a
-                    href="https://www.linkedin.com/in/%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9-%D1%8F%D1%80%D0%BE%D0%B2%D0%BE%D0%B9-28365645/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ x: 5 }}
-                    className="flex items-center gap-4 text-gray-300 hover:text-blue-400 transition-colors group"
-                  >
-                    <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                      <svg className="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6C1.1 6 0 4.88 0 3.5C0 2.12 1.12 1 2.5 1C3.88 1 4.98 2.12 4.98 3.5ZM0.22 8.98H4.74V24H0.22V8.98ZM8.98 8.98H13.18V11.02H13.26C13.98 9.56 15.98 8.98 18.26 8.98C23.02 8.98 24 11.96 24 16.34V24H19.48V17.58C19.48 15.62 19.44 12.98 16.66 12.98C13.86 12.98 13.46 15.28 13.46 17.38V24H8.94V8.98H8.98Z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500">LinkedIn</div>
-                      <div className="font-medium">Евгений Яровой</div>
-                    </div>
-                  </motion.a>
-                </div>
-              </div>
-
+      <section id="contact" className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-4xl mx-auto text-center italic">
+          <h2 className="text-4xl font-bold mb-12 uppercase italic">{t.contact.title}</h2>
+          <div className="grid md:grid-cols-2 gap-12 text-left text-white">
+            <div className="space-y-8">
+              <p className="text-gray-400 leading-relaxed italic">{t.contact.intro}</p>
               <div className="space-y-4">
-                <motion.a
-                  href="https://t.me/zemlymag"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ x: 5 }}
-                  className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 transition-colors group"
-                >
-                  <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500">Telegram</div>
-                    <div className="font-medium">@zemlymag</div>
-                  </div>
-                </motion.a>
+                <a href={`tel:${t.contact.phone.replace(/\s+/g, '')}`} className="flex items-center gap-4 text-gray-300 hover:text-green-400 italic font-bold">
+                  <Phone size={20}/>{t.contact.phone}
+                </a>
+                <a href={`mailto:${t.contact.emailAddr}`} className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 italic font-bold">
+                  <Mail size={20}/>{t.contact.emailAddr}
+                </a>
+                <a href="https://t.me/kakDelaEvgen" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 italic font-bold">
+                  <Ghost size={20}/>Telegram
+                </a>
               </div>
             </div>
-          </motion.div>
+            <div className="bg-slate-800/50 p-8 rounded-3xl border border-white/5 flex flex-col justify-center">
+               <Rainbow className="text-green-400 mb-6" size={32} />
+               <p className="text-sm text-gray-400 italic font-medium leading-relaxed">
+                 Готов к реализации сложных ГИС-проектов, анализу градостроительного потенциала и автоматизации процессов землепользования.
+               </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Project Modal */}
-      {selectedProject && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setSelectedProject(null)}
-          className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 flex items-center justify-center p-6"
-        >
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="project-modal-title"
-            tabIndex={-1}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-slate-800 border-2 border-green-500/30 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-          >
-            {/* Modal Header */}
-            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-md border-b border-green-500/20 p-6 flex justify-between items-start">
-              <div>
-                <h3 id="project-modal-title" className="text-3xl font-bold text-green-400 mb-2">
-                  {selectedProject.title}
-                </h3>
-                <div className="flex gap-4 text-sm text-gray-400">
-                  <span>{t.projects.client}: {selectedProject.client}</span>
-                  <span>•</span>
-                  <span>{t.projects.year}: {selectedProject.year}</span>
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedProject(null)} className="fixed inset-0 bg-slate-950/95 backdrop-blur-sm z-[110] p-6 flex items-center justify-center">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-slate-900 border border-green-500/20 rounded-[3rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto italic">
+              <div className="p-12">
+                <div className="flex justify-between items-start mb-10 text-white">
+                  <h3 className="text-3xl font-black uppercase text-green-400 italic tracking-tighter">{selectedProject.title}</h3>
+                  <button onClick={() => setSelectedProject(null)} className="text-slate-500 hover:text-red-400"><X size={32}/></button>
                 </div>
-              </div>
-              <button
-                ref={modalCloseButtonRef}
-                onClick={() => setSelectedProject(null)}
-                className="text-gray-400 hover:text-red-400 transition-colors"
-                aria-label={t.projects.close}
-              >
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Modal Content */}
-            <div className="p-8">
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {selectedProject.tags.map((tag, j) => (
-                  <span
-                    key={j}
-                    className="px-4 py-2 bg-green-500/10 text-green-400 text-sm rounded-full border border-green-500/30"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Project Image Placeholder */}
-              {selectedProject.image ? (
-                <div className="mb-6">
-                  <img 
-                    src={selectedProject.image} 
-                    alt={selectedProject.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-auto rounded-xl shadow-2xl border border-green-500/20"
-                  />
-                </div>
-              ) : (
-                <div className="h-64 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl mb-6 relative overflow-hidden">
-                  <div className="absolute inset-0 opacity-20">
-                    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                        <pattern id="modal-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-                          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(34, 197, 94, 0.4)" strokeWidth="0.5"/>
-                        </pattern>
-                      </defs>
-                      <rect width="100%" height="100%" fill="url(#modal-grid)" />
-                    </svg>
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-6xl mb-2">🗺️</div>
-                      <div className="text-gray-400 text-sm">Место для изображения проекта</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Description */}
-              <div className="prose prose-invert max-w-none">
-                <div className="text-gray-300 leading-relaxed whitespace-pre-line">
+                <div className="prose prose-invert max-w-none text-gray-400 italic whitespace-pre-line leading-relaxed mb-10 border-l-2 border-green-500/30 pl-8 font-medium">
                   {selectedProject.fullDescription}
                 </div>
+                <button onClick={() => setSelectedProject(null)} className="px-10 py-4 bg-green-500 text-slate-900 rounded-2xl font-black uppercase text-xs tracking-widest italic">{t.projects.close}</button>
               </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-4 mt-8">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setSelectedProject(null)}
-                  className="px-8 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-semibold hover:from-green-400 hover:to-cyan-400 transition-all shadow-lg shadow-green-500/30"
-                >
-                  {t.projects.close}
-                </motion.button>
-                {selectedProject.link && selectedProject.link !== '#' && (
-                  <motion.a
-                    href={selectedProject.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-3 border-2 border-cyan-400 text-cyan-400 rounded-xl font-semibold hover:bg-cyan-400/10 transition-colors"
-                  >
-                    {t.projects.open} →
-                  </motion.a>
-                )}
-              </div>
-            </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 border-t border-green-500/20 bg-slate-900/50">
-        <div className="max-w-6xl mx-auto text-center text-gray-500 text-sm">
-          <p>© 2026 {t.footer}</p>
-        </div>
+      <AnimatePresence>
+        {showExperienceMap && <ExperienceMapModal onClose={() => setShowExperienceMap(false)} language={language} t={t} />}
+      </AnimatePresence>
+
+      <footer className="py-12 px-6 border-t border-green-500/10 bg-slate-950 text-center uppercase text-[8px] font-black tracking-[0.5em] italic text-gray-700">
+        © 2026 {t.footer}
       </footer>
+
+      <style>{`
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+        html { scroll-behavior: smooth; }
+        .leaflet-container { background: #020617 !important; outline: 0; }
+        .leaflet-marker-icon { transition: all 0.3s ease; }
+      `}</style>
     </div>
   );
 };
 
-export default Portfolio;
+export default App;
