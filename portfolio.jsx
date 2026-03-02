@@ -5,12 +5,9 @@ import {
   Briefcase, 
   Calendar, 
   X, 
-  ExternalLink, 
   Globe, 
   Database, 
-  Cpu, 
   User, 
-  Layers, 
   Phone, 
   Mail,
   Map as MapIcon,
@@ -159,7 +156,7 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
       <div className="bg-slate-900 border-b border-green-500/20 px-6 py-4 flex justify-between items-center shrink-0">
         <div className="flex items-center gap-4">
           <div className="flex flex-col">
-            <span className="text-xl font-black text-white italic tracking-tighter uppercase underline decoration-green-500 underline-offset-4">ГИС.ГЕОГРАФИЯ</span>
+            <span className="text-xl font-black text-white tracking-tighter uppercase underline decoration-green-500 underline-offset-4">ГИС.ГЕОГРАФИЯ</span>
             <span className="text-[10px] font-bold text-green-400 uppercase tracking-[0.3em]">{language === 'ru' ? 'Карта опыта' : 'Experience Map'}</span>
           </div>
         </div>
@@ -171,10 +168,10 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
       <div className="flex-grow flex flex-col lg:flex-row overflow-hidden">
         <div className="w-full lg:w-[450px] bg-slate-900 border-r border-green-500/10 overflow-y-auto flex flex-col shrink-0">
           <div className="p-6 bg-slate-950/50 border-b border-white/5">
-             <h4 className="flex items-center gap-2 text-[10px] font-black text-green-400 uppercase tracking-widest mb-3 italic">
+             <h4 className="flex items-center gap-2 text-[10px] font-black text-green-400 uppercase tracking-widest mb-3">
                <User size={14} /> {language === 'ru' ? 'Обо мне' : 'About me'}
              </h4>
-             <p className="text-xs text-slate-400 leading-relaxed italic">
+             <p className="text-xs text-slate-400 leading-relaxed">
                {t.hero.description}
              </p>
           </div>
@@ -186,7 +183,7 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                 <div className="absolute bottom-6 left-6">
                   <h3 className="text-2xl font-black text-white tracking-tight">{selectedPoint.name}</h3>
-                  <div className="flex items-center gap-2 text-cyan-400 text-[10px] mt-1 font-bold uppercase tracking-wider italic">
+                  <div className="flex items-center gap-2 text-cyan-400 text-[10px] mt-1 font-bold uppercase tracking-wider">
                     <MapPin size={12} /> {selectedPoint.region}
                   </div>
                 </div>
@@ -200,8 +197,8 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
                     </div>
                     <div>
                       <h4 className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">{language === 'ru' ? 'Место работы' : 'Workplace'}</h4>
-                      <p className="text-white font-bold text-sm leading-tight italic">{selectedPoint.workPlace}</p>
-                      <p className="text-cyan-400 text-[10px] font-bold mt-1 uppercase italic">{selectedPoint.position}</p>
+                      <p className="text-white font-bold text-sm leading-tight">{selectedPoint.workPlace}</p>
+                      <p className="text-cyan-400 text-[10px] font-bold mt-1 uppercase">{selectedPoint.position}</p>
                     </div>
                   </div>
 
@@ -211,7 +208,7 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
                     </div>
                     <div>
                       <h4 className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">{language === 'ru' ? 'Деятельность' : 'Activity'}</h4>
-                      <p className="text-slate-300 text-xs leading-relaxed italic">{selectedPoint.activity}</p>
+                      <p className="text-slate-300 text-xs leading-relaxed">{selectedPoint.activity}</p>
                     </div>
                   </div>
 
@@ -221,7 +218,7 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
                     </div>
                     <div>
                       <h4 className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">{language === 'ru' ? 'Период' : 'Period'}</h4>
-                      <p className="text-white font-bold text-sm tracking-wider italic">{selectedPoint.year}</p>
+                      <p className="text-white font-bold text-sm tracking-wider">{selectedPoint.year}</p>
                     </div>
                   </div>
                 </div>
@@ -234,18 +231,18 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
           <div ref={mapRef} className="w-full h-full z-0" />
           <div className="absolute top-6 right-6 z-10 pointer-events-none hidden md:block">
             <div className="bg-slate-900/90 backdrop-blur-md p-4 rounded-2xl border border-green-500/20 shadow-2xl w-48">
-              <div className="flex items-center gap-2 mb-3 text-white italic">
+              <div className="flex items-center gap-2 mb-3 text-white">
                 <Database size={14} className="text-green-400" />
                 <span className="text-[9px] font-black uppercase tracking-widest">{language === 'ru' ? 'Слои ГИС' : 'GIS Layers'}</span>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
                   <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
-                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter italic">{language === 'ru' ? 'Активный объект' : 'Active object'}</span>
+                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">{language === 'ru' ? 'Активный объект' : 'Active object'}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2.5 h-2.5 rounded-full bg-green-500 opacity-50 shadow-[0_0_10px_rgba(16,185,129,0.3)]"></div>
-                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter italic">{language === 'ru' ? 'Архив опыта' : 'Experience archive'}</span>
+                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">{language === 'ru' ? 'Архив опыта' : 'Experience archive'}</span>
                 </div>
               </div>
             </div>
@@ -266,7 +263,6 @@ const App = () => {
   const [showExperienceMap, setShowExperienceMap] = useState(false);
   const { scrollY } = useScroll();
   const gridOpacity = useTransform(scrollY, [0, 300], [0.15, 0.05]);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const translations = {
     ru: {
@@ -320,6 +316,7 @@ const App = () => {
       contact: {
         title: 'Связаться со мной',
         intro: 'Заинтересованы в сотрудничестве по ГИС-проекту или нужна экспертиза в области пространственного анализа? Свяжитесь со мной удобным способом — готов обсудить ваш проект и предложить профессиональные решения.',
+        summary: 'Готов к реализации сложных ГИС-проектов, анализу градостроительного потенциала и автоматизации процессов землепользования.',
         email: 'Email',
         phone: '+7 (932) 438-31-90',
         emailAddr: 'zemlymag@gmail.com',
@@ -381,6 +378,7 @@ const App = () => {
       contact: {
         title: 'Get in Touch',
         intro: 'Interested in collaborating on a GIS project or need spatial analysis expertise? Contact me in any convenient way — ready to discuss your project and offer professional solutions.',
+        summary: 'Ready to deliver complex GIS projects, assess urban development potential, and automate land-use workflows.',
         email: 'Email',
         phone: '+7 (932) 438-31-90',
         emailAddr: 'zemlymag@gmail.com',
@@ -480,17 +478,17 @@ const App = () => {
               </div>
             </motion.div>
             <div className="text-sm font-mono text-cyan-400 mb-4 tracking-wider">&lt;ПРОСТРАНСТВЕННЫЙ_ИНТЕЛЛЕКТ /&gt;</div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight uppercase italic">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight uppercase">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">Евгений Яровой</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-6 font-light">{t.hero.subtitle}</p>
-            <p className="text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed italic">{t.hero.description}</p>
+            <p className="text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">{t.hero.description}</p>
             <div className="flex gap-4 justify-center flex-wrap">
               <motion.button onClick={() => scrollToSection('contact')} whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-green-500 text-slate-900 rounded-2xl font-semibold uppercase text-xs tracking-widest">{t.hero.contact}</motion.button>
-              <motion.button onClick={() => setShowExperienceMap(true)} whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-slate-800 border border-green-500/20 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest italic shadow-xl">
+              <motion.button onClick={() => setShowExperienceMap(true)} whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-slate-800 border border-green-500/20 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest shadow-xl">
                 <MapPin size={16} className="text-cyan-400" /> {t.hero.mapCta}
               </motion.button>
-              <motion.a href="/resume.pdf" download whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest italic">{t.hero.resume}</motion.a>
+              <motion.a href="/resume.pdf" download whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest">{t.hero.resume}</motion.a>
             </div>
           </motion.div>
         </div>
@@ -498,17 +496,17 @@ const App = () => {
 
       <section id="about" className="py-24 px-6 relative">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3 italic"><span className="text-green-400">//</span>{t.about.title}</h2>
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-green-400">//</span>{t.about.title}</h2>
           <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-6">
-              <p className="text-gray-300 leading-relaxed italic">{t.about.p1}</p>
-              <p className="text-gray-300 leading-relaxed italic">{t.about.p2}</p>
-              <motion.a href="/resume.pdf" download className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-bold uppercase text-xs tracking-widest italic">{t.about.resumeBtn}</motion.a>
+              <p className="text-gray-300 leading-relaxed">{t.about.p1}</p>
+              <p className="text-gray-300 leading-relaxed">{t.about.p2}</p>
+              <motion.a href="/resume.pdf" download className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-500 to-cyan-500 text-slate-900 rounded-xl font-bold uppercase text-xs tracking-widest">{t.about.resumeBtn}</motion.a>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {t.about.cards.map((item, i) => (
-                <div key={i} className="bg-slate-800/50 border border-green-500/20 rounded-2xl p-6 italic">
+                <div key={i} className="bg-slate-800/50 border border-green-500/20 rounded-2xl p-6">
                   <div className="text-3xl mb-3">{['🗺️', '📐', '🤖', '🏗️'][i]}</div>
                   <h3 className="text-green-400 font-bold mb-2 uppercase tracking-tighter">{item.title}</h3>
                   <p className="text-xs text-gray-400">{item.desc}</p>
@@ -521,14 +519,14 @@ const App = () => {
 
       <section id="services" className="py-24 px-6 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3 italic"><span className="text-cyan-400">//</span>{t.services.title}</h2>
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-cyan-400">//</span>{t.services.title}</h2>
           <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {t.services.items.map((service, i) => (
-              <div key={i} className="bg-slate-800/50 border-2 border-green-500/20 rounded-2xl p-8 hover:border-green-400 transition-all cursor-default group italic">
-                <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform italic"><Globe size={24} className="text-green-400" /></div>
+              <div key={i} className="bg-slate-800/50 border-2 border-green-500/20 rounded-2xl p-8 hover:border-green-400 transition-all cursor-default group">
+                <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform"><Globe size={24} className="text-green-400" /></div>
                 <h3 className="text-xl font-bold mb-3 uppercase tracking-tighter">{service.title}</h3>
-                <p className="text-gray-400 text-sm italic">{service.desc}</p>
+                <p className="text-gray-400 text-sm">{service.desc}</p>
               </div>
             ))}
           </div>
@@ -537,7 +535,7 @@ const App = () => {
 
       <section id="projects" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3 italic"><span className="text-green-400">//</span>{t.projects.title}</h2>
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-green-400">//</span>{t.projects.title}</h2>
           <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
           <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto">
             {[
@@ -545,14 +543,44 @@ const App = () => {
                 title: 'Создание гипсометрической карты Татарстана',
                 desc: 'Физико-административная карта Республики Татарстан с визуализацией рельефа и административной сеткой.',
                 tags: ['QGIS', 'DEM', 'Картография'],
-                fullDescription: 'Завершил работу над физико-административной картой Республики Татарстан. Основной задачей было совместить визуализацию рельефа с административной сеткой.\n\n1️⃣ Сбор данных: fpd-tatar.nextgis.com (районы) + OSM (гидрография/леса).\n2️⃣ Рельеф: Color Ramp + Hillshade (DEM).\n3️⃣ Дизайн: Symbol Levels для дорог, Halo для меток.',
+                details: {
+                  intro: 'Завершил работу над физико-административной картой Республики Татарстан. Основной задачей было совместить наглядную визуализацию рельефа с точной административной сеткой, сохранив при этом высокую читаемость карты.',
+                  workflow: 'Краткий разбор воркфлоу и источников данных, которые легли в основу проекта.',
+                  sections: [
+                    {
+                      title: '1. Сбор и подготовка данных',
+                      text: 'Качество карты напрямую зависит от исходников. В этом проекте я использовал гибридный подход к сбору данных:',
+                      bullets: [
+                        'Административное деление и населенные пункты: за основу взял данные Фонда пространственных данных РТ (портал fpd-tatar.nextgis.com). Это позволило получить наиболее актуальную и точную информацию по границам районов и локации городов, что выгодно отличает карту от версий на базе только глобальных данных.',
+                        'Природные объекты: границы лесных массивов, гидрографию (реки и водохранилища) выгружал и обрабатывал через OpenStreetMap (OSM). Данные прошли постобработку и генерализацию контуров для корректного отображения в выбранном масштабе.'
+                      ]
+                    },
+                    {
+                      title: '2. Работа с рельефом (DEM и визуализация)',
+                      text: 'Для создания объема использовал классическую связку в QGIS:',
+                      bullets: [
+                        'Гипсометрия: наложил цветовую шкалу (Color Ramp) от темно-зеленого для низин к коричневому для возвышенностей.',
+                        'Отмывка (Hillshade): сгенерировал теневой рельеф на основе DEM. Использовал режим смешивания Multiply, чтобы сохранить насыщенность цветов и подчеркнуть пластику ландшафта.'
+                      ]
+                    },
+                    {
+                      title: '3. Картографический дизайн',
+                      bullets: [
+                        'Дорожная сеть: иерархия дорог настроена через Symbol Levels (уровни знака), чтобы избежать визуальных разрывов на перекрестках.',
+                        'Условные знаки: разработал кастомную легенду для классификации населенных пунктов по численности.',
+                        'Оформление: применил буферизацию (Halo) для текстовых меток для повышения контраста.'
+                      ]
+                    }
+                  ],
+                  postscript: 'P.S. Есть еще куда стремиться ↗️'
+                },
                 client: 'Личный проект', year: '2024', image: '/project-map-rt.png'
               }
             ].map((proj, i) => (
-              <button key={i} onClick={() => setSelectedProject(proj)} className="text-left bg-slate-800/50 border border-cyan-500/20 rounded-[2rem] overflow-hidden hover:border-green-400 transition-all group flex flex-col italic text-white">
+              <button key={i} onClick={() => setSelectedProject(proj)} className="text-left bg-slate-800/50 border border-cyan-500/20 rounded-[2rem] overflow-hidden hover:border-green-400 transition-all group flex flex-col text-white">
                 <div className="h-48 bg-slate-700 relative flex items-center justify-center overflow-hidden">
-                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-                   <MapIcon size={64} className="text-green-400/50 group-hover:scale-110 transition-transform" />
+                   <img src={proj.image} alt={proj.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
                 </div>
                 <div className="p-8">
                   <h3 className="text-2xl font-bold mb-3 uppercase tracking-tighter group-hover:text-green-400 transition-colors">{proj.title}</h3>
@@ -567,12 +595,12 @@ const App = () => {
 
       <section id="skills" className="py-24 px-6 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3 italic"><span className="text-cyan-400">//</span>{t.skills.title}</h2>
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-cyan-400">//</span>{t.skills.title}</h2>
           <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 to-green-400 rounded-full mb-12" />
-          <div className="bg-slate-800 border border-green-500/20 rounded-3xl p-8 italic">
+          <div className="bg-slate-800 border border-green-500/20 rounded-3xl p-8">
             {t.skills.items.map((skill, i) => (
               <div key={i} className="mb-6 last:mb-0">
-                <div className="flex justify-between mb-2 uppercase text-[10px] font-black tracking-widest italic"><span>{skill}</span><span className="text-cyan-400">{SKILL_LEVELS[i]}%</span></div>
+                <div className="flex justify-between mb-2 uppercase text-[10px] font-black tracking-widest"><span>{skill}</span><span className="text-cyan-400">{SKILL_LEVELS[i]}%</span></div>
                 <div className="h-1.5 bg-slate-900 rounded-full overflow-hidden">
                   <motion.div initial={{ width: 0 }} whileInView={{ width: `${SKILL_LEVELS[i]}%` }} transition={{ duration: 1 }} className="h-full bg-gradient-to-r from-green-500 to-cyan-400" />
                 </div>
@@ -583,27 +611,27 @@ const App = () => {
       </section>
 
       <section id="contact" className="py-24 px-6 border-t border-white/5">
-        <div className="max-w-4xl mx-auto text-center italic">
-          <h2 className="text-4xl font-bold mb-12 uppercase italic">{t.contact.title}</h2>
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-12 uppercase">{t.contact.title}</h2>
           <div className="grid md:grid-cols-2 gap-12 text-left text-white">
             <div className="space-y-8">
-              <p className="text-gray-400 leading-relaxed italic">{t.contact.intro}</p>
+              <p className="text-gray-400 leading-relaxed">{t.contact.intro}</p>
               <div className="space-y-4">
-                <a href={`tel:${t.contact.phone.replace(/\s+/g, '')}`} className="flex items-center gap-4 text-gray-300 hover:text-green-400 italic font-bold">
+                <a href={`tel:${t.contact.phone.replace(/\s+/g, '')}`} className="flex items-center gap-4 text-gray-300 hover:text-green-400 font-bold">
                   <Phone size={20}/>{t.contact.phone}
                 </a>
-                <a href={`mailto:${t.contact.emailAddr}`} className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 italic font-bold">
+                <a href={`mailto:${t.contact.emailAddr}`} className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 font-bold">
                   <Mail size={20}/>{t.contact.emailAddr}
                 </a>
-                <a href="https://t.me/kakDelaEvgen" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 italic font-bold">
+                <a href="https://t.me/kakDelaEvgen" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 font-bold">
                   <Ghost size={20}/>Telegram
                 </a>
               </div>
             </div>
             <div className="bg-slate-800/50 p-8 rounded-3xl border border-white/5 flex flex-col justify-center">
                <Rainbow className="text-green-400 mb-6" size={32} />
-               <p className="text-sm text-gray-400 italic font-medium leading-relaxed">
-                 Готов к реализации сложных ГИС-проектов, анализу градостроительного потенциала и автоматизации процессов землепользования.
+               <p className="text-sm text-gray-400 font-medium leading-relaxed">
+                 {t.contact.summary}
                </p>
             </div>
           </div>
@@ -613,16 +641,38 @@ const App = () => {
       <AnimatePresence>
         {selectedProject && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedProject(null)} className="fixed inset-0 bg-slate-950/95 backdrop-blur-sm z-[110] p-6 flex items-center justify-center">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-slate-900 border border-green-500/20 rounded-[3rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto italic">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-slate-900 border border-green-500/20 rounded-[3rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="p-12">
                 <div className="flex justify-between items-start mb-10 text-white">
-                  <h3 className="text-3xl font-black uppercase text-green-400 italic tracking-tighter">{selectedProject.title}</h3>
+                  <h3 className="text-3xl font-black uppercase text-green-400 tracking-tighter">{selectedProject.title}</h3>
                   <button onClick={() => setSelectedProject(null)} className="text-slate-500 hover:text-red-400"><X size={32}/></button>
                 </div>
-                <div className="prose prose-invert max-w-none text-gray-400 italic whitespace-pre-line leading-relaxed mb-10 border-l-2 border-green-500/30 pl-8 font-medium">
-                  {selectedProject.fullDescription}
+                <div className="mb-8 rounded-2xl overflow-hidden border border-green-500/20">
+                  <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-auto object-cover" />
                 </div>
-                <button onClick={() => setSelectedProject(null)} className="px-10 py-4 bg-green-500 text-slate-900 rounded-2xl font-black uppercase text-xs tracking-widest italic">{t.projects.close}</button>
+                {selectedProject.details ? (
+                  <div className="max-w-none text-gray-300 leading-relaxed mb-10 border-l-2 border-green-500/30 pl-8 font-medium space-y-6">
+                    <p>{selectedProject.details.intro}</p>
+                    <p className="text-cyan-300">{selectedProject.details.workflow}</p>
+                    {selectedProject.details.sections.map((section) => (
+                      <div key={section.title} className="space-y-3">
+                        <h4 className="text-white font-bold">{section.title}</h4>
+                        {section.text ? <p>{section.text}</p> : null}
+                        <ul className="list-disc pl-5 space-y-2 text-gray-400">
+                          {section.bullets.map((bullet) => (
+                            <li key={bullet}>{bullet}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                    <p className="text-emerald-300">{selectedProject.details.postscript}</p>
+                  </div>
+                ) : (
+                  <div className="prose prose-invert max-w-none text-gray-400 whitespace-pre-line leading-relaxed mb-10 border-l-2 border-green-500/30 pl-8 font-medium">
+                    {selectedProject.fullDescription}
+                  </div>
+                )}
+                <button onClick={() => setSelectedProject(null)} className="px-10 py-4 bg-green-500 text-slate-900 rounded-2xl font-black uppercase text-xs tracking-widest">{t.projects.close}</button>
               </div>
             </motion.div>
           </motion.div>
@@ -633,7 +683,7 @@ const App = () => {
         {showExperienceMap && <ExperienceMapModal onClose={() => setShowExperienceMap(false)} language={language} t={t} />}
       </AnimatePresence>
 
-      <footer className="py-12 px-6 border-t border-green-500/10 bg-slate-950 text-center uppercase text-[8px] font-black tracking-[0.5em] italic text-gray-700">
+      <footer className="py-12 px-6 border-t border-green-500/10 bg-slate-950 text-center uppercase text-[8px] font-black tracking-[0.5em] text-gray-700">
         © 2026 {t.footer}
       </footer>
 
