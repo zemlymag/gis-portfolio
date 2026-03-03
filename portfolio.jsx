@@ -537,7 +537,7 @@ const App = () => {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-green-400">//</span>{t.projects.title}</h2>
           <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
-          <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto">
+          <div className="flex gap-8 overflow-x-auto pb-4 snap-x snap-mandatory">
             {[
               {
                 title: 'Создание гипсометрической карты Татарстана',
@@ -606,7 +606,7 @@ QGIS показывал, где уже оформлены участки, а г�
 Моя цель проста: GIS должен отвечать на главный вопрос любого проекта — где нас ждут риски и как их вовремя увидеть.
 
 GIS — это не про карты. GIS — это про понимание, контроль и возможность принимать решения быстрее, чем проблемы успевают появиться. И вот за это я люблю свою работу.`,
-                client: 'Федеральный инфраструктурный проект', year: '2025', image: '/project-map-rt.png'
+                client: 'Федеральный инфраструктурный проект', year: '2025', image: '/gis.jpeg'
               },
               {
                 title: 'Использование API',
@@ -630,7 +630,7 @@ GIS — это не про карты. GIS — это про понимание,
                 client: 'Личный проект', year: '2025', image: '/API.png'
               }
             ].map((proj, i) => (
-              <button key={i} onClick={() => setSelectedProject(proj)} className="text-left bg-slate-800/50 border border-cyan-500/20 rounded-[2rem] overflow-hidden hover:border-green-400 transition-all group flex flex-col text-white">
+              <button key={i} onClick={() => setSelectedProject(proj)} className="min-w-[320px] md:min-w-[460px] max-w-[460px] snap-start shrink-0 text-left bg-slate-800/50 border border-cyan-500/20 rounded-[2rem] overflow-hidden hover:border-green-400 transition-all group flex flex-col text-white">
                 <div className="h-48 bg-slate-700 relative flex items-center justify-center overflow-hidden">
                    <img src={proj.image} alt={proj.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
