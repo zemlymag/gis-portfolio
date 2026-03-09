@@ -315,6 +315,188 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
 
 const SECTION_IDS = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
 const SKILL_LEVELS = [95, 90, 92, 88];
+const PROJECTS_DATA = {
+  ru: [
+    {
+      title: 'Создание гипсометрической карты Татарстана',
+      desc: 'Физико-административная карта Республики Татарстан с визуализацией рельефа и административной сеткой.',
+      tags: ['QGIS', 'DEM', 'Картография'],
+      details: {
+        intro: 'Завершил работу над физико-административной картой Республики Татарстан. Основной задачей было совместить наглядную визуализацию рельефа с точной административной сеткой, сохранив при этом высокую читаемость карты.',
+        workflow: 'Краткий разбор воркфлоу и источников данных, которые легли в основу проекта.',
+        sections: [
+          {
+            title: '1. Сбор и подготовка данных',
+            text: 'Качество карты напрямую зависит от исходников. В этом проекте я использовал гибридный подход к сбору данных:',
+            bullets: [
+              'Административное деление и населенные пункты: за основу взял данные Фонда пространственных данных РТ (портал fpd-tatar.nextgis.com). Это позволило получить наиболее актуальную и точную информацию по границам районов и локации городов, что выгодно отличает карту от версий на базе только глобальных данных.',
+              'Природные объекты: границы лесных массивов, гидрографию (реки и водохранилища) выгружал и обрабатывал через OpenStreetMap (OSM). Данные прошли постобработку и генерализацию контуров для корректного отображения в выбранном масштабе.'
+            ]
+          },
+          {
+            title: '2. Работа с рельефом (DEM и визуализация)',
+            text: 'Для создания объема использовал классическую связку в QGIS:',
+            bullets: [
+              'Гипсометрия: наложил цветовую шкалу (Color Ramp) от темно-зеленого для низин к коричневому для возвышенностей.',
+              'Отмывка (Hillshade): сгенерировал теневой рельеф на основе DEM. Использовал режим смешивания Multiply, чтобы сохранить насыщенность цветов и подчеркнуть пластику ландшафта.'
+            ]
+          },
+          {
+            title: '3. Картографический дизайн',
+            bullets: [
+              'Дорожная сеть: иерархия дорог настроена через Symbol Levels (уровни знака), чтобы избежать визуальных разрывов на перекрестках.',
+              'Условные знаки: разработал кастомную легенду для классификации населенных пунктов по численности.',
+              'Оформление: применил буферизацию (Halo) для текстовых меток для повышения контраста.'
+            ]
+          }
+        ],
+        postscript: 'P.S. Есть еще куда стремиться ↗️'
+      },
+      client: 'Личный проект',
+      year: '2024',
+      image: '/project-map-rt.png'
+    },
+    {
+      title: 'GIS — это не про карты. GIS — это про контроль и командные решения',
+      desc: 'Кейс о том, как GIS и Excel помогли команде обработать 450 соглашений по публичному сервитуту за 3 месяца и снизить проектные риски.',
+      tags: ['QGIS', 'Excel', 'Управление рисками'],
+      fullDescription: `Когда я только начинал работать с GIS, думал: «Ну всё просто — внес данные, нарисовал карту — и готово».
+Но очень быстро понял: карты сами по себе ничего не решают.
+
+В одном из проектов наша команда работала над 450 соглашениями об установлении публичного сервитута за… три месяца. Да, вы не ослышались — три месяца на такой масштабный федеральный объект.
+Сначала казалось: «Это нереально».
+Но мы использовали GIS и Excel так, что проект реально начал «оживать»:
+в Excel мы отслеживали статус каждого участка, фиксировали прогресс, планировали, где можно начинать строительство;
+QGIS показывал, где уже оформлены участки, а где риски могут нас подстерегать;
+коллеги видели актуальные данные сразу на карте и могли принимать решения на месте — без лишней бюрократии.
+
+💡 Помню один случай: пересекающий участок, о котором никто даже не подумал, мог остановить всю стройку. GIS подсветил это вовремя. Мы скорректировали план — и работа продолжилась. В тот момент я понял: GIS — это не просто карты, это суперсила для инженера и менеджера одновременно.
+
+💯Результат?
+- сроки проекта сократились вдвое;
+- меньше конфликтов с командой и заказчиком;
+- быстро реагировали на изменения и подсвечивали риски ещё до того, как они становились проблемой.
+
+Сейчас мне интересно:
+✔️проектировать GIS-системы, которые реально решают задачи людей;
+✔️управлять этапами и сроками, чтобы команда работала слаженно;
+✔️превращать запросы заказчика в понятную архитектуру данных;
+✔️автоматизировать процессы и использовать AI, чтобы GIS помогал не только с картами, но и с документами и прогнозами рисков.
+
+Моя цель проста: GIS должен отвечать на главный вопрос любого проекта — где нас ждут риски и как их вовремя увидеть.
+
+GIS — это не про карты. GIS — это про понимание, контроль и возможность принимать решения быстрее, чем проблемы успевают появиться. И вот за это я люблю свою работу.`,
+      client: 'Федеральный инфраструктурный проект',
+      year: '2025',
+      image: '/gis.jpeg'
+    },
+    {
+      title: 'Использование API',
+      desc: 'Интеграция 2GIS API и Python для получения точек объектов и последующего пространственного анализа в QGIS.',
+      tags: ['QGIS', 'Python', '2GIS API'],
+      fullDescription: `В какой-то момент понял, что мне нужно научиться привязывать в QGIS точки различных объектов, которые затем можно накладывать на карту, анализировать и сопоставлять с земельными участками и другими пространственными данными.
+
+В качестве эксперимента решил использовать API 2GIS. Задача была прикладная: получить точки объектов в заданном районе - например, в радиусе 30 км от заданной точки.
+
+Вся логика запросов была написана на Python. Для ускорения работы и проверки решений использовал различные AI Cloud инструменты - как помощников при формировании запросов и обработке данных.
+
+В результате получил набор точек с координатами, которые сразу корректно легли в QGIS и стали частью общей рабочей карты.
+
+Дальше стало возможным проводить пространственный анализ: смотреть, как объекты соотносятся с земельными участками, где есть застройка, а где ее нет, какие зоны требуют дополнительного внимания.
+
+Ключевая ценность подхода - в объединении данных из разных источников в одном проекте и возможности анализировать их совместно, а не по отдельности.
+
+Потенциал у такого решения большой: анализ данных, предварительная оценка при формировании охранных зон, применение в градостроительном мониторинге и других аналитических задачах.
+
+Чем дальше погружаешься, тем яснее становится: GIS сегодня - это уже не только карты, а связка данных, кода и аналитики.`,
+      client: 'Личный проект',
+      year: '2025',
+      image: '/API.png'
+    }
+  ],
+  en: [
+    {
+      title: 'Hypsometric Map of Tatarstan',
+      desc: 'A physical-administrative map of the Republic of Tatarstan with terrain visualization and administrative layers.',
+      tags: ['QGIS', 'DEM', 'Cartography'],
+      details: {
+        intro: 'I completed a physical-administrative map of the Republic of Tatarstan. The core task was to combine a clear terrain visualization with an accurate administrative layer while preserving high readability.',
+        workflow: 'A short overview of the workflow and source data used in the project.',
+        sections: [
+          {
+            title: '1. Data Collection and Preparation',
+            text: 'Map quality depends directly on source data. In this project, I used a hybrid approach:',
+            bullets: [
+              'Administrative boundaries and settlements: I used data from the spatial data foundation of Tatarstan (fpd-tatar.nextgis.com). This provided up-to-date and accurate district boundaries and city locations.',
+              'Natural features: forest boundaries and hydrography (rivers, reservoirs) were extracted from OpenStreetMap (OSM), then post-processed and generalized for the target map scale.'
+            ]
+          },
+          {
+            title: '2. Relief Processing (DEM and Visualization)',
+            text: 'To add depth, I used a classic QGIS setup:',
+            bullets: [
+              'Hypsometry: color ramp from dark green lowlands to brown highlands.',
+              'Hillshade: generated from DEM and blended with Multiply mode to preserve color saturation and improve terrain plasticity.'
+            ]
+          },
+          {
+            title: '3. Cartographic Design',
+            bullets: [
+              'Road network: hierarchy configured via Symbol Levels to avoid visual gaps at intersections.',
+              'Map symbols: custom legend designed to classify settlements by population.',
+              'Labeling: halo buffering applied to increase text contrast and readability.'
+            ]
+          }
+        ],
+        postscript: 'P.S. There is still room to improve ↗️'
+      },
+      client: 'Personal project',
+      year: '2024',
+      image: '/project-map-rt.png'
+    },
+    {
+      title: 'GIS Is Not About Maps. It Is About Control and Team Decisions',
+      desc: 'A case on how GIS and Excel helped process 450 public easement agreements in 3 months and reduce project risks.',
+      tags: ['QGIS', 'Excel', 'Risk Management'],
+      fullDescription: `Early in my GIS career, I thought maps were the end goal. Very quickly, I realized maps alone do not solve problems.
+
+On one project, our team had to process 450 public easement agreements in just three months for a large federal infrastructure initiative.
+
+We used Excel to track each parcel status and execution progress, while QGIS visualized completed areas and risk zones in real time. The team could make decisions faster with a shared spatial view.
+
+In one critical case, GIS revealed an intersecting parcel that could have blocked construction. We adjusted the plan in time and avoided a major delay.
+
+Results:
+- project timeline reduced nearly by half;
+- fewer conflicts across team and stakeholders;
+- faster response to changes with early risk visibility.
+
+Today I focus on building GIS systems that solve real operational tasks, improve team coordination, and integrate automation and AI into day-to-day decision workflows.`,
+      client: 'Federal infrastructure project',
+      year: '2025',
+      image: '/gis.jpeg'
+    },
+    {
+      title: 'Using API in GIS Workflows',
+      desc: 'Integration of 2GIS API and Python to obtain POI coordinates for further spatial analysis in QGIS.',
+      tags: ['QGIS', 'Python', '2GIS API'],
+      fullDescription: `At one stage I needed a repeatable way to import object points into QGIS and analyze them together with land parcels and other spatial layers.
+
+As an experiment, I integrated the 2GIS API. The practical task was to fetch object points within a defined area, for example within a 30 km radius from a reference point.
+
+All request logic was implemented in Python. I also used AI cloud tools to speed up query drafting and data processing checks.
+
+The output was a clean coordinate dataset that was loaded into QGIS and became part of the project workspace.
+
+This made it possible to run spatial analysis across multiple layers: object-to-parcel relations, built-up vs. empty zones, and areas requiring additional attention.
+
+The key value is combining data from different sources into one analytical workflow instead of processing each source separately.`,
+      client: 'Personal project',
+      year: '2025',
+      image: '/API.png'
+    }
+  ]
+};
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -362,7 +544,8 @@ const App = () => {
         client: 'Клиент',
         year: 'Год',
         close: 'Закрыть',
-        open: 'Открыть проект'
+        open: 'Открыть проект',
+        items: PROJECTS_DATA.ru
       },
       skills: {
         title: 'Технические навыки',
@@ -424,7 +607,8 @@ const App = () => {
         client: 'Client',
         year: 'Year',
         close: 'Close',
-        open: 'Open Project'
+        open: 'Open Project',
+        items: PROJECTS_DATA.en
       },
       skills: {
         title: 'Technical Skills',
@@ -598,98 +782,7 @@ const App = () => {
           <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-green-400">//</span>{t.projects.title}</h2>
           <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
           <div className="flex gap-8 overflow-x-auto pb-4 snap-x snap-mandatory">
-            {[
-              {
-                title: 'Создание гипсометрической карты Татарстана',
-                desc: 'Физико-административная карта Республики Татарстан с визуализацией рельефа и административной сеткой.',
-                tags: ['QGIS', 'DEM', 'Картография'],
-                details: {
-                  intro: 'Завершил работу над физико-административной картой Республики Татарстан. Основной задачей было совместить наглядную визуализацию рельефа с точной административной сеткой, сохранив при этом высокую читаемость карты.',
-                  workflow: 'Краткий разбор воркфлоу и источников данных, которые легли в основу проекта.',
-                  sections: [
-                    {
-                      title: '1. Сбор и подготовка данных',
-                      text: 'Качество карты напрямую зависит от исходников. В этом проекте я использовал гибридный подход к сбору данных:',
-                      bullets: [
-                        'Административное деление и населенные пункты: за основу взял данные Фонда пространственных данных РТ (портал fpd-tatar.nextgis.com). Это позволило получить наиболее актуальную и точную информацию по границам районов и локации городов, что выгодно отличает карту от версий на базе только глобальных данных.',
-                        'Природные объекты: границы лесных массивов, гидрографию (реки и водохранилища) выгружал и обрабатывал через OpenStreetMap (OSM). Данные прошли постобработку и генерализацию контуров для корректного отображения в выбранном масштабе.'
-                      ]
-                    },
-                    {
-                      title: '2. Работа с рельефом (DEM и визуализация)',
-                      text: 'Для создания объема использовал классическую связку в QGIS:',
-                      bullets: [
-                        'Гипсометрия: наложил цветовую шкалу (Color Ramp) от темно-зеленого для низин к коричневому для возвышенностей.',
-                        'Отмывка (Hillshade): сгенерировал теневой рельеф на основе DEM. Использовал режим смешивания Multiply, чтобы сохранить насыщенность цветов и подчеркнуть пластику ландшафта.'
-                      ]
-                    },
-                    {
-                      title: '3. Картографический дизайн',
-                      bullets: [
-                        'Дорожная сеть: иерархия дорог настроена через Symbol Levels (уровни знака), чтобы избежать визуальных разрывов на перекрестках.',
-                        'Условные знаки: разработал кастомную легенду для классификации населенных пунктов по численности.',
-                        'Оформление: применил буферизацию (Halo) для текстовых меток для повышения контраста.'
-                      ]
-                    }
-                  ],
-                  postscript: 'P.S. Есть еще куда стремиться ↗️'
-                },
-                client: 'Личный проект', year: '2024', image: '/project-map-rt.png'
-              },
-              {
-                title: 'GIS — это не про карты. GIS — это про контроль и командные решения',
-                desc: 'Кейс о том, как GIS и Excel помогли команде обработать 450 соглашений по публичному сервитуту за 3 месяца и снизить проектные риски.',
-                tags: ['QGIS', 'Excel', 'Управление рисками'],
-                fullDescription: `Когда я только начинал работать с GIS, думал: «Ну всё просто — внес данные, нарисовал карту — и готово».
-Но очень быстро понял: карты сами по себе ничего не решают.
-
-В одном из проектов наша команда работала над 450 соглашениями об установлении публичного сервитута за… три месяца. Да, вы не ослышались — три месяца на такой масштабный федеральный объект.
-Сначала казалось: «Это нереально».
-Но мы использовали GIS и Excel так, что проект реально начал «оживать»:
-в Excel мы отслеживали статус каждого участка, фиксировали прогресс, планировали, где можно начинать строительство;
-QGIS показывал, где уже оформлены участки, а где риски могут нас подстерегать;
-коллеги видели актуальные данные сразу на карте и могли принимать решения на месте — без лишней бюрократии.
-
-💡 Помню один случай: пересекающий участок, о котором никто даже не подумал, мог остановить всю стройку. GIS подсветил это вовремя. Мы скорректировали план — и работа продолжилась. В тот момент я понял: GIS — это не просто карты, это суперсила для инженера и менеджера одновременно.
-
-💯Результат?
-- сроки проекта сократились вдвое;
-- меньше конфликтов с командой и заказчиком;
-- быстро реагировали на изменения и подсвечивали риски ещё до того, как они становились проблемой.
-
-Сейчас мне интересно:
-✔️проектировать GIS-системы, которые реально решают задачи людей;
-✔️управлять этапами и сроками, чтобы команда работала слаженно;
-✔️превращать запросы заказчика в понятную архитектуру данных;
-✔️автоматизировать процессы и использовать AI, чтобы GIS помогал не только с картами, но и с документами и прогнозами рисков.
-
-Моя цель проста: GIS должен отвечать на главный вопрос любого проекта — где нас ждут риски и как их вовремя увидеть.
-
-GIS — это не про карты. GIS — это про понимание, контроль и возможность принимать решения быстрее, чем проблемы успевают появиться. И вот за это я люблю свою работу.`,
-                client: 'Федеральный инфраструктурный проект', year: '2025', image: '/gis.jpeg'
-              },
-              {
-                title: 'Использование API',
-                desc: 'Интеграция 2GIS API и Python для получения точек объектов и последующего пространственного анализа в QGIS.',
-                tags: ['QGIS', 'Python', '2GIS API'],
-                fullDescription: `В какой-то момент понял, что мне нужно научиться привязывать в QGIS точки различных объектов, которые затем можно накладывать на карту, анализировать и сопоставлять с земельными участками и другими пространственными данными.
-
-В качестве эксперимента решил использовать API 2GIS. Задача была прикладная: получить точки объектов в заданном районе - например, в радиусе 30 км от заданной точки.
-
-Вся логика запросов была написана на Python. Для ускорения работы и проверки решений использовал различные AI Cloud инструменты - как помощников при формировании запросов и обработке данных.
-
-В результате получил набор точек с координатами, которые сразу корректно легли в QGIS и стали частью общей рабочей карты.
-
-Дальше стало возможным проводить пространственный анализ: смотреть, как объекты соотносятся с земельными участками, где есть застройка, а где ее нет, какие зоны требуют дополнительного внимания.
-
-Ключевая ценность подхода - в объединении данных из разных источников в одном проекте и возможности анализировать их совместно, а не по отдельности.
-
-Потенциал у такого решения большой: анализ данных, предварительная оценка при формировании охранных зон, применение в градостроительном мониторинге и других аналитических задачах.
-
-Чем дальше погружаешься, тем яснее становится: GIS сегодня - это уже не только карты, а связка данных, кода и аналитики.`,
-                client: 'Личный проект', year: '2025', image: '/API.png'
-              }
-            ].map((proj, i) => (
+            {t.projects.items.map((proj, i) => (
               <button key={i} onClick={() => setSelectedProject(proj)} className="min-w-[320px] md:min-w-[460px] max-w-[460px] snap-start shrink-0 text-left bg-slate-800/50 border border-cyan-500/20 rounded-[2rem] overflow-hidden hover:border-green-400 transition-all group flex flex-col text-white">
                 <div className="h-48 bg-slate-700 relative flex items-center justify-center overflow-hidden">
                    <img src={proj.image} alt={proj.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
