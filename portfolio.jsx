@@ -22,6 +22,7 @@ import {
 const ExperienceMapModal = ({ onClose, language, t }) => {
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [leafletReady, setLeafletReady] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const markersRef = useRef({});
@@ -107,6 +108,25 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
   ];
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 1023px)');
+    const updateMobileState = (event) => setIsMobile(event.matches);
+    setIsMobile(mediaQuery.matches);
+    if (mediaQuery.addEventListener) mediaQuery.addEventListener('change', updateMobileState);
+    else mediaQuery.addListener(updateMobileState);
+    return () => {
+      if (mediaQuery.removeEventListener) mediaQuery.removeEventListener('change', updateMobileState);
+      else mediaQuery.removeListener(updateMobileState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      if (mapInstance.current) {
+        mapInstance.current.remove();
+        mapInstance.current = null;
+      }
+      return;
+    }
     if (!window.L) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -123,9 +143,10 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
     }
     setSelectedPoint(experienceData[0]);
     return () => { if (mapInstance.current) { mapInstance.current.remove(); mapInstance.current = null; } };
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
+    if (isMobile) return;
     if (!leafletReady || !mapRef.current || mapInstance.current) return;
     const L = window.L;
     mapInstance.current = L.map(mapRef.current, { center: [62, 95], zoom: 3, zoomControl: false, attributionControl: false });
@@ -139,9 +160,10 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
       marker.on('click', () => setSelectedPoint(point));
       markersRef.current[point.id] = marker;
     });
-  }, [leafletReady]);
+  }, [leafletReady, isMobile]);
 
   useEffect(() => {
+    if (isMobile) return;
     if (!mapInstance.current || !selectedPoint || !window.L) return;
     mapInstance.current.flyTo(selectedPoint.coords, 6, { duration: 1.5 });
     Object.keys(markersRef.current).forEach(key => {
@@ -149,7 +171,7 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
       if (key === selectedPoint.id) m.setStyle({ fillColor: "#22d3ee", radius: 10 });
       else m.setStyle({ fillColor: "#10b981", radius: 8 });
     });
-  }, [selectedPoint]);
+  }, [selectedPoint, isMobile]);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] bg-slate-950 flex flex-col overflow-hidden">
@@ -166,6 +188,42 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
       </div>
 
       <div className="flex-grow flex flex-col lg:flex-row overflow-hidden">
+        {isMobile ? (
+          <div className="flex-grow overflow-y-auto p-4 sm:p-6 space-y-3 bg-slate-950">
+            {experienceData.map((point) => (
+              <article key={point.id} className="rounded-2xl border border-green-500/15 bg-slate-900/80 p-4">
+                <div className="mb-3 h-36 overflow-hidden rounded-xl">
+                  <img src={point.photo} alt={point.name} className="h-full w-full object-cover" />
+                </div>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-base font-black text-white tracking-tight">{point.name}</h3>
+                    <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider mt-1">{point.region}</p>
+                  </div>
+                  <span className="shrink-0 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[10px] font-black text-amber-300">
+                    {point.year}
+                  </span>
+                </div>
+                <div className="mt-3 space-y-3">
+                  <div>
+                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                      {language === 'ru' ? 'Место работы' : 'Workplace'}
+                    </p>
+                    <p className="mt-1 text-sm font-bold text-white leading-tight">{point.workPlace}</p>
+                    <p className="mt-1 text-[10px] font-bold text-green-400 uppercase tracking-wider">{point.position}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                      {language === 'ru' ? 'Деятельность' : 'Activity'}
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-300">{point.activity}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <>
         <div className="w-full lg:w-[450px] bg-slate-900 border-r border-green-500/10 overflow-y-auto flex flex-col shrink-0">
           <div className="p-6 bg-slate-950/50 border-b border-white/5">
              <h4 className="flex items-center gap-2 text-[10px] font-black text-green-400 uppercase tracking-widest mb-3">
@@ -248,6 +306,8 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
             </div>
           </div>
         </div>
+          </>
+        )}
       </div>
     </motion.div>
   );
