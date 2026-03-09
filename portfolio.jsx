@@ -829,7 +829,7 @@ const App = () => {
                 <a href={`mailto:${t.contact.emailAddr}`} className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 font-bold">
                   <Mail size={20}/>{t.contact.emailAddr}
                 </a>
-                <a href="https://t.me/kakDelaEvgen" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 font-bold">
+                <a href="https://t.me/myGIStrip" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 font-bold">
                   <Ghost size={20}/>Telegram
                 </a>
               </div>
