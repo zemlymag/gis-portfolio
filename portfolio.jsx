@@ -313,10 +313,29 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
   );
 };
 
-const SECTION_IDS = ['home', 'about', 'services', 'projects', 'skills', 'contact'];
+const SECTION_IDS = ['home', 'about', 'projects', 'services', 'skills', 'contact'];
 const SKILL_LEVELS = [95, 90, 92, 88];
 const PROJECTS_DATA = {
   ru: [
+    {
+      title: 'Градостроительный анализ участка: когда графика важнее опубликованных слоев',
+      desc: 'Как совмещаю НСПД, ФГИС ТП, сайты администраций и привязку PDF/GeoTIFF в QGIS для поиска ограничений и проектных рисков.',
+      tags: ['QGIS', 'ПЗЗ', 'Градостроительный анализ'],
+      fullDescription: `Сейчас всё чаще появляется запрос на градостроительный анализ участка - поиск ограничений и сведений, которые могут в будущем эти ограничения накладывать. Это может быть будущий публичный сервитут, изъятие участка для строительства дороги, газопровода, железной дороги или иного объекта недвижимости.
+
+Чаще всего такой анализ начинается с открытых источников: НСПД, ФГИС ТП и сайтов администраций, где публикуются документы по публичным сервитутам, изъятиям, КРТ, генеральным планам и ПЗЗ. Проблема в том, что значительная часть материалов доступна только в отсканированном виде, а опубликованные слои на государственных ресурсах обновляются не всегда оперативно.
+
+На практике территориальные зоны и зоны ПЗЗ в первую очередь отражаются в самих градостроительных документах - на картах градостроительного зонирования. Те же сведения должны отображаться в НСПД в слое «Территориальные зоны», но в большинстве случаев актуальность там бывает частичной. Если опираться только на опубликованные данные, это создаёт риск неверных выводов.
+
+Поэтому в работе я дополнительно анализирую схемы и чертежи. Актуальные материалы загружаю в QGIS: это может быть PDF-карта из ФГИС ТП или с сайта администрации, либо GeoTIFF. Затем привязываю документ по границам муниципального образования или населённого пункта и сопоставляю его с кадастровыми и градостроительными слоями.
+
+Дальше проверяю, насколько корректно в НСПД отражены зоны, и обязательно сверяю территорию с фактическим документом. При этом текстовая часть ПЗЗ нередко важнее графики: в карте могут быть опечатки, а в регламентах часто указаны нюансы, которые реально действуют на текущий момент. Если доступны проектные документы, их тоже подключаю к анализу, хотя искать такие материалы на сайтах администраций обычно непросто.
+
+В итоге градостроительный анализ участка - это не только работа с государственными сервисами, но и внимательная проверка исходных документов в растровом виде. Когда есть уверенный опыт работы в ГИС, такие «картинки» превращаются в рабочий аналитический материал. При необходимости их можно оцифровать и получить актуальные границы зон для дальнейшей работы, но это уже отдельная ресурсоёмкая задача.`,
+      client: 'Градостроительный и правовой анализ территорий',
+      year: '2026',
+      image: '/PZZ.png'
+    },
     {
       title: 'Создание гипсометрической карты Татарстана',
       desc: 'Физико-административная карта Республики Татарстан с визуализацией рельефа и административной сеткой.',
@@ -416,6 +435,25 @@ GIS — это не про карты. GIS — это про понимание,
   ],
   en: [
     {
+      title: 'Urban Planning Site Analysis Beyond Published Layers',
+      desc: 'How I combine NSPD, FGIS TP, municipal sources, and georeferenced PDF or GeoTIFF materials in QGIS to detect constraints and future risks.',
+      tags: ['QGIS', 'Zoning', 'Urban Planning'],
+      fullDescription: `Requests for urban planning site analysis are becoming more frequent. The goal is to identify both existing constraints and signals that may lead to future restrictions, such as a planned public easement or land withdrawal for a road, gas pipeline, railway, or other capital project.
+
+The workflow usually starts with public data sources: NSPD, FGIS TP, and municipal websites that publish materials on public easements, land withdrawal, integrated territory development, master plans, and zoning regulations. The issue is that a large share of these materials is available only as scanned documents, while official web layers are often updated slowly.
+
+In practice, zoning boundaries are first reflected in the urban planning source documents themselves, especially on zoning maps. These boundaries are also expected to appear in NSPD under the territorial zones layer, but in many cases the published version is incomplete or outdated. Relying only on published layers can therefore introduce analytical risk.
+
+That is why I also work directly with schemes and drawings. In QGIS I load PDF maps from FGIS TP or municipal portals, as well as GeoTIFF files when available. Then I georeference them by municipal or settlement boundaries and compare them with cadastral and planning layers.
+
+The next step is to verify how accurately NSPD reflects the actual zoning and to check the territory against the source document itself. The text part of zoning regulations is often even more important than the map, because the graphics may contain typos while the written regulations describe the valid nuances in force. If draft planning documents are available, I include them too, although finding them on municipal websites often takes extra effort.
+
+As a result, urban planning site analysis is not limited to government portals. It also depends on careful interpretation of raster source materials. With strong GIS skills, these image-based documents become a practical analytical layer. If needed, they can be digitized into up-to-date zone boundaries, though that is a separate task that requires significant time and effort.`,
+      client: 'Urban planning and legal land analysis',
+      year: '2026',
+      image: '/PZZ.png'
+    },
+    {
       title: 'Hypsometric Map of Tatarstan',
       desc: 'A physical-administrative map of the Republic of Tatarstan with terrain visualization and administrative layers.',
       tags: ['QGIS', 'DEM', 'Cartography'],
@@ -508,7 +546,7 @@ const App = () => {
   
   const translations = {
     ru: {
-      nav: ['Главная', 'О себе', 'Услуги', 'Проекты', 'Навыки', 'Контакты'],
+      nav: ['Главная', 'О себе', 'Проекты', 'Услуги', 'Навыки', 'Контакты'],
       hero: {
         subtitle: 'Управление земельными активами | ГИС-аналитика | Кадастровый инженер',
         description: 'Ведущий эксперт по управлению земельными активами и GIS-аналитике. Объединяю компетенции кадастрового инженера и градостроительного аналитика. Активно применяю ИИ-технологии для глубокого анализа нормативно-правовой базы и автоматизации обработки геоданных, что позволяет сокращать сроки подготовки заключений и снижать риски.',
@@ -571,7 +609,7 @@ const App = () => {
       footer: 'Евгений Яровой. Эксперт по земельным активам и ГИС-аналитике.'
     },
     en: {
-      nav: ['Home', 'About', 'Services', 'Projects', 'Skills', 'Contact'],
+      nav: ['Home', 'About', 'Projects', 'Services', 'Skills', 'Contact'],
       hero: {
         subtitle: 'Land Asset Management | GIS Analytics | Cadastral Engineer',
         description: 'Leading expert in land asset management and GIS analytics. I combine the competencies of a cadastral engineer and urban planning analyst. Actively applying AI technologies for in-depth analysis of regulatory framework and automation of geodata processing, which reduces the time for preparing conclusions and minimizes risks.',
@@ -761,6 +799,57 @@ const App = () => {
         </div>
       </section>
 
+      <section id="projects" className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-green-400">//</span>{t.projects.title}</h2>
+          <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {t.projects.items.map((proj, i) => (
+              <button
+                key={i}
+                onClick={() => setSelectedProject(proj)}
+                className="bg-slate-800/50 border-2 border-green-500/20 rounded-2xl overflow-hidden hover:border-green-400 transition-all group flex flex-col text-left text-white min-h-full"
+              >
+                <div className="h-52 bg-slate-700 relative flex items-center justify-center overflow-hidden">
+                  <img src={proj.image} alt={proj.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/20 to-transparent"></div>
+                  <div className="absolute left-4 right-4 top-4 flex items-start justify-between gap-3">
+                    <span className="rounded-full border border-cyan-400/30 bg-slate-950/80 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-cyan-300">
+                      {proj.year}
+                    </span>
+                    <span className="rounded-full border border-green-500/30 bg-slate-950/80 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-green-300">
+                      {t.projects.open}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6 md:p-8 flex flex-col flex-1">
+                  <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                    <Globe size={24} className="text-green-400" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 uppercase tracking-tighter group-hover:text-green-400 transition-colors leading-tight">
+                    {proj.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">{proj.desc}</p>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {proj.tags.map(tag => (
+                      <span key={tag} className="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] rounded-full border border-green-500/20 uppercase font-black">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between gap-4 pt-5 border-t border-white/5">
+                    <span className="text-[11px] font-medium text-slate-400 leading-snug">{proj.client}</span>
+                    <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400">
+                      {t.projects.open}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="services" className="py-24 px-6 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-cyan-400">//</span>{t.services.title}</h2>
@@ -772,28 +861,6 @@ const App = () => {
                 <h3 className="text-xl font-bold mb-3 uppercase tracking-tighter">{service.title}</h3>
                 <p className="text-gray-400 text-sm">{service.desc}</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4 flex items-center gap-3"><span className="text-green-400">//</span>{t.projects.title}</h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mb-12" />
-          <div className="flex gap-8 overflow-x-auto pb-4 snap-x snap-mandatory">
-            {t.projects.items.map((proj, i) => (
-              <button key={i} onClick={() => setSelectedProject(proj)} className="min-w-[320px] md:min-w-[460px] max-w-[460px] snap-start shrink-0 text-left bg-slate-800/50 border border-cyan-500/20 rounded-[2rem] overflow-hidden hover:border-green-400 transition-all group flex flex-col text-white">
-                <div className="h-48 bg-slate-700 relative flex items-center justify-center overflow-hidden">
-                   <img src={proj.image} alt={proj.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold mb-3 uppercase tracking-tighter group-hover:text-green-400 transition-colors">{proj.title}</h3>
-                  <p className="text-gray-400 text-sm mb-6">{proj.desc}</p>
-                  <div className="flex gap-2">{proj.tags.map(t => <span key={t} className="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] rounded-full border border-green-500/20 uppercase font-black">{t}</span>)}</div>
-                </div>
-              </button>
             ))}
           </div>
         </div>
@@ -846,18 +913,18 @@ const App = () => {
 
       <AnimatePresence>
         {selectedProject && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedProject(null)} className="fixed inset-0 bg-slate-950/95 backdrop-blur-sm z-[110] p-6 flex items-center justify-center">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-slate-900 border border-green-500/20 rounded-[3rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-12">
-                <div className="flex justify-between items-start mb-10 text-white">
-                  <h3 className="text-3xl font-black uppercase text-green-400 tracking-tighter">{selectedProject.title}</h3>
-                  <button onClick={() => setSelectedProject(null)} className="text-slate-500 hover:text-red-400"><X size={32}/></button>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedProject(null)} className="fixed inset-0 bg-slate-950/95 backdrop-blur-sm z-[110] p-3 sm:p-6 flex items-center justify-center">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-slate-900 border border-green-500/20 rounded-[2rem] sm:rounded-[3rem] max-w-4xl w-full max-h-[92vh] overflow-y-auto">
+              <div className="p-5 sm:p-8 lg:p-12">
+                <div className="flex justify-between items-start gap-4 mb-6 sm:mb-10 text-white">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-black uppercase text-green-400 tracking-tighter leading-tight">{selectedProject.title}</h3>
+                  <button onClick={() => setSelectedProject(null)} className="shrink-0 rounded-xl border border-white/10 bg-slate-800 p-2 text-slate-400 hover:text-red-400"><X size={24}/></button>
                 </div>
                 <div className="mb-8 rounded-2xl overflow-hidden border border-green-500/20">
-                  <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-auto object-cover" />
+                  <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-auto max-h-[40vh] object-cover" />
                 </div>
                 {selectedProject.details ? (
-                  <div className="max-w-none text-gray-300 leading-relaxed mb-10 border-l-2 border-green-500/30 pl-8 font-medium space-y-6">
+                  <div className="max-w-none text-gray-300 leading-relaxed mb-8 sm:mb-10 border-l-2 border-green-500/30 pl-4 sm:pl-8 font-medium space-y-6 text-sm sm:text-base">
                     <p>{selectedProject.details.intro}</p>
                     <p className="text-cyan-300">{selectedProject.details.workflow}</p>
                     {selectedProject.details.sections.map((section) => (
@@ -874,11 +941,11 @@ const App = () => {
                     <p className="text-emerald-300">{selectedProject.details.postscript}</p>
                   </div>
                 ) : (
-                  <div className="prose prose-invert max-w-none text-gray-400 whitespace-pre-line leading-relaxed mb-10 border-l-2 border-green-500/30 pl-8 font-medium">
+                  <div className="prose prose-invert prose-sm sm:prose-base max-w-none text-gray-400 whitespace-pre-line leading-relaxed mb-8 sm:mb-10 border-l-2 border-green-500/30 pl-4 sm:pl-8 font-medium">
                     {selectedProject.fullDescription}
                   </div>
                 )}
-                <button onClick={() => setSelectedProject(null)} className="px-10 py-4 bg-green-500 text-slate-900 rounded-2xl font-black uppercase text-xs tracking-widest">{t.projects.close}</button>
+                <button onClick={() => setSelectedProject(null)} className="w-full sm:w-auto px-8 sm:px-10 py-4 bg-green-500 text-slate-900 rounded-2xl font-black uppercase text-xs tracking-widest">{t.projects.close}</button>
               </div>
             </motion.div>
           </motion.div>
