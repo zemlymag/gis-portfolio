@@ -318,6 +318,39 @@ const SKILL_LEVELS = [95, 90, 92, 88];
 const PROJECTS_DATA = {
   ru: [
     {
+      title: 'Ограничения и риски: как не потерять контроль над земельным участком',
+      desc: 'Как НСПД, ГПЗУ, ППТ и GIS-анализ помогают заранее увидеть ЗОУИТ, публичные сервитуты, резервирование и риск изъятия участка.',
+      tags: ['НСПД', 'ЗОУИТ', 'Градостроительный анализ'],
+      fullDescription: `Продолжая тему обременений, важно отметить: и застройщик, и частный собственник могут получить значительный объем информации о зонах с особыми условиями использования территорий (ЗОУИТ) на портале НСПД. Достаточно ввести кадастровый номер участка или объекта капитального строительства, чтобы увидеть зоны, сведения о которых уже внесены в ЕГРН в соответствии со ст. 105 ЗК РФ.
+
+1. «Невидимые» угрозы: резервирование и изъятие
+Помимо существующих зон, существуют и «скрытые» ограничения. Речь идет о землях, планируемых под размещение федеральных или региональных объектов: мостов, железных дорог, газопроводов.
+
+Согласно ст. 56.1 ЗК РФ, права собственников могут быть ограничены в связи с резервированием земель для государственных или муниципальных нужд. Если уже утвержден проект планировки территории по ст. 45 ГрК РФ, появляется риск последующего изъятия участка. В таком случае закон допускает принудительное отчуждение имущества, но строго с возмещением рыночной стоимости и убытков по ст. 49 ЗК РФ и ст. 279 ГК РФ.
+
+2. Публичный сервитут: временные неудобства vs выгода
+Снизить риски можно только через регулярный мониторинг и привлечение профильного специалиста. При этом важно различать степень влияния ограничений на ваши планы.
+
+Если на участок сельхозназначения накладывается публичный сервитут для строительства линейного объекта, например ЛЭП или линии связи, по ст. 39.45 ЗК РФ такой сервитут может устанавливаться на срок от 10 до 49 лет. При этом фактическое занятие участка для строительно-монтажных работ не может превышать 1 год в силу ст. 39.50 ЗК РФ. Собственник имеет право на плату за сервитут и на возмещение убытков, если в период строительства участок нельзя использовать в обычном режиме.
+
+3. Изъятие под дороги: когда компромисс невозможен
+Совсем иная ситуация возникает при строительстве или расширении автодорог. Здесь участок может быть изъят полностью или частично, а собственнику выплачивается выкупная цена, которая включает рыночную стоимость земли, объектов недвижимости и убытки, связанные с досрочным прекращением обязательств перед третьими лицами по ст. 56.8 ЗК РФ. Для ИЖС и СНТ это нередко означает фактическую потерю объекта недвижимости.
+
+Как защитить свои интересы?
+ГПЗУ остается главным юридическим «щитом». НСПД отлично подходит для визуальной первичной проверки, но именно градостроительный план земельного участка по ст. 57.3 ГрК РФ фиксирует ограничения, пятно застройки и минимальные отступы. Если спорная зона не отражена в ГПЗУ, шансы на защиту позиции в суде становятся значительно выше.
+
+Есть и экономический аспект. Наличие серьезных ограничений, включая ЗОУИТ и сервитуты, снижает рыночную привлекательность участка. Это может служить основанием для оспаривания кадастровой стоимости и, как следствие, для снижения земельного налога.
+
+Отдельно важно отслеживать проекты планировки территории и публичные обсуждения. Дороги и иные линейные объекты редко появляются внезапно: ППТ проходят стадию общественных обсуждений, а значит, у собственника есть шанс заранее подать возражения и повлиять на границы зоны до начала работ.
+
+Почему здесь важна GIS-аналитика? Потому что ограничения часто накладываются друг на друга. Край участка может попадать в водоохранную зону, а центральная часть - в зону охраны объектов культурного наследия. Профессиональный GIS-анализ позволяет совместить слои разных ведомств, выявить конфликт зон и увидеть ограничения, которые еще не дошли до публичных реестров, но уже закреплены в ведомственных актах.
+
+Вывод простой: универсальный способ избежать «сюрпризов» - регулярный мониторинг, проверка ГПЗУ и работа с актуальными пространственными данными.`,
+      client: 'Правовой и GIS-анализ земельных ограничений',
+      year: '2026',
+      image: '/zouit.png'
+    },
+    {
       title: 'Градостроительный анализ участка: когда графика важнее опубликованных слоев',
       desc: 'Как совмещаю НСПД, ФГИС ТП, сайты администраций и привязку PDF/GeoTIFF в QGIS для поиска ограничений и проектных рисков.',
       tags: ['QGIS', 'ПЗЗ', 'Градостроительный анализ'],
@@ -434,6 +467,39 @@ GIS — это не про карты. GIS — это про понимание,
     }
   ],
   en: [
+    {
+      title: 'Restrictions and Risks: How Not to Lose Control Over a Land Plot',
+      desc: 'How NSPD, GPZU, planning documentation, and GIS analysis help identify special-use zones, public easements, reservation, and expropriation risks in advance.',
+      tags: ['NSPD', 'Special-Use Zones', 'Urban Planning'],
+      fullDescription: `Continuing the topic of encumbrances, it is important to note that both developers and private owners can obtain a substantial amount of information on special-use territorial zones through the NSPD portal. By entering the cadastral number of a land plot or capital construction object, it is possible to see zones already recorded in the EGRN under Article 105 of the Land Code of the Russian Federation.
+
+1. Invisible threats: reservation and expropriation
+In addition to existing zones, there are also hidden restrictions. These are lands planned for federal or regional infrastructure such as bridges, railways, and pipelines.
+
+Under Article 56.1 of the Land Code, owners' rights may be limited due to land reservation for state or municipal needs. If a territory planning project has already been approved under Article 45 of the Urban Planning Code, the risk of future withdrawal of the land plot becomes real. In such cases, compulsory acquisition is allowed only with compensation for market value and related losses under Article 49 of the Land Code and Article 279 of the Civil Code.
+
+2. Public easement: temporary inconvenience versus practical benefit
+These risks can only be reduced through regular monitoring and specialist review. It is essential to distinguish how strongly a restriction affects the actual development or use scenario.
+
+If an agricultural land plot is affected by a public easement for a linear infrastructure project such as a power line or communication line, Article 39.45 of the Land Code allows such an easement to be established for 10 to 49 years. At the same time, the actual occupation of the land for construction works cannot exceed one year under Article 39.50. The owner is entitled to easement payments and compensation for losses caused by the temporary inability to use the land normally during construction.
+
+3. Road projects: when compromise is impossible
+The situation is different when roads are expanded or newly built. In that case, the plot may be acquired fully or partially, and the owner is paid a redemption price that includes the market value of the land, buildings, and losses related to the early termination of obligations to third parties under Article 56.8 of the Land Code. For individual housing and garden plots, this often means losing the property itself.
+
+How can owners protect their interests?
+The GPZU remains the main legal shield. NSPD is an excellent visual tool for the initial review, but the urban planning plan of a land plot is the document with direct practical legal value for development decisions. Under Article 57.3 of the Urban Planning Code, it records restrictions, building envelopes, and setback requirements. If a disputed zone is absent from the GPZU, the chances of defending a position in court are much stronger.
+
+There is also an economic dimension. Serious restrictions, including special-use zones and easements, reduce a plot's market attractiveness. This may become a valid basis for challenging cadastral value and, as a result, reducing land tax.
+
+It is equally important to monitor territory planning projects and public hearings. Roads and other linear objects rarely appear overnight. Planning documentation usually goes through public discussion stages, which gives owners a chance to submit objections before the project physically reaches the site.
+
+This is where GIS analytics becomes especially valuable. Restrictions often overlap: one edge of a plot may fall into a water protection zone while the center intersects a cultural heritage protection area. Professional GIS analysis makes it possible to overlay data from different authorities, detect conflicts between zones, and identify restrictions that may not yet appear in public registries but already exist in official departmental acts.
+
+The main conclusion is simple: the best way to avoid unpleasant surprises is regular monitoring, GPZU verification, and work with up-to-date spatial data.`,
+      client: 'Legal and GIS analysis of land constraints',
+      year: '2026',
+      image: '/zouit.png'
+    },
     {
       title: 'Urban Planning Site Analysis Beyond Published Layers',
       desc: 'How I combine NSPD, FGIS TP, municipal sources, and georeferenced PDF or GeoTIFF materials in QGIS to detect constraints and future risks.',
