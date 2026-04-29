@@ -1,0 +1,387 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.4379,
+          55.7111
+        ]
+      },
+      "properties": {
+        "id": 1,
+        "name": "АО «Камский индустриальный парк «Мастер»»",
+        "city": "Набережные Челны",
+        "district": "Набережные Челны",
+        "area": "30 га",
+        "status": "Активный",
+        "profile": "Машиностроение",
+        "tenants": 45,
+        "established": 2007,
+        "railway_access": "Есть",
+        "free_area": "5 га",
+        "description": "Специализированный парк машиностроительного профиля в составе КАМАЗа."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          48.9687,
+          55.8968
+        ]
+      },
+      "properties": {
+        "id": 2,
+        "name": "Индустриальный парк «М-7»",
+        "city": "Зеленодольский район",
+        "district": "Зеленодольский район",
+        "area": "45 га",
+        "status": "Активный",
+        "profile": "Логистика",
+        "tenants": 12,
+        "established": 2012,
+        "railway_access": "Нет",
+        "free_area": "18 га",
+        "description": "Логистический парк у трассы М-7 с удобным выходом на федеральную магистраль."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          50.7072,
+          55.3541
+        ]
+      },
+      "properties": {
+        "id": 3,
+        "name": "Индустриальный парк «Чистополь»",
+        "city": "Чистопольский район",
+        "district": "Чистопольский район",
+        "area": "292 га",
+        "status": "Развитие",
+        "profile": "Многопрофильный",
+        "tenants": 3,
+        "established": 2019,
+        "railway_access": "Есть",
+        "free_area": "265 га",
+        "description": "Крупнейший по площади парк РТ в стадии активного освоения."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.3612,
+          55.4249
+        ]
+      },
+      "properties": {
+        "id": 4,
+        "name": "Индустриальный парк «Камские Поляны»",
+        "city": "Нижнекамский район",
+        "district": "Нижнекамский район",
+        "area": "50 га",
+        "status": "Активный",
+        "profile": "Нефтехимия",
+        "tenants": 8,
+        "established": 2015,
+        "railway_access": "Есть",
+        "free_area": "12 га",
+        "description": "Парк нефтехимического профиля в составе нижнекамского промышленного узла."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          49.2725,
+          55.6294
+        ]
+      },
+      "properties": {
+        "id": 5,
+        "name": "Индустриальный парк «Лаишево»",
+        "city": "Лаишевский район",
+        "district": "Лаишевский район",
+        "area": "60 га",
+        "status": "Доступен",
+        "profile": "Многопрофильный",
+        "tenants": 0,
+        "established": 2021,
+        "railway_access": "Нет",
+        "free_area": "60 га",
+        "description": "Новая площадка вблизи Казани с готовой инфраструктурой для резидентов."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.4218,
+          55.6918
+        ]
+      },
+      "properties": {
+        "id": 6,
+        "name": "Индустриальный парк «Набережные Челны»",
+        "city": "Набережные Челны",
+        "district": "Набережные Челны",
+        "area": "100 га",
+        "status": "Активный",
+        "profile": "Машиностроение",
+        "tenants": 22,
+        "established": 2010,
+        "railway_access": "Есть",
+        "free_area": "20 га",
+        "description": "Многопрофильный парк на базе промышленной зоны города автомобилестроителей."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          49.044825,
+          55.830255
+        ]
+      },
+      "properties": {
+        "id": 49,
+        "region": "Республика Татарстан",
+        "name": "Индустриальный парк 'Тасма' на территории Технополиса 'Химград'",
+        "site": "https://promparktit.ru/?page_id=10",
+        "address": "Республика Татарстан, городской округ Казань, г. Казань, территория Химград, д.126, пом. 35"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          50.191291,
+          55.880712
+        ]
+      },
+      "properties": {
+        "id": 50,
+        "region": "Республика Татарстан",
+        "name": "Промышленный парк 'Тюлячи'",
+        "site": "https://тюлячи.рф/",
+        "address": "Республика Татарстан, Тюлячинский муниципальный район, Тюлячинское СП, 75 км автодороги 'Казань-Шемордан'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          50.449988,
+          55.986747
+        ]
+      },
+      "properties": {
+        "id": 51,
+        "region": "Республика Татарстан",
+        "name": "Индустриальный парк 'Саба'",
+        "site": "https://saba-industrial.ru/ru/",
+        "address": "Республика Татарстан, Сабинский район, пгт Богатые Сабы, Заводской переулок, 59"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.207906,
+          55.074798
+        ]
+      },
+      "properties": {
+        "id": 52,
+        "region": "Республика Татарстан",
+        "name": "Промышленная площадка муниципального уровня №2 по переработке полимеров в Новошешминском муниципальном районе",
+        "site": "https://unipark.tatar/our-objects/novosheshminsk/",
+        "address": "Республика Татарстан, Новошешминский район, с. Новошешминск, ул. Парковая, 9"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          49.05221,
+          55.834264
+        ]
+      },
+      "properties": {
+        "id": 53,
+        "region": "Республика Татарстан",
+        "name": "АО 'Инновационный индустриальный парк – Технополис Химград (АО 'Химград')",
+        "site": "https://www.himgrad.ru",
+        "address": "420095, Республика Татарстан, г. Казань, тер. Химград"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.415111,
+          55.718096
+        ]
+      },
+      "properties": {
+        "id": 54,
+        "region": "Республика Татарстан",
+        "name": "Промышленный парк 'Вятка'",
+        "site": "https://promparkvyatka.ru/",
+        "address": "422190, Республика Татарстан, г. Мамадыш, ул. М.Джалиля, д.23/33"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.489424,
+          55.690689
+        ]
+      },
+      "properties": {
+        "id": 55,
+        "region": "Республика Татарстан",
+        "name": "Промышленный парк 'Развитие'",
+        "site": "http://prompark16.ru/",
+        "address": "Республика Татарстан, г. Набережные Челны, Металлургическая, 115"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          47.56309,
+          54.724235
+        ]
+      },
+      "properties": {
+        "id": 56,
+        "region": "Республика Татарстан",
+        "name": "Промышленный парк 'Дрожжаное'",
+        "site": null,
+        "address": "Республика Татарстан, Дрожжановский район, село Старое Дрожжаное, ул. Промышленная"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          50.942624,
+          56.186189
+        ]
+      },
+      "properties": {
+        "id": 57,
+        "region": "Республика Татарстан",
+        "name": "Промышленный парк 'Кукмор'",
+        "site": "https://kukmor.tatarstan.ru/promishlenniy-park-kukmor.htm",
+        "address": "Республика Татарстан, Кукморский муниципальный район, пгт. Кукмор, ул. Производственная"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          49.394665,
+          55.620174
+        ]
+      },
+      "properties": {
+        "id": 58,
+        "region": "Республика Татарстан",
+        "name": "Промышленный парк 'Сокуры'",
+        "site": null,
+        "address": "Республика Татарстан, Лаишевский район, с. Сокуры"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.066813,
+          55.709971
+        ]
+      },
+      "properties": {
+        "id": 59,
+        "region": "Республика Татарстан",
+        "name": "Промышленный парк 'Актаныш'",
+        "site": "http://prompark16.ru/index/promyshlennyj_park_aktanysh/0-11",
+        "address": "Республика Татарстан, Актанышский район, село Актаныш"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.439128,
+          55.710195
+        ]
+      },
+      "properties": {
+        "id": 60,
+        "region": "Республика Татарстан",
+        "name": "Индустриальный парк 'КИП Мастер'",
+        "site": "https://www.kipmaster.ru/",
+        "address": "Республика Татарстан, г. Набережные Челны, Производственный проезд, 4 (промзона КИП 'Мастер')"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          49.12429,
+          55.747723
+        ]
+      },
+      "properties": {
+        "id": 61,
+        "region": "Республика Татарстан",
+        "name": "Индустриальный парк 'Казанский Силикон'",
+        "site": null,
+        "address": "Республика Татарстан, г. Казань, ул. Лебедева, д.1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          49.212864,
+          55.794457
+        ]
+      },
+      "properties": {
+        "id": 62,
+        "region": "Республика Татарстан",
+        "name": "Агропромышленный парк 'Казань'",
+        "site": "https://agroprompark-kazan.ru/",
+        "address": "Республика Татарстан, г. Казань, улица Аграрная дом 2"
+      }
+    }
+  ]
+}

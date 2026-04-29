@@ -314,9 +314,33 @@ const ExperienceMapModal = ({ onClose, language, t }) => {
 };
 
 const SECTION_IDS = ['home', 'about', 'projects', 'services', 'skills', 'contact'];
+const INDUSTRIAL_PARKS_PAGE = './industrial-parks.html';
 const SKILL_LEVELS = [95, 90, 92, 88];
 const PROJECTS_DATA = {
   ru: [
+    {
+      slug: 'industrial-parks-tatarstan',
+      title: 'Индустриальные парки Татарстана: интерактивная GIS-карта',
+      desc: 'Веб-карта индустриальных парков с анализом ПЗЗ, слоями участков и поиском площадок в одном интерфейсе.',
+      tags: ['React', 'Leaflet', 'ПЗЗ'],
+      fullDescription: `Друзья, хочу поделиться свежим кейсом о том, как современные инструменты меняют привычную работу градостроителя. Сейчас я занимаюсь проектом карты индустриальных парков в Татарстане — эта территория мне ближе и понятнее. Чтобы не тратить время на рутину, я решил выжать максимум из связки QGIS, Python и нейросетей.
+
+Основная сложность была с данными НСПД. Чтобы получить точные границы участков, нужно либо долго «копать» портал, либо писать запросы. Я протестировал разные модели — ChatGPT, Gemini, Claude, но в итоге сделал основной упор на DeepSeek.
+
+Почему именно он? Всё просто:
+
+- Доступность: стабильно работает в России без лишних «костылей» и ***.
+- Качество кода: на удивление чётко справился с библиотеками PyQGIS. Там, где другие модели путались в синтаксисе старых версий, DeepSeek выдал чистый рабочий каркас.
+
+В итоге нейросеть написала мне скрипт, который я лишь допилил под себя в консоли QGIS. Теперь границы участков подтягиваются почти автоматически по запросу расположения точки — система сама определяет кадастровый контур парка.
+
+Транспортную инфраструктуру я вытащил из открытых данных через QuickOSM. Раньше на чистку и сортировку дорог уходил целый вечер, а сейчас короткий Python-скрипт, тоже родом из AI, разложил всё по слоям за пару минут.
+
+Для меня AI здесь — не замена специалисту, а мощный ускоритель. Он берёт на себя рутинную писанину кода и поиск синтаксических ошибок, оставляя самое интересное: анализ территории и принятие проектных решений. Все данные я связал с проектом в QGIS — теперь любые правки в слоях, например добавление нового парка или ЗОУИТ, мгновенно отображаются на сайте без изменения кода.`,
+      client: 'Личный GIS-проект',
+      year: '2026',
+      image: '/parki_rt.png'
+    },
     {
       title: 'Ограничения и риски: как не потерять контроль над земельным участком',
       desc: 'Как НСПД, ГПЗУ, ППТ и GIS-анализ помогают заранее увидеть ЗОУИТ, публичные сервитуты, резервирование и риск изъятия участка.',
@@ -440,7 +464,7 @@ QGIS показывал, где уже оформлены участки, а г�
 GIS — это не про карты. GIS — это про понимание, контроль и возможность принимать решения быстрее, чем проблемы успевают появиться. И вот за это я люблю свою работу.`,
       client: 'Федеральный инфраструктурный проект',
       year: '2025',
-      image: '/gis.jpeg'
+      image: '/parki_rt.png'
     },
     {
       title: 'Использование API',
@@ -467,6 +491,18 @@ GIS — это не про карты. GIS — это про понимание,
     }
   ],
   en: [
+    {
+      slug: 'industrial-parks-tatarstan',
+      title: 'Industrial Parks of Tatarstan: interactive GIS map',
+      desc: 'A web map of industrial parks with zoning analysis, land plot layers, and site screening in one interface.',
+      tags: ['React', 'Leaflet', 'Zoning'],
+      fullDescription: `An interactive GIS project that combines industrial parks of Tatarstan with municipal boundaries, land plots, zoning layers, roads, and rail infrastructure.
+
+The map supports layer toggles, object cards, and polygon-based zoning analysis, turning the project into a practical site assessment workspace rather than a static showcase.`,
+      client: 'Personal GIS project',
+      year: '2026',
+      image: '/gis.jpeg'
+    },
     {
       title: 'Restrictions and Risks: How Not to Lose Control Over a Land Plot',
       desc: 'How NSPD, GPZU, planning documentation, and GIS analysis help identify special-use zones, public easements, reservation, and expropriation risks in advance.',
@@ -619,7 +655,8 @@ const App = () => {
         contact: 'Связаться',
         resume: 'Скачать резюме',
         projects: 'Посмотреть проекты',
-        mapCta: 'Карта опыта'
+        mapCta: 'Карта опыта',
+        petProject: 'Мой pet-проект'
       },
       about: {
         title: 'О себе',
@@ -649,6 +686,7 @@ const App = () => {
         year: 'Год',
         close: 'Закрыть',
         open: 'Открыть проект',
+        visitPage: 'Перейти на страницу проекта',
         items: PROJECTS_DATA.ru
       },
       skills: {
@@ -682,7 +720,8 @@ const App = () => {
         contact: 'Get in Touch',
         resume: 'Download Resume',
         projects: 'View Projects',
-        mapCta: 'Experience Map'
+        mapCta: 'Experience Map',
+        petProject: 'My pet project'
       },
       about: {
         title: 'About',
@@ -712,6 +751,7 @@ const App = () => {
         year: 'Year',
         close: 'Close',
         open: 'Open Project',
+        visitPage: 'Open project page',
         items: PROJECTS_DATA.en
       },
       skills: {
@@ -779,6 +819,10 @@ const App = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const openProject = (project) => {
+    setSelectedProject(project);
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-gray-100 relative overflow-hidden">
       <motion.div className="fixed inset-0 pointer-events-none" style={{ opacity: gridOpacity }}>
@@ -836,6 +880,9 @@ const App = () => {
               <motion.button onClick={() => setShowExperienceMap(true)} whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-slate-800 border border-green-500/20 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest shadow-xl">
                 <MapPin size={16} className="text-cyan-400" /> {t.hero.mapCta}
               </motion.button>
+              <motion.a href={INDUSTRIAL_PARKS_PAGE} whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-slate-800 border border-cyan-400/20 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest shadow-xl">
+                <Globe size={16} className="text-green-400" /> {t.hero.petProject}
+              </motion.a>
               <motion.a href="/resume.pdf" download whileHover={{ scale: 1.05 }} className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-2xl font-semibold flex items-center gap-2 uppercase text-xs tracking-widest">{t.hero.resume}</motion.a>
             </div>
           </motion.div>
@@ -873,7 +920,7 @@ const App = () => {
             {t.projects.items.map((proj, i) => (
               <button
                 key={i}
-                onClick={() => setSelectedProject(proj)}
+                onClick={() => openProject(proj)}
                 className="bg-slate-800/50 border-2 border-green-500/20 rounded-2xl overflow-hidden hover:border-green-400 transition-all group flex flex-col text-left text-white min-h-full"
               >
                 <div className="h-52 bg-slate-700 relative flex items-center justify-center overflow-hidden">
@@ -1011,7 +1058,16 @@ const App = () => {
                     {selectedProject.fullDescription}
                   </div>
                 )}
-                <button onClick={() => setSelectedProject(null)} className="w-full sm:w-auto px-8 sm:px-10 py-4 bg-green-500 text-slate-900 rounded-2xl font-black uppercase text-xs tracking-widest">{t.projects.close}</button>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  {selectedProject.slug === 'industrial-parks-tatarstan' && (
+                    <a href={INDUSTRIAL_PARKS_PAGE} className="w-full sm:w-auto px-8 sm:px-10 py-4 bg-cyan-400 text-slate-900 rounded-2xl font-black uppercase text-xs tracking-widest text-center">
+                      {t.projects.visitPage}
+                    </a>
+                  )}
+                  {selectedProject.slug !== 'industrial-parks-tatarstan' && (
+                    <button onClick={() => setSelectedProject(null)} className="w-full sm:w-auto px-8 sm:px-10 py-4 bg-green-500 text-slate-900 rounded-2xl font-black uppercase text-xs tracking-widest">{t.projects.close}</button>
+                  )}
+                </div>
               </div>
             </motion.div>
           </motion.div>

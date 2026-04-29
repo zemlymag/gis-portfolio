@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "source_pdf": "Градостроительные регламенты.pdf",
+    "city": "Чистополь",
+    "article": "26",
+    "total_zones": 20,
+    "total_regulations": 20,
+    "validation": {
+      "zones_declared": 20,
+      "zones_exported": 20,
+      "zones_with_regulations": 20,
+      "counts_match_export": true,
+      "counts_match_regulations": true,
+      "data_filled_ok": true,
+      "quality": {
+        "zones_with_any_data": 20,
+        "zones_without_pages_count": 0,
+        "zones_without_pages": [],
+        "zones_without_vri_count": 0,
+        "zones_without_vri": [],
+        "zones_without_location_count": 20,
+        "zones_without_location": [
+          "Ж1",
+          "Ж1.1",
+          "Ж2",
+          "Ж3",
+          "ОД",
+          "Т",
+          "И",
+          "П1",
+          "П2",
+          "П3",
+          "П4",
+          "КС",
+          "СХ2",
+          "СХ3",
+          "СХ4",
+          "Р2",
+          "Р3",
+          "СН1",
+          "СН2",
+          "ОБ"
+        ],
+        "all_zones_have_pages": true,
+        "all_zones_have_vri": true
+      }
+    },
+    "profile": "chistopol",
+    "site_json": "D:\\geo_gis\\industrial_parks\\PZZ\\Чистополь.json"
+  },
+  "zones": [
+    {
+      "zone_code": "Ж1",
+      "zone_name": "Зона индивидуальной жилой застройки (Ж 1)",
+      "location": ""
+    },
+    {
+      "zone_code": "Ж1.1",
+      "zone_name": "Зона индивидуальной жилой застройки (Ж1.1)",
+      "location": ""
+    },
+    {
+      "zone_code": "Ж2",
+      "zone_name": "Зона малоэтажной жилой застройки (Ж 2)",
+      "location": ""
+    },
+    {
+      "zone_code": "Ж3",
+      "zone_name": "Зона среднеэтажной жилой застройки (Ж 3)",
+      "location": ""
+    },
+    {
+      "zone_code": "И",
+      "zone_name": "Зона инженерной инфраструктуры (И)",
+      "location": ""
+    },
+    {
+      "zone_code": "КС",
+      "zone_name": "Зона коммунально-складских объектов (КС)",
+      "location": ""
+    },
+    {
+      "zone_code": "ОБ",
+      "zone_name": "Зона объектов обороны и безопасности (ОБ)",
+      "location": ""
+    },
+    {
+      "zone_code": "ОД",
+      "zone_name": "Многофункциональная общественно-деловая зона (ОД)",
+      "location": ""
+    },
+    {
+      "zone_code": "П1",
+      "zone_name": "Зона производственных и складских объектов I- II класса опасности (П 1)",
+      "location": ""
+    },
+    {
+      "zone_code": "П2",
+      "zone_name": "Зона производственных и складских объектов III класса опасности (П 2)",
+      "location": ""
+    },
+    {
+      "zone_code": "П3",
+      "zone_name": "Зона производственных и складских объектов IV-V классов опасности (П 3)",
+      "location": ""
+    },
+    {
+      "zone_code": "П4",
+      "zone_name": "Зона производственных и складских объектов V класса опасности (П 4)",
+      "location": ""
+    },
+    {
+      "zone_code": "Р2",
+      "zone_name": "Зона рекреационного назначения (Р 2)",
+      "location": ""
+    },
+    {
+      "zone_code": "Р3",
+      "zone_name": "Зона объектов отдыха, туризма и спорта (Р 3)",
+      "location": ""
+    },
+    {
+      "zone_code": "СН1",
+      "zone_name": "Зона размещения кладбищ (СН 1)",
+      "location": ""
+    },
+    {
+      "zone_code": "СН2",
+      "zone_name": "Зона обращения с отходами (СН 2)",
+      "location": ""
+    },
+    {
+      "zone_code": "СХ2",
+      "zone_name": "Зона объектов сельскохозяйственного назначения (СХ 2)",
+      "location": ""
+    },
+    {
+      "zone_code": "СХ3",
+      "zone_name": "Зона объектов сельскохозяйственного использования (СХ 3)",
+      "location": ""
+    },
+    {
+      "zone_code": "СХ4",
+      "zone_name": "Зона коллективного садоводства и огородничества (СХ 4)",
+      "location": ""
+    },
+    {
+      "zone_code": "Т",
+      "zone_name": "Зона транспортной инфраструктуры (Т)",
+      "location": ""
+    }
+  ]
+}

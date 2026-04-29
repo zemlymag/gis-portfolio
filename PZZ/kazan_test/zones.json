@@ -1,0 +1,275 @@
+{
+  "metadata": {
+    "source_pdf": "Градостроительные регламенты 1.pdf",
+    "city": "Казань",
+    "article": "30",
+    "total_zones": 31,
+    "total_regulations": 31,
+    "validation": {
+      "zones_declared": 31,
+      "zones_exported": 31,
+      "zones_with_regulations": 31,
+      "counts_match_export": true,
+      "counts_match_regulations": true,
+      "data_filled_ok": true,
+      "location_coverage_ok": false,
+      "strict_data_filled_ok": false,
+      "quality": {
+        "zones_with_any_data": 31,
+        "zones_without_pages_count": 0,
+        "zones_without_pages": [],
+        "zones_without_vri_count": 0,
+        "zones_without_vri": [],
+        "zones_without_location_count": 31,
+        "zones_without_location": [
+          "Ж1",
+          "Ж1А",
+          "Ж2",
+          "Ж3",
+          "Ж4",
+          "ОЖ",
+          "ОД",
+          "О1",
+          "О2",
+          "О3",
+          "О4",
+          "О5",
+          "Ц",
+          "Р0",
+          "Р1",
+          "Р2",
+          "Р3",
+          "ПР",
+          "П1",
+          "П2",
+          "ОП",
+          "С1",
+          "С2",
+          "С3",
+          "С4",
+          "СТ",
+          "Т",
+          "ДМ-А",
+          "ДМ-Б",
+          "ДМ-В",
+          "ДМ-Г"
+        ],
+        "all_zones_have_pages": true,
+        "all_zones_have_vri": true,
+        "all_zones_have_location": false
+      },
+      "map_zone_check": {
+        "document_zones": 31,
+        "map_zones": 31,
+        "shared_zones": 31,
+        "missing_in_regulations_count": 0,
+        "missing_in_regulations": [],
+        "missing_on_map_count": 0,
+        "missing_on_map": [],
+        "counts_match_map": true,
+        "codes_match_map": true
+      }
+    },
+    "profile": "kazan",
+    "zone_map": {
+      "source_pdf": "Карта градостроительного зонирования.pdf",
+      "total_codes": 31,
+      "codes": [
+        "Ж1",
+        "Ж1А",
+        "Ж2",
+        "Ж3",
+        "Ж4",
+        "ОЖ",
+        "ОД",
+        "О1",
+        "О2",
+        "О3",
+        "О4",
+        "О5",
+        "Ц",
+        "Р0",
+        "Р1",
+        "Р2",
+        "Р3",
+        "ПР",
+        "П1",
+        "П2",
+        "ОП",
+        "С1",
+        "С2",
+        "С3",
+        "С4",
+        "СТ",
+        "Т",
+        "ДМ-А",
+        "ДМ-Б",
+        "ДМ-В",
+        "ДМ-Г"
+      ],
+      "codes_by_page": {},
+      "empty_text_pages": [],
+      "ocr_pages": [],
+      "ocr_available": false,
+      "fallback": "kazan_legend"
+    },
+    "site_json": "industrial_parks\\PZZ\\kazan_test\\Казань.json"
+  },
+  "zones": [
+    {
+      "zone_code": "ДМ-А",
+      "zone_name": "Зона достопримечательного места «А» (застроенная территория)",
+      "location": ""
+    },
+    {
+      "zone_code": "ДМ-Б",
+      "zone_name": "Зона достопримечательного места «Б» (территория городского озеленения)",
+      "location": ""
+    },
+    {
+      "zone_code": "ДМ-В",
+      "zone_name": "Зона достопримечательного места «В» (территория парка)",
+      "location": ""
+    },
+    {
+      "zone_code": "ДМ-Г",
+      "zone_name": "Зона достопримечательного места «Г» (территория спорткомплекса)",
+      "location": ""
+    },
+    {
+      "zone_code": "Ж1",
+      "zone_name": "Зона индивидуальной и блокированной жилой застройки",
+      "location": ""
+    },
+    {
+      "zone_code": "Ж1А",
+      "zone_name": "Зона индивидуальной жилой застройки в границах многоквартирной застройки",
+      "location": ""
+    },
+    {
+      "zone_code": "Ж2",
+      "zone_name": "Зона малоэтажной жилой застройки",
+      "location": ""
+    },
+    {
+      "zone_code": "Ж3",
+      "zone_name": "Зона среднеэтажной жилой застройки",
+      "location": ""
+    },
+    {
+      "zone_code": "Ж4",
+      "zone_name": "Зона многоэтажной жилой застройки",
+      "location": ""
+    },
+    {
+      "zone_code": "О1",
+      "zone_name": "Зона размещения объектов торгового назначения",
+      "location": ""
+    },
+    {
+      "zone_code": "О2",
+      "zone_name": "Зона размещения объектов образования",
+      "location": ""
+    },
+    {
+      "zone_code": "О3",
+      "zone_name": "Зона размещения объектов здравоохранения",
+      "location": ""
+    },
+    {
+      "zone_code": "О4",
+      "zone_name": "Зона размещения объектов культурного назначения",
+      "location": ""
+    },
+    {
+      "zone_code": "О5",
+      "zone_name": "Зона размещения объектов спорта",
+      "location": ""
+    },
+    {
+      "zone_code": "ОД",
+      "zone_name": "Зона размещения объектов общественно-делового назначения",
+      "location": ""
+    },
+    {
+      "zone_code": "ОЖ",
+      "zone_name": "Зона смешанной жилой и общественной застройки",
+      "location": ""
+    },
+    {
+      "zone_code": "ОП",
+      "zone_name": "Зона размещения общественно-производственных объектов",
+      "location": ""
+    },
+    {
+      "zone_code": "П1",
+      "zone_name": "Зона производственно-коммунальных объектов среднего и сильного отрицательного воздействия на среду",
+      "location": ""
+    },
+    {
+      "zone_code": "П2",
+      "zone_name": "Зона производственно-коммунальных объектов незначительного отрицательного воздействия на среду",
+      "location": ""
+    },
+    {
+      "zone_code": "ПР",
+      "zone_name": "Зона озеленения специального назначения",
+      "location": ""
+    },
+    {
+      "zone_code": "Р0",
+      "zone_name": "Зона особого природоохранного, рекреационного и иного ценного значения",
+      "location": ""
+    },
+    {
+      "zone_code": "Р1",
+      "zone_name": "Зона природных территорий",
+      "location": ""
+    },
+    {
+      "zone_code": "Р2",
+      "zone_name": "Рекреационная зона",
+      "location": ""
+    },
+    {
+      "zone_code": "Р3",
+      "zone_name": "Рекреационная зона с долей общественных функций",
+      "location": ""
+    },
+    {
+      "zone_code": "С1",
+      "zone_name": "Зона размещения кладбищ",
+      "location": ""
+    },
+    {
+      "zone_code": "С2",
+      "zone_name": "Зона размещения полигонов твердых коммунальных отходов",
+      "location": ""
+    },
+    {
+      "zone_code": "С3",
+      "zone_name": "Зона размещения объектов специального назначения",
+      "location": ""
+    },
+    {
+      "zone_code": "С4",
+      "zone_name": "Зона размещения объектов по обращению с отходами производства и потребления",
+      "location": ""
+    },
+    {
+      "zone_code": "СТ",
+      "zone_name": "Зона садоводств и огородничеств",
+      "location": ""
+    },
+    {
+      "zone_code": "Т",
+      "zone_name": "Зона размещения объектов транспорта",
+      "location": ""
+    },
+    {
+      "zone_code": "Ц",
+      "zone_name": "Зона смешанной застройки центра города",
+      "location": ""
+    }
+  ]
+}
