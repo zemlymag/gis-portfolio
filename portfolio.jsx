@@ -319,27 +319,23 @@ const SKILL_LEVELS = [95, 90, 92, 88];
 const PROJECTS_DATA = {
   ru: [
     {
-      slug: 'industrial-parks-tatarstan',
-      title: 'Индустриальные парки Татарстана: интерактивная GIS-карта',
-      desc: 'Веб-карта индустриальных парков с анализом ПЗЗ, слоями участков и поиском площадок в одном интерфейсе.',
-      tags: ['React', 'Leaflet', 'ПЗЗ'],
-      fullDescription: `Друзья, хочу поделиться свежим кейсом о том, как современные инструменты меняют привычную работу градостроителя. Сейчас я занимаюсь проектом карты индустриальных парков в Татарстане — эта территория мне ближе и понятнее. Чтобы не тратить время на рутину, я решил выжать максимум из связки QGIS, Python и нейросетей.
+      title: 'Контроль объекта от замысла до ЕГРН',
+      desc: 'Как сопровождение стройки от выбора площадки до ввода в эксплуатацию и регистрации права помогает убрать риски еще до появления объекта на кадастровом учете.',
+      tags: ['ГрК РФ', 'Техплан', 'Ввод в эксплуатацию'],
+      fullDescription: `Мы все понимаем, каким должен быть итог работ по строительству объекта: регистрация права в соответствии с Федеральным законом № 218-ФЗ, при этом получение разрешения на ввод согласно ст. 55 ГрК РФ является ключевым промежуточным этапом. Но чтобы всё оформить правильно и в срок, нужно активно проверять и контролировать весь процесс. Может возникнуть вопрос: а точно ли это задача кадастрового инженера или эксперта по имуществу? Мой опыт подтверждает, что да. Важно вести контроль за «рождением» объекта с самой первой мысли.
 
-Основная сложность была с данными НСПД. Чтобы получить точные границы участков, нужно либо долго «копать» портал, либо писать запросы. Я протестировал разные модели — ChatGPT, Gemini, Claude, но в итоге сделал основной упор на DeepSeek.
+Мы упустим идею в голове инвестора, но на этапе выбора места строительства приходится подключаться. Часто коллеги-проектировщики смотрят на оформление земли как на что-то второстепенное. Однако сейчас всё чаще возникают риски, которые можно исключить простой проверкой территории через сервисы НСПД или ФГИС ТП, градостроительной проработкой и определением параметров участка согласно ЗК РФ. На этом этапе мы определяем необходимость изменения категории земель или внесения изменений в правила землепользования и застройки (ПЗЗ) в соответствии со ст. 33 ГрК РФ.
 
-Почему именно он? Всё просто:
+Следующий этап — работа с проектировщиками и определение технико-экономических показателей (ТЭПов). Тут главное — определить вид объекта и прописать характеристики: длину для линейных сооружений, площадь застройки и общую площадь зданий со всеми уровнями. Нужно руководствоваться требованиями к подготовке технического плана, установленными Приказом Росреестра от 15.03.2022 № П/0082. Также необходимо грамотно отсеять вспомогательные сооружения, опираясь на критерии Постановления Правительства РФ № 703, чтобы они не перегружали разрешение на строительство.
 
-- Доступность: стабильно работает в России без лишних «костылей» и ***.
-- Качество кода: на удивление чётко справился с библиотеками PyQGIS. Там, где другие модели путались в синтаксисе старых версий, DeepSeek выдал чистый рабочий каркас.
+Это критически важно, так как строители часто хотят включать в документы либо всё сразу, либо ничего. На этапе ввода у заказчика появляется желание оптимизировать налоговую базу, и начинаются изменения разрешения на строительство. Согласно ст. 51 ГрК РФ, технический план должен строго соответствовать проектной документации и разрешению на строительство, иначе получение акта ввода станет невозможным.
 
-В итоге нейросеть написала мне скрипт, который я лишь допилил под себя в консоли QGIS. Теперь границы участков подтягиваются почти автоматически по запросу расположения точки — система сама определяет кадастровый контур парка.
+На этапе стройки нужно следить, чтобы объект возводился строго в границах, отраженных в ГПЗУ или документации по планировке территории (ДПТ), требования к которым закреплены в главе 5 ГрК РФ. В ходе СМР получение исполнительной съёмки дает контроль характеристик и сокращает время подготовки техплана. В идеале к моменту получения заключения о соответствии (ЗОС) технический план уже готов, так как именно он, согласно ч. 10.1 ст. 55 ГрК РФ, является обязательным приложением для получения разрешения на ввод.
 
-Транспортную инфраструктуру я вытащил из открытых данных через QuickOSM. Раньше на чистку и сортировку дорог уходил целый вечер, а сейчас короткий Python-скрипт, тоже родом из AI, разложил всё по слоям за пару минут.
-
-Для меня AI здесь — не замена специалисту, а мощный ускоритель. Он берёт на себя рутинную писанину кода и поиск синтаксических ошибок, оставляя самое интересное: анализ территории и принятие проектных решений. Все данные я связал с проектом в QGIS — теперь любые правки в слоях, например добавление нового парка или ЗОУИТ, мгновенно отображаются на сайте без изменения кода.`,
-      client: 'Личный GIS-проект',
+После получения разрешения на ввод в электронном виде осуществляется присвоение адреса в соответствии с Постановлением Правительства РФ № 1221. Финальным шагом становится подача документов на регистрацию собственности. Объект уже прошел кадастровый учет в рамках межведомственного взаимодействия, номер присвоен, и мы получаем выписку из ЕГРН как подтверждение успешного завершения всего цикла работ.`,
+      client: 'Сопровождение капитального строительства',
       year: '2026',
-      image: '/parki_rt.png'
+      image: '/stroika 3.1.png'
     },
     {
       title: 'Ограничения и риски: как не потерять контроль над земельным участком',
@@ -488,20 +484,50 @@ GIS — это не про карты. GIS — это про понимание,
       client: 'Личный проект',
       year: '2025',
       image: '/API.png'
+    },
+    {
+      slug: 'industrial-parks-tatarstan',
+      title: 'Индустриальные парки Татарстана: интерактивная GIS-карта',
+      desc: 'Веб-карта индустриальных парков с анализом ПЗЗ, слоями участков и поиском площадок в одном интерфейсе.',
+      tags: ['React', 'Leaflet', 'ПЗЗ'],
+      fullDescription: `Друзья, хочу поделиться свежим кейсом о том, как современные инструменты меняют привычную работу градостроителя. Сейчас я занимаюсь проектом карты индустриальных парков в Татарстане — эта территория мне ближе и понятнее. Чтобы не тратить время на рутину, я решил выжать максимум из связки QGIS, Python и нейросетей.
+
+Основная сложность была с данными НСПД. Чтобы получить точные границы участков, нужно либо долго «копать» портал, либо писать запросы. Я протестировал разные модели — ChatGPT, Gemini, Claude, но в итоге сделал основной упор на DeepSeek.
+
+Почему именно он? Всё просто:
+
+- Доступность: стабильно работает в России без лишних «костылей» и ***.
+- Качество кода: на удивление чётко справился с библиотеками PyQGIS. Там, где другие модели путались в синтаксисе старых версий, DeepSeek выдал чистый рабочий каркас.
+
+В итоге нейросеть написала мне скрипт, который я лишь допилил под себя в консоли QGIS. Теперь границы участков подтягиваются почти автоматически по запросу расположения точки — система сама определяет кадастровый контур парка.
+
+Транспортную инфраструктуру я вытащил из открытых данных через QuickOSM. Раньше на чистку и сортировку дорог уходил целый вечер, а сейчас короткий Python-скрипт, тоже родом из AI, разложил всё по слоям за пару минут.
+
+Для меня AI здесь — не замена специалисту, а мощный ускоритель. Он берёт на себя рутинную писанину кода и поиск синтаксических ошибок, оставляя самое интересное: анализ территории и принятие проектных решений. Все данные я связал с проектом в QGIS — теперь любые правки в слоях, например добавление нового парка или ЗОУИТ, мгновенно отображаются на сайте без изменения кода.`,
+      client: 'Личный GIS-проект',
+      year: '2026',
+      image: '/parki_rt.png'
     }
   ],
   en: [
     {
-      slug: 'industrial-parks-tatarstan',
-      title: 'Industrial Parks of Tatarstan: interactive GIS map',
-      desc: 'A web map of industrial parks with zoning analysis, land plot layers, and site screening in one interface.',
-      tags: ['React', 'Leaflet', 'Zoning'],
-      fullDescription: `An interactive GIS project that combines industrial parks of Tatarstan with municipal boundaries, land plots, zoning layers, roads, and rail infrastructure.
+      title: 'Controlling a Capital Asset from Concept to EGRN Registration',
+      desc: 'How early-stage control of land, design parameters, construction, and commissioning reduces registration risks long before the asset reaches the cadastral stage.',
+      tags: ['Urban Planning Code', 'Technical Plan', 'Commissioning'],
+      fullDescription: `We all understand what the final result of a construction project should be: registration of ownership under Federal Law No. 218-FZ. At the same time, obtaining the commissioning permit under Article 55 of the Urban Planning Code is the key intermediate milestone. To reach that outcome correctly and on time, the entire process must be checked and controlled proactively. A fair question may arise: is this really the responsibility of a cadastral engineer or property expert? My experience shows that it is. The asset has to be monitored from the earliest practical stage of its creation.
 
-The map supports layer toggles, object cards, and polygon-based zoning analysis, turning the project into a practical site assessment workspace rather than a static showcase.`,
-      client: 'Personal GIS project',
+We may leave aside the investor's initial idea, but once the site selection stage begins, this expertise must already be involved. Designers often treat land formalization as secondary. In reality, many risks can be removed through a simple review of the territory via NSPD or FGIS TP services, urban planning analysis, and land parameter assessment under the Land Code. At this stage, we determine whether a land category change or amendments to land use and development rules are needed under Article 33 of the Urban Planning Code.
+
+The next stage is coordination with designers and definition of technical and economic indicators. The main task here is to classify the object correctly and define its characteristics: length for linear structures, building footprint, and total floor area across all levels for buildings. This should be done in accordance with the technical plan preparation requirements established by Rosreestr Order No. P/0082 dated March 15, 2022. It is also essential to separate auxiliary facilities using the criteria of Government Resolution No. 703 so that they do not overload the construction permit package.
+
+This point is critical because construction teams often want to include either everything or nothing in the documentation. At the commissioning stage, the client may also try to optimize the future tax base, which often leads to amendments in the construction permit. Under Article 51 of the Urban Planning Code, the technical plan must strictly correspond to both the design documentation and the permit itself; otherwise, obtaining the commissioning act becomes impossible.
+
+During construction, the object must be monitored to ensure it is built strictly within the limits reflected in the GPZU or territory planning documentation, as regulated by Chapter 5 of the Urban Planning Code. As-built surveying during construction provides control over actual characteristics and shortens the technical plan preparation timeline. Ideally, by the time the compliance statement is issued, the technical plan is already complete, because under Part 10.1 of Article 55 of the Urban Planning Code it is a mandatory attachment for obtaining the commissioning permit.
+
+After the commissioning permit is issued electronically, the asset is assigned an address under Government Resolution No. 1221. The final step is filing for ownership registration. By that stage, the cadastral registration has already been completed through interagency interaction, the cadastral number has been assigned, and the result is an EGRN extract confirming successful completion of the entire workflow.`,
+      client: 'Capital construction support',
       year: '2026',
-      image: '/gis.jpeg'
+      image: '/stroika 3.1.png'
     },
     {
       title: 'Restrictions and Risks: How Not to Lose Control Over a Land Plot',
@@ -634,6 +660,18 @@ The key value is combining data from different sources into one analytical workf
       client: 'Personal project',
       year: '2025',
       image: '/API.png'
+    },
+    {
+      slug: 'industrial-parks-tatarstan',
+      title: 'Industrial Parks of Tatarstan: interactive GIS map',
+      desc: 'A web map of industrial parks with zoning analysis, land plot layers, and site screening in one interface.',
+      tags: ['React', 'Leaflet', 'Zoning'],
+      fullDescription: `An interactive GIS project that combines industrial parks of Tatarstan with municipal boundaries, land plots, zoning layers, roads, and rail infrastructure.
+
+The map supports layer toggles, object cards, and polygon-based zoning analysis, turning the project into a practical site assessment workspace rather than a static showcase.`,
+      client: 'Personal GIS project',
+      year: '2026',
+      image: '/gis.jpeg'
     }
   ]
 };
@@ -860,7 +898,7 @@ const App = () => {
         </div>
       </nav>
 
-      <section id="home" className="min-h-screen flex items-center justify-center relative px-6">
+      <section id="home" className="min-h-screen md:min-h-[82vh] flex items-center justify-center relative px-6">
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="mb-8 flex justify-center">
